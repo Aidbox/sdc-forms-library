@@ -3,168 +3,122 @@
 
  VitalsDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules},
-  :zen/desc "Basic Vitals Document",
+  :source {:url "https://loinc.org/85353-1/"
+           :system  "https://loinc.org/"
+           :code "85353-1"}
+  :zen/desc "This form allows you measure the body's basic functions.
+These include temperature, heart rate, respiratory rate, blood pressure, and oxygen saturation.
+As additional option this form has BMI."
   :type zen/map,
   :confirms #{aidbox.sdc/Document},
-  :sdc/rules {:loinc-39156-5 (lisp/when
-                                 (lisp/and
-                                  (lisp/get-in [:loinc-29463-7 :value])
-                                  (lisp/get-in [:loinc-8302-2 :value]))
-                               (lisp/*
-                                (lisp/divide
-                                 (lisp/*
-                                  (lisp/get-in [:loinc-29463-7 :value])
-                                  703)
-                                 (lisp/*
-                                  (lisp/get-in [:loinc-8302-2 :value])
-                                  (lisp/get-in [:loinc-8302-2 :value])))
-                                1))},
-  :keys {:loinc-8310-5 {:type zen/vector,
-                        :minItems 1,
-                        :every {:type zen/map,
-                                :keys {:loinc-8310-5-value {:questionCodeSystem "http://loinc.org",
-                                                            :linkId "/8310-5",
-                                                            :units [{:name "°F"}],
-                                                            :sdc/boundaries
-                                                            {:imperial {:min 86
-                                                                        :max 105}}
-                                                            :text "Body temperature",
-                                                            :sdc-type aidbox.sdc/quantity
-                                                            :confirms #{aidbox.sdc.fhir/quantity}
-                                                            :type zen/map
-                                                            :keys {:value {:type zen/number}}
-                                                            :zen/desc "Body temperature"},
-                                       :datetime {:type zen/datetime
-                                                  :zen/desc "Moment of measurement"}}}},
-         :loinc-85354-9 {:type zen/vector,
-                         :minItems 1,
-                         :every {:type zen/map,
-                                 :keys {:loinc-8480-6 {:questionCodeSystem "http://loinc.org",
-                                                       :linkId "/8480-6",
-                                                       :units [{:name "mmHg"}],
-                                                       :text "BP sys",
-                                                       :sdc-type aidbox.sdc/quantity
-                                                       :confirms #{aidbox.sdc.fhir/quantity}
-                                                       :type zen/map
-                                                       :keys {:value {:type zen/number
-                                                                      :min 40
-                                                                      :max 300}}
-                                                       :zen/desc "BP sys"},
-                                        :loinc-8462-4 {:questionCodeSystem "http://loinc.org",
-                                                       :linkId "/8462-4",
-                                                       :units [{:name "mmHg"}],
-                                                       :text "BP dias",
-                                                       :sdc-type aidbox.sdc/quantity
-                                                       :confirms #{aidbox.sdc.fhir/quantity}
-                                                       :type zen/map
-                                                       :keys {:value {:type zen/number
-                                                                      :min 20
-                                                                      :max 220}}
-                                                       :zen/desc "BP dias"},
-                                        :loinc-41904-4 {:questionCodeSystem "http://loinc.org",
-                                                        :linkId "/41904-4",
-                                                        :type zen/map
-                                                        :confirms #{aidbox.sdc.fhir/coding}
-                                                        :sdc-type aidbox.sdc/choice,
-                                                        :enum [{:value {:display "Biceps left",
-                                                                        :code "LA11158-5",
-                                                                        :system "http://loinc.org"}}
-                                                               {:value {:display "Biceps right",
-                                                                        :code "LA11159-3",
-                                                                        :system "http://loinc.org"}}],
-                                                        :zen/desc "Arm"}
-                                        :loinc-8361-8 {:questionCodeSystem "http://loinc.org",
-                                                       :linkId "/8361-8",
-                                                       :type zen/map
-                                                       :confirms #{aidbox.sdc.fhir/coding}
-                                                       :sdc-type aidbox.sdc/choice,
-                                                       :enum [{:value {:display "Sitting",
-                                                                       :code "LA11868-9",
-                                                                       :system "http://loinc.org"}}
-                                                              {:value {:display "Lying",
-                                                                       :code "LA11869-7",
-                                                                       :system "http://loinc.org"}}
-                                                              {:value {:display "Standing",
-                                                                       :code "LA11870-5",
-                                                                       :system "http://loinc.org"}}],
-                                                       :zen/desc "Positions"},
-                                        :datetime {:type zen/datetime
-                                                   :zen/desc "Moment of measurement"}}}},
-         :loinc-9279-1 {:type zen/vector,
-                        :minItems 1,
-                        :every {:type zen/map,
-                                :keys {:loinc-9279-1-value {:questionCodeSystem "http://loinc.org",
-                                                            :linkId "/9279-1",
-                                                            :units [{:name "bpm"}],
-                                                            :text "Resp rate",
-                                                            :sdc-type aidbox.sdc/quantity,
-                                                            :confirms #{aidbox.sdc.fhir/quantity}
-                                                            :type zen/map
-                                                            :keys {:value {:type zen/number
-                                                                           :min 6
-                                                                           :max 60}}
-                                                            :zen/desc "Resp rate"},
-                                       :datetime {:type zen/datetime
-                                                  :zen/desc "Moment of measurement"}}}}
-         :loinc-39156-5 {:questionCodeSystem "http://loinc.org",
-                         :linkId "/39156-5",
-                         :type zen/number
-                         :sdc-type aidbox.sdc/calculated,
-                         :text "BMI",
-                         :scale 1
-                         :zen/desc "BMI"},
-         :loinc-29463-7 {:questionCodeSystem "http://loinc.org",
-                         :linkId "/29463-7",
-                         :units [{:name "[lb_av]"}
-                                 {:name "kg"}],
-                         :text "Weight",
-                         :type zen/map
-                         :keys {:value {:type zen/number}}
-                         :confirms #{aidbox.sdc.fhir/quantity}
-                         :sdc-type aidbox.sdc/quantity,
-                         :zen/desc "Weight"},
-         :loinc-59408-5 {:type zen/vector,
-                         :minItems 1,
-                         :every {:type zen/map,
-                                 :keys {:loinc-59408-5-value {:questionCodeSystem "http://loinc.org",
-                                                              :linkId "/59408-5",
-                                                              :units [{:name "%"}],
-                                                              :text "SaO2 % BldA PulseOx",
-                                                              :sdc-type aidbox.sdc/quantity
-                                                              :confirms #{aidbox.sdc.fhir/quantity}
-                                                              :type zen/map
-                                                              :keys {:value {:type zen/number
-                                                                             :min 60
-                                                                             :max 100}}
-                                                              :zen/desc "SaO2 % BldA PulseOx"}, :datetime {:type zen/datetime
-                                                                                                           :zen/desc "Moment of measurement"}}}}
-         :loinc-8302-2 {:questionCodeSystem "http://loinc.org",
-                        :linkId "/8302-2",
-                        :units [{:name "[in_i]"}
-                                {:name "cm"}],
-                        :text "Body height",
-                        :sdc-type aidbox.sdc/quantity,
-                        :confirms #{aidbox.sdc.fhir/quantity}
-                        :keys {:value {:type zen/number}}
-                        :type zen/map
-                        :zen/desc "Body height"},
-         :loinc-8867-4 {:type zen/vector,
-                        :minItems 1,
-                        :every {:type zen/map,
-                                :keys {:loinc-8867-4-value {:questionCodeSystem "http://loinc.org",
-                                                            :linkId "/8867-4",
-                                                            :units [{:name "bpm"}],
-                                                            :text "Heart rate",
-                                                            :confirms #{aidbox.sdc.fhir/quantity}
-                                                            :type zen/map
-                                                            :keys {:value {:type zen/number
-                                                                           :min 30
-                                                                           :max 250}}
-                                                            :sdc-type aidbox.sdc/quantity,
-                                                            :zen/desc "Heart rate"
-                                                            :last-change-datetime [:datetime]}
-                                       :datetime {:type zen/datetime
-                                                  :zen/desc "Moment of measurement"}}}}}}
+  :sdc/rules {:bmi
+              (when (and (get-in [:body-weight :value])
+                         (get-in [:body-height :value]))
+                (* (divide (* (get-in [:body-weight :value])
+                              703)
+                           (* (get-in [:body-height :value])
+                              (get-in [:body-height :value])))
+                   1))},
+  :keys {:temperature {:type zen/vector,
+                       :minItems 1,
+                       :every {:type zen/map,
+                               :keys {:value {:text "Body temperature",
+                                              :confirms #{aidbox.sdc.fhir/quantity}
+                                              :units [{:name "°F"}],
+                                              :sdc/boundaries {:imperial {:min 86 :max 105}}
+                                              :code [{:system "http://loinc.org" :code "8310-5"}]
+                                              :linkId "8310-5"},
+                                      :datetime {:type zen/datetime :text "Moment of measurement"}}}},
+         :blood-pressure {:type zen/vector,
+                          :minItems 1,
+                          :every {:type zen/map,
+                                  :keys {:systolic {:confirms #{aidbox.sdc.fhir/quantity}
+                                                    :units [{:name "mmHg"}],
+                                                    :text "BP sys",
+                                                    :type zen/map
+                                                    :keys {:value {:type zen/number :min 40 :max 300}}
+                                                    :code [{:system "http://loinc.org" :code "8480-6"}]
+                                                    :linkId "8480-6"},
+                                         :diastolic {:text "BP dias",
+                                                     :units [{:name "mmHg"}],
+                                                     :confirms #{aidbox.sdc.fhir/quantity}
+                                                     :type zen/map
+                                                     :keys {:value {:type zen/number :min 20 :max 220}}
+                                                     :code [{:system "http://loinc.org" :code "8462-4"}]
+                                                     :linkId "8462-4"},
+                                         :arm {:text "Arm"
+                                               :confirms #{aidbox.sdc.fhir/coding}
+                                               :enum [{:value {:display "Biceps left",
+                                                               :code "LA11158-5",
+                                                               :system "http://loinc.org"}}
+                                                      {:value {:display "Biceps right",
+                                                               :code "LA11159-3",
+                                                               :system "http://loinc.org"}}],
+                                               :code [{:system "http://loinc.org" :code "41904-4"}]
+                                               :linkId "41904-4"}
+                                         :positions {:text "Positions"
+                                                     :confirms #{aidbox.sdc.fhir/coding}
+                                                     :enum [{:value {:display "Sitting", :code "LA11868-9", :system "http://loinc.org"}}
+                                                            {:value {:display "Lying", :code "LA11869-7", :system "http://loinc.org"}}
+                                                            {:value {:display "Standing", :code "LA11870-5", :system "http://loinc.org"}}],
+                                                     :code [{:system "http://loinc.org" :code "8361-8"}]
+                                                     :linkId "8361-8"},
+                                         :datetime {:type zen/datetime
+                                                    :text "Moment of measurement"}}}},
+         :respiratory-rate {:type zen/vector,
+                            :minItems 1,
+                            :every {:type zen/map,
+                                    :keys {:value {:text "Resp rate",
+                                                   :units [{:name "bpm"}],
+                                                   :confirms #{aidbox.sdc.fhir/quantity}
+                                                   :type zen/map
+                                                   :keys {:value {:type zen/number :min 6 :max 60}}
+                                                   :code [{:system "http://loinc.org" :code "9279-1"}]
+                                                   :linkId "9279-1"},
+                                           :datetime {:type zen/datetime
+                                                      :text "Moment of measurement"}}}}
+         :bmi {:text "BMI",
+               :type zen/number
+               :scale 1
+               :code [{:system "http://loinc.org" :code "39156-5"}]
+               :linkId "39156-5"},
+
+         :body-weight {:text "Weight",
+                       :confirms #{aidbox.sdc.fhir/quantity}
+                       :units [{:name "[lb_av]"} {:name "kg"}],
+                       :code [{:system "http://loinc.org" :code "29463-7"}]
+                       :linkId "29463-7"},
+
+         :saturation {:type zen/vector,
+                      :minItems 1,
+                      :every {:type zen/map,
+                              :keys {:value {:text "SaO2 % BldA PulseOx",
+                                             :type zen/map
+                                             :confirms #{aidbox.sdc.fhir/quantity}
+                                             :keys {:value {:type zen/number :min 60 :max 100}}
+                                             :units [{:name "%"}]
+                                             :code [{:system "http://loinc.org" :code "59408-5"}]
+                                             :linkId "59408-5"},
+                                     :datetime {:text "Moment of measurement"
+                                                :type zen/datetime}}}}
+         :body-height {:text "Body height",
+                       :units [{:name "[in_i]"} {:name "cm"}],
+                       :confirms #{aidbox.sdc.fhir/quantity}
+                       :code [{:system "http://loinc.org" :code "8302-2"}]
+                       :linkId "8302-2"},
+         :heart-rate {:type zen/vector,
+                      :minItems 1,
+                      :every {:type zen/map,
+                              :keys {:value {:text "Heart rate",
+                                             :type zen/map
+                                             :confirms #{aidbox.sdc.fhir/quantity}
+                                             :keys {:value {:type zen/number :min 30 :max 250}}
+                                             :units [{:name "bpm"}],
+                                             :last-change-datetime [:datetime]
+                                             :code [{:system "http://loinc.org" :code "8302-2"}]
+                                             :linkId "8867-4"}
+                                     :datetime {:type zen/datetime
+                                                :text "Moment of measurement"}}}}}}
 
                                         ; type, label etc...
 
@@ -177,87 +131,85 @@
                :label "Temperature"}
               {:type aidbox.sdc/fields
                :children
-               [{:bind [:loinc-8310-5-value] :last-change-datetime [:datetime] :label ""}
+               [{:bind [:value] :last-change-datetime [:datetime] :label ""}
                 {:bind [:datetime] :label "" :is-last-change true}]}]}}
 
  VitalsLayout
-{:zen/tags #{aidbox.sdc/Layout},
- :document VitalsDocument,
- :engine aidbox.sdc/Hiccup
- :layout {:type aidbox.sdc/col,
-          :children [{:type aidbox.sdc/row,
-                      :children [{:type aidbox.sdc/subform,
-                                  :bind [:loinc-8310-5],
-                                  :collection true,
-                                  :form-ref body-temperature-subform}]}
-                     {:type aidbox.sdc/row,
-                      :children [{:type aidbox.sdc/subform,
-                                  :bind [:loinc-85354-9],
-                                  :collection true,
-                                  :form-layout {:type aidbox.sdc/col
-                                                :children [{:type aidbox.sdc/label
-                                                            :label "Blood Pressure",}
-                                                           {:type aidbox.sdc/fields,
-                                                            :children [{:type aidbox.sdc/row,
-                                                                        :children [{:bind [:loinc-8480-6],
-                                                                                    :last-change-datetime [:datetime]}
-                                                                                   {:bind [:loinc-8462-4],
-                                                                                    :last-change-datetime [:datetime]}]}
-                                                                       {:type aidbox.sdc/row,
-                                                                        :children [{:bind [:loinc-8361-8]}
-                                                                                   {:bind [:loinc-41904-4]}]}
-                                                                       {:bind [:datetime],
-                                                                        :label "",
-                                                                        :is-last-change true}]}]}}]}
-                     {:type aidbox.sdc/row,
-
-                      :children [{:type aidbox.sdc/subform,
-                                  :bind [:loinc-8867-4],
-                                  :collection true,
-                                  :form-layout {:type aidbox.sdc/col
-                                                :children [{:type aidbox.sdc/label
-                                                            :label "Pulse Rate"}
-                                                           {:type aidbox.sdc/fields,
-                                                            :children [{:bind [:loinc-8867-4-value],
-                                                                        :label "",
-                                                                        :last-change-datetime [:datetime]}
-                                                                       {:bind [:datetime],
-                                                                        :label "",
-                                                                        :is-last-change true}]}]}}]}
-                     {:type aidbox.sdc/row,
-                      :children [{:type aidbox.sdc/subform,
-                                  :bind [:loinc-9279-1],
-                                  :collection true,
-                                  :form-layout {:type aidbox.sdc/col
-                                                :children [{:type aidbox.sdc/label
-                                                            :label "Respiratory Rate"}
-                                                           {:type aidbox.sdc/fields,
-                                                            :children [{:bind [:loinc-9279-1-value],
-                                                                        :label "",
-                                                                        :last-change-datetime [:datetime]}
-                                                                       {:bind [:datetime],
-                                                                        :label "",
-                                                                        :is-last-change true}]}]}}]}
-                     {:type aidbox.sdc/row,
-                      :children [{:type aidbox.sdc/subform,
-                                  :bind [:loinc-59408-5],
-                                  :collection true,
-                                  :form-layout {:type aidbox.sdc/col
-                                                :children [{:type aidbox.sdc/label
-                                                            :label "Oxygen Saturation",}
-                                                           {:type aidbox.sdc/fields,
-                                                            :children [{:bind [:loinc-59408-5-value],
-                                                                        :label "",
-                                                                        :last-change-datetime [:datetime]}
-                                                                       {:bind [:datetime],
-                                                                        :label "",
-                                                                        :is-last-change true}]}]}}]}
-                     {:type aidbox.sdc/row,
-                      :children [{:bind [:loinc-29463-7], :label "Weight"}]}
-                     {:type aidbox.sdc/row
-                      :children [{:bind [:loinc-8302-2] :label "Height"}]}
-                     {:type aidbox.sdc/row,
-                      :children [{:bind [:loinc-39156-5], :label "Body Mass Index"}]}]}}
+ {:zen/tags #{aidbox.sdc/Layout},
+  :document VitalsDocument,
+  :engine aidbox.sdc/Hiccup
+  :layout {:type aidbox.sdc/col,
+           :children [{:type aidbox.sdc/row,
+                       :children [{:type aidbox.sdc/subform,
+                                   :bind [:temperature],
+                                   :collection true,
+                                   :form-ref body-temperature-subform}]}
+                      {:type aidbox.sdc/row,
+                       :children [{:type aidbox.sdc/subform,
+                                   :bind [:blood-pressure],
+                                   :collection true,
+                                   :form-layout {:type aidbox.sdc/col
+                                                 :children [{:type aidbox.sdc/label
+                                                             :label "Blood Pressure"}
+                                                            {:type aidbox.sdc/fields,
+                                                             :children [{:type aidbox.sdc/row,
+                                                                         :children [{:bind [:systolic],
+                                                                                     :last-change-datetime [:datetime]}
+                                                                                    {:bind [:diastolic],
+                                                                                     :last-change-datetime [:datetime]}]}
+                                                                        {:type aidbox.sdc/row,
+                                                                         :children [{:bind [:positions]}
+                                                                                    {:bind [:arm]}]}
+                                                                        {:bind [:datetime],
+                                                                         :label "",
+                                                                         :is-last-change true}]}]}}]}
+                      {:type aidbox.sdc/row,
+                       :children [{:type aidbox.sdc/subform,
+                                   :bind [:heart-rate],
+                                   :collection true,
+                                   :form-layout {:type aidbox.sdc/col
+                                                 :children [{:type aidbox.sdc/label
+                                                             :label "Pulse Rate"}
+                                                            {:type aidbox.sdc/fields,
+                                                             :children [{:bind [:value],
+                                                                         :label "",
+                                                                         :last-change-datetime [:datetime]}
+                                                                        {:bind [:datetime],
+                                                                         :label "",
+                                                                         :is-last-change true}]}]}}]}
+                      {:type aidbox.sdc/row,
+                       :children [{:type aidbox.sdc/subform,
+                                   :bind [:respiratory-rate],
+                                   :collection true,
+                                   :form-layout {:type aidbox.sdc/col
+                                                 :children [{:type aidbox.sdc/label
+                                                             :label "Respiratory Rate"}
+                                                            {:type aidbox.sdc/fields,
+                                                             :children [{:bind [:value],
+                                                                         :label "",
+                                                                         :last-change-datetime [:datetime]}
+                                                                        {:bind [:datetime],
+                                                                         :label "",
+                                                                         :is-last-change true}]}]}}]}
+                      {:type aidbox.sdc/row,
+                       :children [{:type aidbox.sdc/subform,
+                                   :bind [:saturation],
+                                   :collection true,
+                                   :form-layout {:type aidbox.sdc/col
+                                                 :children [{:type aidbox.sdc/label :label "Oxygen Saturation",}
+                                                            {:type aidbox.sdc/fields,
+                                                             :children [{:bind [:value],
+                                                                         :label "",
+                                                                         :last-change-datetime [:datetime]}
+                                                                        {:bind [:datetime],
+                                                                         :label "",
+                                                                         :is-last-change true}]}]}}]}
+                      {:type aidbox.sdc/row,
+                       :children [{:bind [:body-weight], :label "Weight"}]}
+                      {:type aidbox.sdc/row
+                       :children [{:bind [:body-height] :label "Height"}]}
+                      {:type aidbox.sdc/row,
+                       :children [{:bind [:bmi], :label "Body Mass Index"}]}]}}
 
 
  VitalsLaunch
@@ -265,191 +217,161 @@
   :document VitalsDocument
   :params {:encounter-id {:type zen/string}}
   :populate-engine aidbox.sdc/LispPopulate
-  :populate {:author    (lisp/get-in [:ctx :user])
-             :encounter {:id (lisp/get-in [:params :encounter-id])
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id])
                          :resourceType "Encounter"}
-             :patient   (lisp/sql {:select [:#> :resource [:subject]]
-                                   :from :Encounter
-                                   :where [:= :id (lisp/get-in [:params :encounter-id])]})
-             :loinc-8302-2 (lisp/or (lisp/sql {:select [:#> :resource [:value :Quantity]]
-                                               :from :Observation
-                                               :where [:and
-                                                       [:= [:#>> :resource [:code :coding 0 :code]] "8302-2"]
-                                                       [:= [:#>> :resource [:subject :id]]
-                                                        (lisp/sql {:select [:#>> :resource [:subject :id]]
-                                                                   :from :Encounter
-                                                                   :where [:= :id (lisp/get-in [:params :encounter-id])]})]]
-                                               :order-by [:pg/desc :cts]
-                                               :limit 1})
-                                    {})}}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})
+             :body-height (or (sql {:select [:#> :resource [:value :Quantity]]
+                                    :from :Observation
+                                    :where [:and
+                                            [:= [:#>> :resource [:code :coding 0 :code]] "8302-2"]
+                                            [:= [:#>> :resource [:subject :id]]
+                                             (sql {:select [:#>> :resource [:subject :id]]
+                                                   :from :Encounter
+                                                   :where [:= :id (get-in [:params :encounter-id])]})]]
+                                    :order-by [:pg/desc :cts]
+                                    :limit 1})
+                              {})}}
 
  VitalsFinalizeConstraints
  {:zen/tags #{zen/schema}
   :type zen/map
-  :require #{:loinc-8310-5
-             :loinc-85354-9
-             :loinc-9279-1
-             :loinc-39156-5
-             :loinc-29463-7
-             :loinc-59408-5
-             :loinc-8302-2
-             :loinc-8867-4}
+  :require #{:temperature
+             :blood-pressure
+             :respiratory-rate
+             :bmi
+             :body-weight
+             :saturation
+             :body-height
+             :heart-rate}
   :keys
-  {:loinc-8310-5 {:type zen/vector,
-                  :minItems 1,
-                  :every {:type zen/map,
-                          :require #{:loinc-8310-5-value :datetime}
-                          :keys {:loinc-8310-5-value {:require #{:value}
-                                                      :type zen/map
-                                                      :keys {:value {:type zen/number}}},
-                                 :datetime {:type zen/datetime}}}},
-   :loinc-85354-9 {:type zen/vector,
-                   :minItems 1,
-                   :every {:type zen/map,
-                           :require #{:loinc-8480-6 :loinc-8462-4 :datetime}
-                           :keys {:loinc-8480-6 {:type zen/map
-                                                 :require #{:value}
-                                                 :keys {:value {:type zen/number}}},
-                                  :loinc-8462-4 {:type zen/map
-                                                 :require #{:value}
-                                                 :keys {:value {:type zen/number}}},
-                                  :datetime {:type zen/datetime}}}},
-   :loinc-9279-1 {:type zen/vector,
-                  :minItems 1,
-                  :every {:type zen/map,
-                          :require #{:loinc-9279-1-value :datetime}
-                          :keys {:loinc-9279-1-value {:type zen/map
-                                                      :require #{:value}
-                                                      :keys {:value {:type zen/number}}},
-                                 :datetime {:type zen/datetime}}}}
-   :loinc-39156-5 {:type zen/number},
-   :loinc-29463-7 {:type zen/map
-                   :require #{:value}
-                   :keys {:value {:type zen/number}}},
-   :loinc-59408-5 {:type zen/vector,
-                   :minItems 1,
-                   :every {:type zen/map,
-                           :require #{:loinc-59408-5-value :datetime}
-                           :keys {:loinc-59408-5-value {:require #{:value}
-                                                        :type zen/map
-                                                        :keys {:value {:type zen/number}}}
-                                  :datetime {:type zen/datetime}}}}
-   :loinc-8302-2 {:require #{:value}
-                  :keys {:value {:type zen/number}}
-                  :type zen/map},
-   :loinc-8867-4 {:type zen/vector,
-                  :minItems 1,
-                  :every {:type zen/map,
-                          :require #{:loinc-8867-4-value :datetime}
-                          :keys {:loinc-8867-4-value {:type zen/map
-                                                      :require #{:value}
-                                                      :keys {:value {:type zen/number}}}
-                                 :datetime {:type zen/datetime}}}}}}
+  {:temperature {:type zen/vector,
+                 :minItems 1,
+                 :every {:type zen/map,
+                         :require #{:value :datetime}
+                         :keys {:value {:require #{:value}
+                                        :type zen/map
+                                        :keys {:value {:type zen/number}}},
+                                :datetime {:type zen/datetime}}}},
+   :blood-pressure {:type zen/vector,
+                    :minItems 1,
+                    :every {:type zen/map,
+                            :require #{:systolic :diastolic :datetime}
+                            :keys {:systolic {:type zen/map
+                                              :require #{:value}
+                                              :keys {:value {:type zen/number}}},
+                                   :diastolic {:type zen/map
+                                               :require #{:value}
+                                               :keys {:value {:type zen/number}}},
+                                   :datetime {:type zen/datetime}}}},
+   :respiratory-rate {:type zen/vector,
+                      :minItems 1,
+                      :every {:type zen/map,
+                              :require #{:value :datetime}
+                              :keys {:value {:type zen/map
+                                             :require #{:value}
+                                             :keys {:value {:type zen/number}}},
+                                     :datetime {:type zen/datetime}}}}
+   :bmi {:type zen/number},
+   :body-weight {:type zen/map
+                 :require #{:value}
+                 :keys {:value {:type zen/number}}},
+   :saturation {:type zen/vector,
+                :minItems 1,
+                :every {:type zen/map,
+                        :require #{:value :datetime}
+                        :keys {:value {:require #{:value}
+                                       :type zen/map
+                                       :keys {:value {:type zen/number}}}
+                               :datetime {:type zen/datetime}}}}
+   :body-height {:require #{:value}
+                 :keys {:value {:type zen/number}}
+                 :type zen/map},
+   :heart-rate {:type zen/vector,
+                :minItems 1,
+                :every {:type zen/map,
+                        :require #{:value :datetime}
+                        :keys {:value {:type zen/map
+                                       :require #{:value}
+                                       :keys {:value {:type zen/number}}}
+                               :datetime {:type zen/datetime}}}}}}
 
  VitalsFinalize
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
   :document VitalsDocument
   :profile VitalsFinalizeConstraints
   :export-engine aidbox.sdc/LispExport
-  :create [(lisp/for [lisp/i (lisp/get :loinc-8310-5)]
-             (lisp/when (lisp/get lisp/i :loinc-8310-5-value)
+  :create [(for [i (get :temperature)]
+             (when (get i :value)
                {:resourceType "Observation"
                 :status "final"
-                :subject   (lisp/get :patient)
-                :encounter (lisp/get :encounter)
-                :effective {:dateTime (lisp/get lisp/i :datetime)}
-
+                :subject   (get :patient)
+                :encounter (get :encounter)
+                :effective {:dateTime (get i :datetime)}
                 :code {:coding [{:code "8310-5"}]}
-                :value {:Quantity (lisp/get lisp/i :loinc-8310-5-value)}}))
-           (lisp/for [lisp/i (lisp/get :loinc-85354-9)]
-             (lisp/when (lisp/and (lisp/get lisp/i :loinc-8480-6)
-                                  (lisp/get lisp/i :loinc-8462-4))
+                :value {:Quantity (get i :value)}}))
+           (for [i (get :blood-pressure)]
+             (when (and (get i :systolic) (get i :diastolic))
                {:resourceType "Observation"
                 :status "final"
-                :subject   (lisp/get :patient)
-                :encounter (lisp/get :encounter)
-                :effective {:dateTime (lisp/get lisp/i :datetime)}
+                :subject   (get :patient)
+                :encounter (get :encounter)
+                :effective {:dateTime (get i :datetime)}
                 :code {:coding [{:code "85354-9"}]}
                 :bodySite {:coding
-                           (lisp/remove
-                            lisp/nil?
-                            [(lisp/when (lisp/get-in lisp/i [:loinc-41904-4 :code])
-                               {:display (lisp/get-in lisp/i [:loinc-41904-4 :display])
-                                :code (lisp/get-in lisp/i [:loinc-41904-4 :code])
-                                :system (lisp/get-in lisp/i [:loinc-41904-4 :system])})
-                             (lisp/when (lisp/get-in lisp/i [:loinc-8361-8 :code])
-                               {:display (lisp/get-in lisp/i [:loinc-8361-8 :display])
-                                :code (lisp/get-in lisp/i [:loinc-8361-8 :code])
-                                :system (lisp/get-in lisp/i [:loinc-8361-8 :system])})])}
+                           (remove
+                            nil?
+                            [(when (get-in i [:arm :code])
+                               {:display (get-in i [:arm :display])
+                                :code (get-in i [:arm :code])
+                                :system (get-in i [:arm :system])})
+                             (when (get-in i [:positions :code])
+                               {:display (get-in i [:positions :display])
+                                :code (get-in i [:positions :code])
+                                :system (get-in i [:positions :system])})])}
                 :component [{:code {:coding [{:code "8480-6"}]}
-                             :value {:Quantity (lisp/get lisp/i :loinc-8480-6)}}
+                             :value {:Quantity (get i :systolic)}}
                             {:code {:coding [{:code "8462-4"}]}
-                             :value {:Quantity (lisp/get lisp/i :loinc-8462-4)}}]}))
-           (lisp/when (lisp/get :loinc-29463-7)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :code {:coding [{:code "29463-7"}]}
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :value {:Quantity (lisp/get :loinc-29463-7)}})
-
-           (lisp/when (lisp/get :loinc-8302-2)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :code {:coding [{:code "8302-2"}]}
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :value {:Quantity (lisp/get :loinc-8302-2)}})
-           (lisp/when (lisp/get :loinc-39156-5)
-             {:resourceType "Observation"
-              :issued (lisp/date)
-              :status "final"
-              :code {:coding [{:code "39156-5"}]}
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :value {:Quantity {:value (lisp/get :loinc-39156-5)}}})
-           (lisp/for
-            [lisp/i (lisp/get :loinc-8867-4)]
-             (lisp/when
-              (lisp/get lisp/i :loinc-8867-4-value)
-               {:encounter (lisp/get :encounter),
-                :value {:Quantity (lisp/get lisp/i :loinc-8867-4-value)},
+                             :value {:Quantity (get i :diastolic)}}]}))
+           {:template aidbox.sdc/gen-observation-template
+            :params {:path [:body-weight]}}
+           {:template aidbox.sdc/gen-observation-template
+            :params {:path [:body-height]}}
+           {:template aidbox.sdc/gen-observation-template
+            :params {:path [:bmi]}}
+           (for [i (get :heart-rate)]
+             (when (get i :value)
+               {:encounter (get :encounter),
+                :value {:Quantity (get i :value)},
                 :resourceType "Observation",
                 :status "final",
-                :effective {:dateTime (lisp/get lisp/i :datetime)},
+                :effective {:dateTime (get i :datetime)},
                 :code {:coding [{:code "8867-4"}]},
-                :subject (lisp/get :patient)}))
-           (lisp/for
-            [lisp/i (lisp/get :loinc-9279-1)]
-             (lisp/when
-              (lisp/get lisp/i :loinc-9279-1-value)
-               {:encounter (lisp/get :encounter),
-                :value {:Quantity (lisp/get lisp/i :loinc-9279-1-value)},
+                :subject (get :patient)}))
+           (for [i (get :respiratory-rate)]
+             (when (get i :value)
+               {:encounter (get :encounter),
+                :value {:Quantity (get i :value)},
                 :resourceType "Observation",
                 :status "final",
-                :effective {:dateTime (lisp/get lisp/i :datetime)},
+                :effective {:dateTime (get i :datetime)},
                 :code {:coding [{:code "9279-1"}]},
-                :subject (lisp/get :patient)}))
-           (lisp/for
-            [lisp/i (lisp/get :loinc-59408-5)]
-             (lisp/when
-              (lisp/get lisp/i :loinc-59408-5-value)
-               {:encounter (lisp/get :encounter),
-                :value {:Quantity (lisp/get lisp/i :loinc-59408-5-value)},
+                :subject (get :patient)}))
+           (for [i (get :saturation)]
+             (when (get i :value)
+               {:encounter (get :encounter),
+                :value {:Quantity (get i :value)},
                 :resourceType "Observation",
                 :status "final",
-                :effective {:dateTime (lisp/get lisp/i :datetime)},
+                :effective {:dateTime (get i :datetime)},
                 :code {:coding [{:code "59408-5"}]},
-                :subject (lisp/get :patient)}))]}
+                :subject (get :patient)}))]}
 
  VitalsForm
  {:zen/tags #{aidbox.sdc/Form}
   :title    "Vitals Signs"
-  :version  "1.0.0"
   :document VitalsDocument
   :layout   VitalsLayout
   :launch   VitalsLaunch
