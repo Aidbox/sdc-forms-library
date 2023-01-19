@@ -1,36 +1,70 @@
 {ns aidbox.forms.physical-exam
  import #{zenbox aidbox.sdc}
 
-;;
-;; Physical Exam
-;;
+ ;;
+ ;; Physical Exam
+ ;;
  PhysicalExamDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
   :zen/desc "Physical Exam"
   :type zen/map
   :confirms #{aidbox.sdc/Document}
-  :sdc/rules {:loinc-71389-1 (lisp/or
-                              (lisp/get :loinc-71389-1)
-                              (lisp/get :ros/general-comment))}
-  :keys {:gender {:type zen/string}
-         :encounter-class {:type zen/string}
-         :loinc-71389-1 {:zen/desc "General" :type zen/string}
-         :loinc-71392-5 {:zen/desc "HEENT" :type zen/string}
-         :loinc-71393-3 {:zen/desc "Neck" :type zen/string}
-         :loinc-71395-8 {:zen/desc "Cardiovascular" :type zen/string}
-         :loinc-71394-1 {:zen/desc "Pulmonary" :type zen/string}
-         :loinc-71397-4 {:zen/desc "Abdominal" :type zen/string}
-         :loinc-71402-2 {:zen/desc "Musculoskeletal" :type zen/string}
-         :loinc-71401-4 {:zen/desc "Extremities" :type zen/string}
-         :loinc-71404-8 {:zen/desc "Neurologic" :type zen/string}
-         :loinc-71405-5 {:zen/desc "Psychiatric" :type zen/string}
-         :loinc-71403-0 {:zen/desc "Skin" :type zen/string}
-         :loinc-71396-6 {:zen/desc "Chest" :type zen/string}
-         :loinc-32473-1 {:zen/desc "Monofilament" :type zen/string}
-         :loinc-71399-0 {:zen/desc "Genitourinary" :type zen/string} ;; Female
-         :loinc-71399-2 {:zen/desc "Genitourinary" :type zen/string} ;; Male
-         :loinc-8708-0 {:zen/desc "Rectal" :type zen/string}
-         :loinc-71400-6 {:zen/desc "Lymphatic" :type zen/string}}}
+  :sdc/rules {:general (or (get :general)
+                          ;; Injecting external value (from WF)
+                           (get :ros/general-comment))}
+  :keys {:gender               {:zen/desc "Gender (hidden field)" :type zen/string}
+         :encounter-class      {:zen/desc "Encounter class (hidden field)" :type zen/string}
+         :general              {:text "General" :type zen/string
+                                :code [{:code "71389-1" :system "https://loinc.org"
+                                        :display "CMS - constitutional exam panel"}]}
+         :heent                {:text "HEENT" :type zen/string
+                                :code [{:code "71392-5" :system "https://loinc.org"
+                                        :display "CMS - ear-nose-mouth-throat exam panel"}]}
+         :neck                 {:text "Neck" :type zen/string
+                                :code [{:code "71393-3" :system "https://loinc.org"
+                                        :display "CMS - neck exam panel"}]}
+         :cardiovascular       {:text "Cardiovascular" :type zen/string
+                                :code [{:code "71395-8" :system "https://loinc.org"
+                                        :display "CMS - cardiovascular exam panel"}]}
+         :pulmonary            {:text "Pulmonary" :type zen/string
+                                :code [{:code "71394-1" :system "https://loinc.org"
+                                        :display "CMS - respiratory exam panel"}]}
+         :abdominal            {:text "Abdominal" :type zen/string
+                                :code [{:code "71397-4" :system "https://loinc.org"
+                                        :display "CMS - gastrointestinal - abdomen - exam panel"}]}
+         :musculoskeletal      {:text "Musculoskeletal" :type zen/string
+                                :code [{:code "71402-2" :system "https://loinc.org"
+                                        :display "CMS - musculoskeletal exam panel"}]}
+         :extremities          {:text "Extremities" :type zen/string
+                                :code [{:code "71401-4" :system "https://loinc.org"
+                                        :display "CMS - extremities exam panel"}]}
+         :neurologic           {:text "Neurologic" :type zen/string
+                                :code [{:code "71404-8" :system "https://loinc.org"
+                                        :display "CMS - neurologic exam panel"}]}
+         :psychiatric          {:text "Psychiatric" :type zen/string
+                                :code [{:code "71405-5" :system "https://loinc.org"
+                                        :display "CMS - psychiatric exam panel"}]}
+         :skin                 {:text "Skin" :type zen/string
+                                :code [{:code "71403-0" :system "https://loinc.org"
+                                        :display "CMS - skin exam panel"}]}
+         :chest                {:text "Chest" :type zen/string
+                                :code [{:code "71396-6" :system "https://loinc.org"
+                                        :display "CMS - breast exam panel"}]}
+         :monofilament         {:text "Monofilament" :type zen/string
+                                :code [{:code "32473-1" :system "https://loinc.org"
+                                        :display "Physical findings sensation"}]}
+         :genitourinary-female {:text "Genitourinary" :type zen/string
+                                :code [{:code "71399-0" :system "https://loinc.org"
+                                        :display "CMS - genitourinary exam - female panel"}]}
+         :genitourinary-male   {:text "Genitourinary" :type zen/string
+                                :code [{:code "71398-2" :system "https://loinc.org"
+                                        :display "CMS - genitourinary exam - male panel"}]}
+         :rectal               {:text "Rectal" :type zen/string
+                                :code [{:code "8708-0" :system "https://loinc.org"
+                                        :display "Physical findings of Rectum"}]}
+         :lymphatic            {:text "Lymphatic" :type zen/string
+                                :code [{:code "71400-6" :system "https://loinc.org"
+                                        :display "CMS - lymphatic exam panel"}]}}}
 
  PhysicalExamLayout
  {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
@@ -47,9 +81,9 @@
          :label "General"}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71389-1]}
-          {:bind [:loinc-71389-1]
-           :sdc/disable-when (lisp/get-in [ :loinc-71389-1])
+         [{:bind [:general]}
+          {:bind [:general]
+           :sdc/disable-when (get-in [:general])
            :type aidbox.sdc/set-value-button
            :value "Well nourished, well developed, awake and alert, resting comfortably in no acute distress, cooperative on exam."
            :label "Fill"}]}]}
@@ -59,9 +93,9 @@
          :label "HEENT"}
         {:type aidbox.sdc/row
          :children
-         [{:bind [ :loinc-71392-5]}
-          {:bind [ :loinc-71392-5]
-           :sdc/disable-when (lisp/get-in [ :loinc-71392-5])
+         [{:bind [:heent]}
+          {:bind [:heent]
+           :sdc/disable-when (get-in [:heent])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "NCAT, PERRL, normal conjunctivae, nonicteric sclerae, bilateral EAC/TM clear, no nasal discharge, OP clear, moist mucous membranes"}]}]}
@@ -71,10 +105,10 @@
          :children
          [{:type aidbox.sdc/label
            :label "Neck"}
-          {:bind [ :loinc-71393-3]
+          {:bind [:neck]
            }
-          {:bind [ :loinc-71393-3]
-           :sdc/disable-when (lisp/get-in [ :loinc-71393-3])
+          {:bind [:neck]
+           :sdc/disable-when (get-in [:neck])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "Supple, normal ROM, no lymphadenopathy/masses, nontender."}]}]}
@@ -84,9 +118,9 @@
          :children
          [{:type aidbox.sdc/label
            :label "Cardiovascular"}
-          {:bind [ :loinc-71395-8]}
-          {:bind [ :loinc-71395-8]
-           :sdc/disable-when (lisp/get-in [ :loinc-71395-8])
+          {:bind [:cardiovascular]}
+          {:bind [:cardiovascular]
+           :sdc/disable-when (get-in [:cardiovascular])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "RRR, normal S1/S2, no murmurs/gallops/rub."}]}]}
@@ -96,9 +130,9 @@
          :children
          [{:type aidbox.sdc/label
            :label "Pulmonary"}
-          {:bind [ :loinc-71394-1]}
-          {:bind [ :loinc-71394-1]
-           :sdc/disable-when (lisp/get-in [ :loinc-71394-1])
+          {:bind [:pulmonary]}
+          {:bind [:pulmonary]
+           :sdc/disable-when (get-in [:pulmonary])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "No respiratory distress, lungs CTAB: no rales, rhonchi, or wheeze."}]}]}
@@ -108,9 +142,9 @@
          :children
          [{:type aidbox.sdc/label
            :label "Abdominal"}
-          {:bind [ :loinc-71397-4]}
-          {:bind [ :loinc-71397-4]
-           :sdc/disable-when (lisp/get-in [ :loinc-71397-4])
+          {:bind [:abdominal]}
+          {:bind [:abdominal]
+           :sdc/disable-when (get-in [:abdominal])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "Soft and non-tender with no guarding or rebound; +BS normoactive, no tympany on auscultation."}]}]}
@@ -120,9 +154,9 @@
          :children
          [{:type aidbox.sdc/label
            :label "Musculoskeletal"}
-          {:bind [ :loinc-71402-2]}
-          {:bind [ :loinc-71402-2]
-           :sdc/disable-when (lisp/get-in [ :loinc-71402-2])
+          {:bind [:musculoskeletal]}
+          {:bind [:musculoskeletal]
+           :sdc/disable-when (get-in [:musculoskeletal])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "Normal ROM of UE and LE, normal bulk and tone."}]}]}
@@ -132,9 +166,9 @@
          :children
          [{:type aidbox.sdc/label
            :label "Extremities"}
-          {:bind [ :loinc-71401-4]}
-          {:bind [ :loinc-71401-4]
-           :sdc/disable-when (lisp/get-in [ :loinc-71401-4])
+          {:bind [:extremities]}
+          {:bind [:extremities]
+           :sdc/disable-when (get-in [:extremities])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "Pulses intact with normal cap refill, no LE pitting edema or calf tenderness."}]}]}
@@ -144,9 +178,9 @@
          :children
          [{:type aidbox.sdc/label
            :label "Neurologic"}
-          {:bind [ :loinc-71404-8]}
-          {:bind [ :loinc-71404-8]
-           :sdc/disable-when (lisp/get-in [ :loinc-71404-8])
+          {:bind [:neurologic]}
+          {:bind [:neurologic]
+           :sdc/disable-when (get-in [:neurologic])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "AAOx3, converses normally. CN II - XII grossly intact. Gait and coordination intact. 5+ BL UE/LE strength, no gross motor or sensory defects."}]}]}
@@ -156,9 +190,9 @@
          :children
          [{:type aidbox.sdc/label
            :label "Psychiatric"}
-          {:bind [ :loinc-71405-5]}
-          {:bind [ :loinc-71405-5]
-           :sdc/disable-when (lisp/get-in [ :loinc-71405-5])
+          {:bind [:psychiatric]}
+          {:bind [:psychiatric]
+           :sdc/disable-when (get-in [:psychiatric])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "Normal mood and affect. Judgement/competence is appropriate."}]}]}
@@ -168,22 +202,22 @@
          :children
          [{:type aidbox.sdc/label
            :label "Psychiatric"}
-          {:bind [ :loinc-71403-0]}
-          {:bind [ :loinc-71403-0]
-           :sdc/disable-when (lisp/get-in [ :loinc-71403-0])
+          {:bind [:skin]}
+          {:bind [:skin]
+           :sdc/disable-when (get-in [:skin])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "Warm, dry, and intact. No rashes, dermatoses, petechiae, or lesions."}]}]}
       {:type aidbox.sdc/row
-       :sdc/display-when (lisp/get :has-diabetes)
+       :sdc/display-when (get :has-diabetes)
        :children
        [{:type aidbox.sdc/row
          :children
          [{:type aidbox.sdc/label
            :label "Monofilament"}
-          {:bind [ :loinc-32473-1]}
-          {:bind [ :loinc-32473-1]
-           :sdc/disable-when (lisp/get-in [ :loinc-32473-1])
+          {:bind [:monofilament]}
+          {:bind [:monofilament]
+           :sdc/disable-when (get-in [:monofilament])
            :type aidbox.sdc/set-value-button
            :label "Fill"
            :value "Normal sensation bilaterally on soles of feet with 10g monofilament."}]}]}]}
@@ -199,48 +233,48 @@
            :children
            [{:type aidbox.sdc/label
              :label "Chest"}
-            {:bind [ :loinc-71396-6]}
-            {:bind [ :loinc-71396-6]
-             :sdc/disable-when (lisp/get-in [ :loinc-71396-6])
+            {:bind [:chest]}
+            {:bind [:chest]
+             :sdc/disable-when (get-in [:chest])
              :type aidbox.sdc/set-value-button
              :label "Fill"
              :value "The chest wall is symmetric, without deformity, and is atraumatic in appearance."}]}]}
         {:type aidbox.sdc/row
-         :sdc/display-when (lisp/not (lisp/get :has-diabetes))
+         :sdc/display-when (not (get :has-diabetes))
          :children
          [{:type aidbox.sdc/row
            :children
            [{:type aidbox.sdc/label
              :label "Monofilament"}
-            {:bind [ :loinc-32473-1]}
-            {:bind [ :loinc-32473-1]
-             :sdc/disable-when (lisp/get-in [ :loinc-32473-1])
+            {:bind [:monofilament]}
+            {:bind [:monofilament]
+             :sdc/disable-when (get-in [:monofilament])
              :type aidbox.sdc/set-value-button
              :label "Fill"
              :value "Normal sensation bilaterally on soles of feet with 10g monofilament."}]}]}
         {:type aidbox.sdc/row
-         :sdc/display-when (lisp/= (lisp/get :gender) "female")
+         :sdc/display-when (= (get :gender) "female")
          :children
          [{:type aidbox.sdc/row
            :children
            [{:type aidbox.sdc/label
              :label "Genitourinary famale"}
-            {:bind [ :loinc-71399-0]}
-            {:bind [ :loinc-71399-0]
-             :sdc/disable-when (lisp/get-in [ :loinc-71399-0])
+            {:bind [:genitourinary-female]}
+            {:bind [:genitourinary-female]
+             :sdc/disable-when (get-in [:genitourinary-female])
              :type aidbox.sdc/set-value-button
              :label "Fill"
              :value "External genitalia without erythema, exudate or discharge."}]}]}
         {:type aidbox.sdc/row
-         :sdc/display-when (lisp/= (lisp/get :gender) "male")
+         :sdc/display-when (= (get :gender) "male")
          :children
          [{:type aidbox.sdc/row
            :children
            [{:type aidbox.sdc/label
              :label "Genitourinary male"}
-            {:bind [ :loinc-71399-2]}
-            {:bind [ :loinc-71399-2]
-             :sdc/disable-when (lisp/get-in [ :loinc-71399-2])
+            {:bind [:genitourinary-male]}
+            {:bind [:genitourinary-male]
+             :sdc/disable-when (get-in [:genitourinary-male])
              :type aidbox.sdc/set-value-button
              :label "Fill"
              :value "Penis without lesions. No urethral discharge. Testes normal size without masses or tenderness. No scrotal masses. No hernia."
@@ -251,9 +285,9 @@
            :children
            [{:type aidbox.sdc/label
              :label "Rectal"}
-            {:bind [ :loinc-8708-0]}
-            {:bind [ :loinc-8708-0]
-             :sdc/disable-when (lisp/get-in [ :loinc-8708-0])
+            {:bind [:rectal]}
+            {:bind [:rectal]
+             :sdc/disable-when (get-in [:rectal])
              :type aidbox.sdc/set-value-button
              :label "Fill"
              :value "Normal external anus and normal tone. No palpable masses, normal mucosa, brown stool. Hemoccult negative."
@@ -264,9 +298,9 @@
            :children
            [{:type aidbox.sdc/label
              :label "Lymphatic"}
-            {:bind [ :loinc-71400-6]}
-            {:bind [ :loinc-71400-6]
-             :sdc/disable-when (lisp/get-in [ :loinc-71400-6])
+            {:bind [:lymphatic]}
+            {:bind [:lymphatic]
+             :sdc/disable-when (get-in [:lymphatic])
              :type aidbox.sdc/set-value-button
              :label "Fill"
              :value "No enlarged lymph nodes of occipital, pre- and postauricular, submandibular, anterior or posterior cervical, or supraclavicular identified."}]}]}]}]}]}}
@@ -276,218 +310,60 @@
   :document PhysicalExamDocument
   :params {:encounter-id {:type zen/string}}
   :populate-engine aidbox.sdc/LispPopulate
-  :populate {:author    (lisp/get-in [:ctx :user])
-             :encounter {:id (lisp/get-in [:params :encounter-id]) :resourceType "Encounter"}
-             :encounter-class (lisp/sql {:select [:#> :resource [:class :code]]
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :encounter-class (sql {:select [:#> :resource [:class :code]]
+                                    :from :Encounter
+                                    :where [:= :id (get-in [:params :encounter-id])]})
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})
+             :gender (sql {:select [:#> :resource [:gender]]
+                           :from :Patient
+                           :where [:= :id
+                                   (sql {:select [:#> :resource [:subject :id]]
                                          :from :Encounter
-                                         :where [:= :id (lisp/get-in [:params :encounter-id])]})
-             :patient   (lisp/sql {:select [:#> :resource [:subject]]
-                                   :from :Encounter
-                                   :where [:= :id (lisp/get-in [:params :encounter-id])]})
-             :gender (lisp/sql {:select [:#> :resource [:gender]]
-                                :from :Patient
-                                :where [:= :id
-                                        (lisp/sql {:select [:#> :resource [:subject :id]]
-                                                   :from :Encounter
-                                                   :where [:= :id (lisp/get-in [:params :encounter-id])]})]})}}
+                                         :where [:= :id (get-in [:params :encounter-id])]})]})}}
 
  PhysicalExamProfile
  {:zen/tags #{zen/schema}
   :type zen/map
-  :require #{:loinc-71389-1
-             :loinc-71392-5
-             :loinc-71393-3
-             :loinc-71395-8
-             :loinc-71394-1
-             :loinc-71397-4
-             :loinc-71402-2
-             :loinc-71401-4
-             :loinc-71404-8
-             :loinc-71405-5
-             :loinc-71403-0
-             :loinc-32473-1}}
+  :require #{:general
+             :heent
+             :neck
+             :cardiovascular
+             :pulmonary
+             :abdominal
+             :musculoskeletal
+             :extremities
+             :neurologic
+             :psychiatric
+             :skin
+             :monofilament}}
 
  PhysicalExamFinalize
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
   :document PhysicalExamDocument
   :profile PhysicalExamProfile
   :export-engine aidbox.sdc/LispExport
-  :create [{:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71389-1"
-                             :display "CMS - constitutional exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71389-1])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71392-5"
-                             :display "CMS - ear-nose-mouth-throat exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71392-5])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71393-3"
-                             :display "CMS - neck exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71393-3])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71395-8"
-                             :display "CMS - cardiovascular exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71395-8])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71394-1"
-                             :display "CMS - respiratory exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71394-1])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71397-4"
-                             :display "CMS - gastrointestinal - abdomen - exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71397-4])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71402-2"
-                             :display "CMS - musculoskeletal exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71402-2])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71401-4"
-                             :display "CMS - extremities exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71401-4])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71404-8"
-                             :display "CMS - neurologic exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71404-8])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71405-5"
-                             :display "CMS - psychiatric exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71405-5])}}
-           {:resourceType "Observation"
-            :status "final"
-            :subject   (lisp/get :patient)
-            :encounter (lisp/get :encounter)
-            :effective {:dateTime (lisp/date)}
-            :issued (lisp/date)
-            :code {:coding [{:code "71403-0"
-                             :display "CMS - skin exam panel"
-                             :system "https://loinc.org"}]}
-            :value {:string (lisp/get-in [ :loinc-71403-0])}}
-           (lisp/when (lisp/get-in [ :loinc-32473-1])
-             {:resourceType "Observation"
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :code {:coding [{:code "32473-1"
-                               :display "Physical findings sensation"
-                               :system "https://loinc.org"}]}
-              :value {:string (lisp/get-in [ :loinc-32473-1])}})
-           (lisp/when (lisp/get-in [ :loinc-71396-6])
-             {:resourceType "Observation"
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :code {:coding [{:code "71396-6"
-                               :display "CMS - breast exam panel"
-                               :system "https://loinc.org"}]}
-              :value {:string (lisp/get-in [ :loinc-71396-6])}})
-           (lisp/when (lisp/get-in [ :loinc-71399-0])
-             {:resourceType "Observation"
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :code {:coding [{:code "71399-0"
-                               :display "CMS - genitourinary exam - female panel"
-                               :system "https://loinc.org"}]}
-              :value {:string (lisp/get-in [ :loinc-71399-0])}})
-           (lisp/when (lisp/get-in [ :loinc-71398-2])
-             {:resourceType "Observation"
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :code {:coding [{:code "71398-2"
-                               :display "CMS - genitourinary exam - male panel"
-                               :system "https://loinc.org"}]}
-              :value {:string (lisp/get-in [ :loinc-71398-2])}})
-           (lisp/when (lisp/get-in [ :loinc-8708-0])
-             {:resourceType "Observation"
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :code {:coding [{:code "8708-0"
-                               :display "Physical findings of Rectum"
-                               :system "https://loinc.org"}]}
-              :value {:string (lisp/get-in [ :loinc-8708-0])}})
-           (lisp/when (lisp/get-in [ :loinc-71400-6])
-             {:resourceType "Observation"
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :code {:coding [{:code "71400-6"
-                               :display "CMS - lymphatic exam panel"
-                               :system "https://loinc.org"}]}
-              :value {:string (lisp/get-in [:loinc-71400-6])}})]}
+  :create
+  [{:template aidbox.sdc/gen-observation-template :params {:path [:general]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:heent]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:neck]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:cardiovascular]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:pulmonary]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:abdominal]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:musculoskeletal]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:extremities]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:neurologic]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:psychiatric]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:skin]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:monofilament]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:chest]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:genitourinary-female]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:genitourinary-male]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:rectal]}}
+   {:template aidbox.sdc/gen-observation-template :params {:path [:lymphatic]}}]}
 
  PhysicalExamForm
  {:zen/tags #{aidbox.sdc/Form}

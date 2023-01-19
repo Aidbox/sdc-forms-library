@@ -144,8 +144,8 @@ a series of questions seeking to identify signs and/or symptoms which the patien
   :populate {:author    (get-in [:ctx :user])
              :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
              :patient   (sql {:select [:#> :resource [:subject]]
-                                   :from :Encounter
-                                   :where [:= :id (get-in [:params :encounter-id])]})}}
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})}}
 
  RoSFinalize
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
