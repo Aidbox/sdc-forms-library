@@ -26,7 +26,9 @@
   :confirms #{aidbox.sdc/Document},
   :sdc/rules {:phq2-score-reported (+ (get-in [:little-interest-doing-things :score])
                                       (get-in [:feeling-down :score])),
-              :phq2-interp (get-in [:phq2-score-reported]),
+              :phq2-interp         (if (> (get :phq2-score-reported) 2)
+                                     "positive"
+                                     "negative"),
               :phq9-score-reported (+ (get-in [:little-interest-doing-things :score])
                                       (get-in [:feeling-down :score])
                                       (get-in [:feeling-bad-about-yourself :score])
@@ -36,7 +38,27 @@
                                       (get-in [:feeling-tired :score])
                                       (get-in [:hurting-yourself-thoughts :score])
                                       (get-in [:moving-or-speaking-slowly :score])),
-              :phq9-interp-score (get-in [:phq9-score-reported]),
+              :phq9-interp-score    (cond
+                                      (< 1 (get :phq9-score-reported) 5)
+                                      {:code "LA6708-7",
+                                       :display "0-4 = None",
+                                       :system "http://loinc.org"}
+                                      (< 4 (get :phq9-score-reported) 10)
+                                      {:code "LA6709-5",
+                                       :display "5-9 = Mild depression",
+                                       :system "http://loinc.org"}
+                                      (< 9 (get :phq9-score-reported) 15)
+                                      {:code "LA6710-3"
+                                       :display "10-14 = Moderate depression"
+                                       :system "http://loinc.org"}
+                                      (< 14 (get :phq9-score-reported) 20)
+                                      {:code "LA6711-1",
+                                       :display "15-19 = Moderately severe depression",
+                                       :system "http://loinc.org"}
+                                      (< 19 (get :phq9-score-reported))
+                                      {:code "LA6712-9",
+                                       :display "20-27 = Severe depression",
+                                       :system "http://loinc.org"}),
               :final-score  (if (or ;; TODO refer?
                                  (get-in [:misc-yes-no-button])
                                  (>= (+ (get-in [:little-interest-doing-things  :score])
@@ -51,7 +73,7 @@
                                         :code [{:code "44258-2" :system  "http://loinc.org"}]
                                         :linkId "44258-2"},
          :phq2-interp                  {:text "PHQ-2 interp score"
-                                        :type zen/integer},
+                                        :type zen/string},
          :hurting-yourself-thoughts    {:text "Thoughts that you would be better off dead, or of hurting yourself in some way",
                                         :confirms #{aidbox.sdc.fhir/coding LL358-3}
                                         :code [{:code "44260-8" :system  "http://loinc.org"}]
@@ -64,7 +86,7 @@
                                         :type zen/number
                                         :code [{:code "55758-7" :system  "http://loinc.org"}]}
          :phq9-interp-score            {:text "PHQ-9 Interp-score"
-                                        :type zen/number},
+                                        :confirms #{aidbox.sdc.fhir/coding}},
          :concentrating-trouble        {:text "Trouble concentrating on things, such as reading the newspaper or watching television",
                                         :confirms #{aidbox.sdc.fhir/coding LL358-3}
                                         :code [{:code "44252-5" :system  "http://loinc.org"}]
@@ -188,7 +210,7 @@
               :status "final",
               :code {:coding [{:code "55758-7"}]},
               :value {:integer (get :phq2-score-reported)}})
-           (when (get :phq2-score-reported)
+           (when (get :phq2-interp)
              {:resourceType "Observation",
               :effective {:dateTime (date)}
               :issued (date)
@@ -196,9 +218,7 @@
               :encounter (get :encounter),
               :status "final",
               :code {:coding [{:code "PHQ2-interp-score"}]},
-              :value {:string (if (> (get :phq2-score-reported) 2)
-                                "positive"
-                                "negative")}})
+              :value {:string (get :phq2-interp)}})
            (when (and (get :phq9-score-reported)
                       (> (get :phq9-score-reported) 2))
              {:resourceType "Observation",
@@ -218,29 +238,7 @@
               :encounter (get :encounter),
               :status "final",
               :code {:coding [{:code "LL382-3"}]},
-              :value {:CodeableConcept
-                      {:coding
-                       [(cond
-                          (< 1 (get :phq9-score-reported) 5)
-                          {:code "LA6708-7",
-                           :display "0-4 = None",
-                           :system "http://loinc.org"}
-                          (< 4 (get :phq9-score-reported) 10)
-                          {:code "LA6709-5",
-                           :display "5-9 = Mild depression",
-                           :system "http://loinc.org"}
-                          (< 9 (get :phq9-score-reported) 15)
-                          {:code "LA6710-3"
-                           :display "10-14 = Moderate depression"
-                           :system "http://loinc.org"}
-                          (< 14 (get :phq9-score-reported) 20)
-                          {:code "LA6711-1",
-                           :display "15-19 = Moderately severe depression",
-                           :system "http://loinc.org"}
-                          (< 19 (get :phq9-score-reported))
-                          {:code "LA6712-9",
-                           :display "20-27 = Severe depression",
-                           :system "http://loinc.org"})]}}})
+              :value {:CodeableConcept {:coding [(get :phq9-interp-score)]}}})
 
            (when (get :feeling-bad-about-yourself)
              {:resourceType "Observation",
