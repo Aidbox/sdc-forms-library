@@ -18,49 +18,60 @@ a series of questions seeking to identify signs and/or symptoms which the patien
           :type zen/boolean
           :code [{:system "http://loinc.com" :code "71406-3"}]}
 
-         :general-enabled {:text "General" :type zen/boolean}
-         :general-comment {:text "General Comment" :type zen/string
-                           :code [{:system "http://loinc.com" :code "71407-1"}]}
+         :general {:type zen/map
+                   :keys {:enabled {:text "General" :type zen/boolean}
+                          :comment {:text "General Comment" :type zen/string
+                                    :code [{:system "http://loinc.com" :code "71407-1"}]}}}
 
-         :heent-enabled {:text "HEENT" :type zen/boolean}
-         :heent-comment {:text "HEENT Comment" :type zen/string
-                         :code [{:system "http://loinc.com" :code "71409-7"}]}
+         :heent {:type zen/map
+                 :keys {:enabled {:text "HEENT" :type zen/boolean}
+                        :comment {:text "HEENT Comment" :type zen/string
+                                  :code [{:system "http://loinc.com" :code "71409-7"}]}}}
 
-         :cardiovascular-enabled {:text "Cardiovascular" :type zen/boolean}
-         :cardiovascular-comment {:text "Cardiovascular Comment" :type zen/string
-                                  :code [{:system "http://loinc.com" :code "71410-5"}]}
+         :cardiovascular {:type zen/map
+                          :keys {:enabled {:text "Cardiovascular" :type zen/boolean}
+                                 :comment {:text "Cardiovascular Comment" :type zen/string
+                                           :code [{:system "http://loinc.com" :code "71410-5"}]}}}
 
-         :respiratory-enabled {:text "Respiratory" :type zen/boolean}
-         :respiratory-comment {:text "Respiratory Comment" :type zen/string
-                               :code [{:system "http://loinc.com" :code "71411-3"}]}
+         :respiratory {:type zen/map
+                       :keys {:enabled {:text "Respiratory" :type zen/boolean}
+                              :comment {:text "Respiratory Comment" :type zen/string
+                                        :code [{:system "http://loinc.com" :code "71411-3"}]}}}
 
-         :gastrointestinal-enabled {:text "Gastrointestinal" :type zen/boolean}
-         :gastrointestinal-comment {:text "Gastrointestinal Comment" :type zen/string
-                                    :code [{:system "http://loinc.com" :code "71412-1"}]}
+         :gastrointestinal {:type zen/map
+                            :keys {:enabled {:text "Gastrointestinal" :type zen/boolean}
+                                   :comment {:text "Gastrointestinal Comment" :type zen/string
+                                             :code [{:system "http://loinc.com" :code "71412-1"}]}}}
 
-         :genitourinary-enabled {:text "Genitourinary" :type zen/boolean}
-         :genitourinary-comment {:text "Genitourinary Comment" :type zen/string
-                                 :code [{:system "http://loinc.com" :code "71413-9"}]}
+         :genitourinary {:type zen/map
+                         :keys {:enabled {:text "Genitourinary" :type zen/boolean}
+                                :comment {:text "Genitourinary Comment" :type zen/string
+                                          :code [{:system "http://loinc.com" :code "71413-9"}]}}}
 
-         :musculoskeletal-enabled {:text "Musculoskeletal" :type zen/boolean}
-         :musculoskeletal-comment {:text "Musculoskeletal Comment" :type zen/string
-                                   :code [{:system "http://loinc.com" :code "71414-7"}]}
+         :musculoskeletal {:type zen/map
+                           :keys {:enabled {:text "Musculoskeletal" :type zen/boolean}
+                                  :comment {:text "Musculoskeletal Comment" :type zen/string
+                                            :code [{:system "http://loinc.com" :code "71414-7"}]}}}
 
-         :neurologic-enabled {:text "Neurologic" :type zen/boolean}
-         :neurologic-comment {:text "Neurologic Comment" :type zen/string
-                              :code [{:system "http://loinc.com" :code "71416-2"}]}
+         :neurologic {:type zen/map
+                      :keys {:enabled {:text "Neurologic" :type zen/boolean}
+                             :comment {:text "Neurologic Comment" :type zen/string
+                                       :code [{:system "http://loinc.com" :code "71416-2"}]}}}
 
-         :psychiatric-enabled {:text "Psychiatric" :type zen/boolean}
-         :psychiatric-comment {:text "Psychiatric Comment" :type zen/string
-                               :code [{:system "http://loinc.com" :code "71417-0"}]}
+         :psychiatric {:type zen/map
+                       :keys {:enabled {:text "Psychiatric" :type zen/boolean}
+                              :comment {:text "Psychiatric Comment" :type zen/string
+                                        :code [{:system "http://loinc.com" :code "71417-0"}]}}}
 
-         :skin-enabled {:text "Skin" :type zen/boolean}
-         :skin-comment {:text "Skin Comment" :type zen/string
-                        :code [{:system "http://loinc.com" :code "71415-4"}]}
+         :skin {:type zen/map
+                :keys {:enabled {:text "Skin" :type zen/boolean}
+                       :comment {:text "Skin Comment" :type zen/string
+                                 :code [{:system "http://loinc.com" :code "71415-4"}]}}}
 
-         :other-enabled {:text "Other" :type zen/boolean}
-         :other-comment {:text "Other Comment" :type zen/string
-                         #_#_:code [{:system "http://loinc.com" :code "other-enabled"}] }}} ;; What to do with this field?
+         :other {:type zen/map
+                 :keys {:enabled {:text "Other" :type zen/boolean}
+                        :comment {:text "Other Comment" :type zen/string
+                                  #_#_:code [{:system "http://loinc.com" :code "other-enabled"}] }}}}} ;; What to do with this field?
 
  RoSLayout
  {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
@@ -80,61 +91,61 @@ a series of questions seeking to identify signs and/or symptoms which the patien
        :children
        [{:type aidbox.sdc/row
          :children
-         [{:bind [:general-enabled]}
-          {:sdc/display-when (get :general-enabled)
-           :bind [:general-comment]
+         [{:bind [:general :enabled]}
+          {:sdc/display-when (get-in [:general :enabled])
+           :bind [:general :comment]
            :label "Comment"}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:heent-enabled]}
-          {:sdc/display-when (get :heent-enabled)
-           :bind [:heent-comment]}]}
+         [{:bind [:heent :enabled]}
+          {:sdc/display-when (get-in [:heent :enabled])
+           :bind [:heent :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:cardiovascular-enabled]}
-          {:sdc/display-when (get :cardiovascular-enabled)
-           :bind [:cardiovascular-comment]
+         [{:bind [:cardiovascular :enabled]}
+          {:sdc/display-when (get-in [:cardiovascular :enabled])
+           :bind [:cardiovascular :comment]
            }]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:respiratory-enabled]}
-          {:sdc/display-when (get :respiratory-enabled)
-           :bind [:respiratory-comment]}]}
+         [{:bind [:respiratory :enabled]}
+          {:sdc/display-when (get-in [:respiratory :enabled])
+           :bind [:respiratory :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:gastrointestinal-enabled]}
-          {:sdc/display-when (get :gastrointestinal-enabled)
-           :bind [:gastrointestinal-comment]}]}
+         [{:bind [:gastrointestinal :enabled]}
+          {:sdc/display-when (get-in [:gastrointestinal :enabled])
+           :bind [:gastrointestinal :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:genitourinary-enabled]}
-          {:sdc/display-when (get :genitourinary-enabled)
-           :bind [:genitourinary-comment]}]}
+         [{:bind [:genitourinary :enabled]}
+          {:sdc/display-when (get-in [:genitourinary :enabled])
+           :bind [:genitourinary :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:musculoskeletal-enabled]}
-          {:sdc/display-when (get :musculoskeletal-enabled)
-           :bind [:musculoskeletal-comment]}]}
+         [{:bind [:musculoskeletal :enabled]}
+          {:sdc/display-when (get-in [:musculoskeletal :enabled])
+           :bind [:musculoskeletal :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:neurologic-enabled]}
-          {:sdc/display-when (get :neurologic-enabled)
-           :bind [:neurologic-comment]}]}
+         [{:bind [:neurologic :enabled]}
+          {:sdc/display-when (get-in [:neurologic :enabled])
+           :bind [:neurologic :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:psychiatric-enabled]}
-          {:sdc/display-when (get :psychiatric-enabled)
-           :bind [:psychiatric-comment]}]}
+         [{:bind [:psychiatric :enabled]}
+          {:sdc/display-when (get-in [:psychiatric :enabled])
+           :bind [:psychiatric :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:skin-enabled]}
-          {:sdc/display-when (get :skin-enabled)
-           :bind [:skin-comment]}]}
+         [{:bind [:skin :enabled]}
+          {:sdc/display-when (get-in [:skin :enabled])
+           :bind [:skin :comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:other-enabled]}
-          {:sdc/display-when (get :other-enabled)
-           :bind [:other-comment]}]}]}]}]}}
+         [{:bind [:other :enabled]}
+          {:sdc/display-when (get-in [:other :enabled])
+           :bind [:other :comment]}]}]}]}]}}
 
  RoSLaunch
  {:zen/tags #{aidbox.sdc/Launch}
@@ -147,21 +158,46 @@ a series of questions seeking to identify signs and/or symptoms which the patien
                               :from :Encounter
                               :where [:= :id (get-in [:params :encounter-id])]})}}
 
+ RequireEnabledComment
+ {:zen/tags #{zen/schema}
+  :type zen/case
+  :case [{:when {:type zen/map
+                 :require #{:enabled}
+                 :keys {:enabled {:const {:value true}}}}
+          :then {:type zen/map :require #{:comment}}}
+         {:then {:type zen/map}}]}
+
+ RoSFinalizeConstraint
+ {:zen/tags #{zen/schema}
+  :type zen/map
+  :keys {:general          {:confirms #{RequireEnabledComment}}
+         :heent            {:confirms #{RequireEnabledComment}}
+         :cardiovascular   {:confirms #{RequireEnabledComment}}
+         :respiratory      {:confirms #{RequireEnabledComment}}
+         :gastrointestinal {:confirms #{RequireEnabledComment}}
+         :genitourinary    {:confirms #{RequireEnabledComment}}
+         :musculoskeletal  {:confirms #{RequireEnabledComment}}
+         :neurologic       {:confirms #{RequireEnabledComment}}
+         :psychiatric      {:confirms #{RequireEnabledComment}}
+         :skin             {:confirms #{RequireEnabledComment}}
+         :other            {:confirms #{RequireEnabledComment}}}}
+
  RoSFinalize
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :profile RoSFinalizeConstraint
   :document RoSDocument
   :export-engine aidbox.sdc/LispExport
-  :create [{:template aidbox.sdc/gen-observation-template :params {:path [:general-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:heent-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:cardiovascular-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:respiratory-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:gastrointestinal-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:genitourinary-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:musculoskeletal-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:neurologic-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:psychiatric-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:skin-comment]}}
-           {:template aidbox.sdc/gen-observation-template :params {:path [:other-comment]}}]}
+  :create [{:template aidbox.sdc/gen-observation-template :params {:path [:general :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:heent :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:cardiovascular :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:respiratory :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:gastrointestinal :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:genitourinary :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:musculoskeletal :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:neurologic :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:psychiatric :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:skin :comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:other :comment]}}]}
 
  RoSForm
  {:zen/tags #{aidbox.sdc/Form}
