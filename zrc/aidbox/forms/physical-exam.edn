@@ -9,9 +9,6 @@
   :zen/desc "Physical Exam"
   :type zen/map
   :confirms #{aidbox.sdc/Document}
-  :sdc/rules {:general (or (get :general)
-                          ;; Injecting external value (from WF)
-                           (get :ros/general-comment))}
   :keys {:gender               {:zen/desc "Gender (hidden field)" :type zen/string}
          :encounter-class      {:zen/desc "Encounter class (hidden field)" :type zen/string}
          :general              {:text "General" :type zen/string
@@ -77,189 +74,119 @@
      :children
      [{:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/label
-         :label "General"}
-        {:type aidbox.sdc/row
-         :children
-         [{:bind [:general]}
-          {:bind [:general]
-           :sdc/disable-when (get-in [:general])
-           :type aidbox.sdc/set-value-button
-           :value "Well nourished, well developed, awake and alert, resting comfortably in no acute distress, cooperative on exam."
-           :label "Fill"}]}]}
+       [{:bind [:general]}
+        {:bind [:general]
+         :sdc/disable-when (get-in [:general])
+         :type aidbox.sdc/set-value-button
+         :value "Well nourished, well developed, awake and alert, resting comfortably in no acute distress, cooperative on exam."
+         :label "Fill"}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/label
-         :label "HEENT"}
-        {:type aidbox.sdc/row
-         :children
-         [{:bind [:heent]}
-          {:bind [:heent]
-           :sdc/disable-when (get-in [:heent])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "NCAT, PERRL, normal conjunctivae, nonicteric sclerae, bilateral EAC/TM clear, no nasal discharge, OP clear, moist mucous membranes"}]}]}
+       [{:bind [:heent]}
+        {:bind [:heent]
+         :sdc/disable-when (get-in [:heent])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "NCAT, PERRL, normal conjunctivae, nonicteric sclerae, bilateral EAC/TM clear, no nasal discharge, OP clear, moist mucous membranes"}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Neck"}
-          {:bind [:neck]
-           }
-          {:bind [:neck]
-           :sdc/disable-when (get-in [:neck])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "Supple, normal ROM, no lymphadenopathy/masses, nontender."}]}]}
+       [{:bind [:neck]}
+        {:bind [:neck]
+         :sdc/disable-when (get-in [:neck])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "Supple, normal ROM, no lymphadenopathy/masses, nontender."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Cardiovascular"}
-          {:bind [:cardiovascular]}
-          {:bind [:cardiovascular]
-           :sdc/disable-when (get-in [:cardiovascular])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "RRR, normal S1/S2, no murmurs/gallops/rub."}]}]}
+       [{:bind [:cardiovascular]}
+        {:bind [:cardiovascular]
+         :sdc/disable-when (get-in [:cardiovascular])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "RRR, normal S1/S2, no murmurs/gallops/rub."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Pulmonary"}
-          {:bind [:pulmonary]}
-          {:bind [:pulmonary]
-           :sdc/disable-when (get-in [:pulmonary])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "No respiratory distress, lungs CTAB: no rales, rhonchi, or wheeze."}]}]}
+       [{:bind [:pulmonary]}
+        {:bind [:pulmonary]
+         :sdc/disable-when (get-in [:pulmonary])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "No respiratory distress, lungs CTAB: no rales, rhonchi, or wheeze."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Abdominal"}
-          {:bind [:abdominal]}
-          {:bind [:abdominal]
-           :sdc/disable-when (get-in [:abdominal])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "Soft and non-tender with no guarding or rebound; +BS normoactive, no tympany on auscultation."}]}]}
+       [{:bind [:abdominal]}
+        {:bind [:abdominal]
+         :sdc/disable-when (get-in [:abdominal])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "Soft and non-tender with no guarding or rebound; +BS normoactive, no tympany on auscultation."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Musculoskeletal"}
-          {:bind [:musculoskeletal]}
-          {:bind [:musculoskeletal]
-           :sdc/disable-when (get-in [:musculoskeletal])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "Normal ROM of UE and LE, normal bulk and tone."}]}]}
+       [{:bind [:musculoskeletal]}
+        {:bind [:musculoskeletal]
+         :sdc/disable-when (get-in [:musculoskeletal])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "Normal ROM of UE and LE, normal bulk and tone."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Extremities"}
-          {:bind [:extremities]}
-          {:bind [:extremities]
-           :sdc/disable-when (get-in [:extremities])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "Pulses intact with normal cap refill, no LE pitting edema or calf tenderness."}]}]}
+       [{:bind [:extremities]}
+        {:bind [:extremities]
+         :sdc/disable-when (get-in [:extremities])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "Pulses intact with normal cap refill, no LE pitting edema or calf tenderness."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Neurologic"}
-          {:bind [:neurologic]}
-          {:bind [:neurologic]
-           :sdc/disable-when (get-in [:neurologic])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "AAOx3, converses normally. CN II - XII grossly intact. Gait and coordination intact. 5+ BL UE/LE strength, no gross motor or sensory defects."}]}]}
+       [{:bind [:neurologic]}
+        {:bind [:neurologic]
+         :sdc/disable-when (get-in [:neurologic])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "AAOx3, converses normally. CN II - XII grossly intact. Gait and coordination intact. 5+ BL UE/LE strength, no gross motor or sensory defects."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Psychiatric"}
-          {:bind [:psychiatric]}
-          {:bind [:psychiatric]
-           :sdc/disable-when (get-in [:psychiatric])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "Normal mood and affect. Judgement/competence is appropriate."}]}]}
+       [{:bind [:psychiatric]}
+        {:bind [:psychiatric]
+         :sdc/disable-when (get-in [:psychiatric])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "Normal mood and affect. Judgement/competence is appropriate."}]}
       {:type aidbox.sdc/row
        :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Psychiatric"}
-          {:bind [:skin]}
-          {:bind [:skin]
-           :sdc/disable-when (get-in [:skin])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "Warm, dry, and intact. No rashes, dermatoses, petechiae, or lesions."}]}]}
-      {:type aidbox.sdc/row
-       :sdc/display-when (get :has-diabetes)
-       :children
-       [{:type aidbox.sdc/row
-         :children
-         [{:type aidbox.sdc/label
-           :label "Monofilament"}
-          {:bind [:monofilament]}
-          {:bind [:monofilament]
-           :sdc/disable-when (get-in [:monofilament])
-           :type aidbox.sdc/set-value-button
-           :label "Fill"
-           :value "Normal sensation bilaterally on soles of feet with 10g monofilament."}]}]}]}
+       [{:bind [:skin]}
+        {:bind [:skin]
+         :sdc/disable-when (get-in [:skin])
+         :type aidbox.sdc/set-value-button
+         :label "Fill"
+         :value "Warm, dry, and intact. No rashes, dermatoses, petechiae, or lesions."}]}]}
     {:type aidbox.sdc/col
      :children
-     [{:type aidbox.sdc/label
-       :label "Other Systems (optional)"}
+     [{:type aidbox.sdc/label :label "Other Systems (optional)"}
       {:type aidbox.sdc/fields
        :children
        [{:type aidbox.sdc/row
          :children
-         [{:type aidbox.sdc/row
-           :children
-           [{:type aidbox.sdc/label
-             :label "Chest"}
-            {:bind [:chest]}
-            {:bind [:chest]
-             :sdc/disable-when (get-in [:chest])
-             :type aidbox.sdc/set-value-button
-             :label "Fill"
-             :value "The chest wall is symmetric, without deformity, and is atraumatic in appearance."}]}]}
+         [{:bind [:chest]}
+          {:bind [:chest]
+           :sdc/disable-when (get-in [:chest])
+           :type aidbox.sdc/set-value-button
+           :label "Fill"
+           :value "The chest wall is symmetric, without deformity, and is atraumatic in appearance."}]}
         {:type aidbox.sdc/row
-         :sdc/display-when (not (get :has-diabetes))
          :children
-         [{:type aidbox.sdc/row
-           :children
-           [{:type aidbox.sdc/label
-             :label "Monofilament"}
-            {:bind [:monofilament]}
-            {:bind [:monofilament]
-             :sdc/disable-when (get-in [:monofilament])
-             :type aidbox.sdc/set-value-button
-             :label "Fill"
-             :value "Normal sensation bilaterally on soles of feet with 10g monofilament."}]}]}
+         [{:bind [:monofilament]}
+          {:bind [:monofilament]
+           :sdc/disable-when (get-in [:monofilament])
+           :type aidbox.sdc/set-value-button
+           :label "Fill"
+           :value "Normal sensation bilaterally on soles of feet with 10g monofilament."}]}
         {:type aidbox.sdc/row
          :sdc/display-when (= (get :gender) "female")
          :children
          [{:type aidbox.sdc/row
            :children
-           [{:type aidbox.sdc/label
-             :label "Genitourinary famale"}
-            {:bind [:genitourinary-female]}
+           [{:bind [:genitourinary-female] :label "Genitourinary famale"}
             {:bind [:genitourinary-female]
              :sdc/disable-when (get-in [:genitourinary-female])
              :type aidbox.sdc/set-value-button
@@ -270,9 +197,7 @@
          :children
          [{:type aidbox.sdc/row
            :children
-           [{:type aidbox.sdc/label
-             :label "Genitourinary male"}
-            {:bind [:genitourinary-male]}
+           [{:bind [:genitourinary-male] :label "Genitourinary male"}
             {:bind [:genitourinary-male]
              :sdc/disable-when (get-in [:genitourinary-male])
              :type aidbox.sdc/set-value-button
@@ -281,29 +206,21 @@
              }]}]}
         {:type aidbox.sdc/row
          :children
-         [{:type aidbox.sdc/row
-           :children
-           [{:type aidbox.sdc/label
-             :label "Rectal"}
-            {:bind [:rectal]}
-            {:bind [:rectal]
-             :sdc/disable-when (get-in [:rectal])
-             :type aidbox.sdc/set-value-button
-             :label "Fill"
-             :value "Normal external anus and normal tone. No palpable masses, normal mucosa, brown stool. Hemoccult negative."
-             }]}]}
+         [{:bind [:rectal]}
+          {:bind [:rectal]
+           :sdc/disable-when (get-in [:rectal])
+           :type aidbox.sdc/set-value-button
+           :label "Fill"
+           :value "Normal external anus and normal tone. No palpable masses, normal mucosa, brown stool. Hemoccult negative."
+           }]}
         {:type aidbox.sdc/row
          :children
-         [{:type aidbox.sdc/row
-           :children
-           [{:type aidbox.sdc/label
-             :label "Lymphatic"}
-            {:bind [:lymphatic]}
-            {:bind [:lymphatic]
-             :sdc/disable-when (get-in [:lymphatic])
-             :type aidbox.sdc/set-value-button
-             :label "Fill"
-             :value "No enlarged lymph nodes of occipital, pre- and postauricular, submandibular, anterior or posterior cervical, or supraclavicular identified."}]}]}]}]}]}}
+         [{:bind [:lymphatic]}
+          {:bind [:lymphatic]
+           :sdc/disable-when (get-in [:lymphatic])
+           :type aidbox.sdc/set-value-button
+           :label "Fill"
+           :value "No enlarged lymph nodes of occipital, pre- and postauricular, submandibular, anterior or posterior cervical, or supraclavicular identified."}]}]}]}]}}
 
  PhysicalExamLaunch
  {:zen/tags #{aidbox.sdc/Launch}
