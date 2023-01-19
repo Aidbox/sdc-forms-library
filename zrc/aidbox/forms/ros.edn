@@ -1,49 +1,66 @@
 {ns aidbox.forms.ros
  import #{zenbox aidbox.sdc}
 
-;;
-;; Review of Systems
-;;
+ ;;
+ ;; Review of Systems
+ ;;
  RoSDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules},
-  :zen/desc "Review of Systems",
+  :source {:url "https://www.cms.gov/Outreach-and-Education/Medicare-Learning-Network-MLN/MLNProducts/MLN-Publications-Items/CMS1243514"
+           :system "https://loinc.org"
+           :code "71406-3"}
+  :zen/desc "A review of systems is an inventory of body systems obtained through
+a series of questions seeking to identify signs and/or symptoms which the patient may be experiencing or has experienced",
   :type zen/map,
   :confirms #{aidbox.sdc/Document},
-  :keys {:loinc-71406-3 {:zen/desc "Provider reviewed all systems and state that all are WNL except as noted below"
-                         :type zen/boolean}
+  :keys {:provider-state-some-problems
+         {:text "Provider reviewed all systems and state that all are WNL except as noted below"
+          :type zen/boolean
+          :code [{:system "http://loinc.com" :code "71406-3"}]}
 
-         :loinc-71407-1 {:zen/desc "General" :type zen/boolean}
-         :loinc-71407-1-comment {:zen/desc "General Comment" :type zen/string}
+         :general-enabled {:text "General" :type zen/boolean}
+         :general-comment {:text "General Comment" :type zen/string
+                           :code [{:system "http://loinc.com" :code "71407-1"}]}
 
-         :loinc-71409-7 {:zen/desc "HEENT" :type zen/boolean}
-         :loinc-71409-7-comment {:zen/desc "HEENT Comment" :type zen/string}
+         :heent-enabled {:text "HEENT" :type zen/boolean}
+         :heent-comment {:text "HEENT Comment" :type zen/string
+                         :code [{:system "http://loinc.com" :code "71409-7"}]}
 
-         :loinc-71410-5 {:zen/desc "Cardiovascular" :type zen/boolean}
-         :loinc-71410-5-comment {:zen/desc "Cardiovascular Comment" :type zen/string}
+         :cardiovascular-enabled {:text "Cardiovascular" :type zen/boolean}
+         :cardiovascular-comment {:text "Cardiovascular Comment" :type zen/string
+                                  :code [{:system "http://loinc.com" :code "71410-5"}]}
 
-         :loinc-71411-3 {:zen/desc "Respiratory" :type zen/boolean}
-         :loinc-71411-3-comment {:zen/desc "Respiratory Comment" :type zen/string}
+         :respiratory-enabled {:text "Respiratory" :type zen/boolean}
+         :respiratory-comment {:text "Respiratory Comment" :type zen/string
+                               :code [{:system "http://loinc.com" :code "71411-3"}]}
 
-         :loinc-71412-1 {:zen/desc "Gastrointestinal" :type zen/boolean}
-         :loinc-71412-1-comment {:zen/desc "Gastrointestinal Comment" :type zen/string}
+         :gastrointestinal-enabled {:text "Gastrointestinal" :type zen/boolean}
+         :gastrointestinal-comment {:text "Gastrointestinal Comment" :type zen/string
+                                    :code [{:system "http://loinc.com" :code "71412-1"}]}
 
-         :loinc-71413-9 {:zen/desc "Genitourinary" :type zen/boolean}
-         :loinc-71413-9-comment {:zen/desc "Genitourinary Comment" :type zen/string}
+         :genitourinary-enabled {:text "Genitourinary" :type zen/boolean}
+         :genitourinary-comment {:text "Genitourinary Comment" :type zen/string
+                                 :code [{:system "http://loinc.com" :code "71413-9"}]}
 
-         :loinc-71414-7 {:zen/desc "Musculoskeletal" :type zen/boolean}
-         :loinc-71414-7-comment {:zen/desc "Musculoskeletal Comment" :type zen/string}
+         :musculoskeletal-enabled {:text "Musculoskeletal" :type zen/boolean}
+         :musculoskeletal-comment {:text "Musculoskeletal Comment" :type zen/string
+                                   :code [{:system "http://loinc.com" :code "71414-7"}]}
 
-         :loinc-71416-2 {:zen/desc "Neurologic" :type zen/boolean}
-         :loinc-71416-2-comment {:zen/desc "Neurologic Comment" :type zen/string}
+         :neurologic-enabled {:text "Neurologic" :type zen/boolean}
+         :neurologic-comment {:text "Neurologic Comment" :type zen/string
+                              :code [{:system "http://loinc.com" :code "71416-2"}]}
 
-         :loinc-71417-0 {:zen/desc "Psychiatric" :type zen/boolean}
-         :loinc-71417-0-comment {:zen/desc "Psychiatric Comment" :type zen/string}
+         :psychiatric-enabled {:text "Psychiatric" :type zen/boolean}
+         :psychiatric-comment {:text "Psychiatric Comment" :type zen/string
+                               :code [{:system "http://loinc.com" :code "71417-0"}]}
 
-         :loinc-71415-4 {:zen/desc "Skin" :type zen/boolean}
-         :loinc-71415-4-comment {:zen/desc "Skin Comment" :type zen/string}
+         :skin-enabled {:text "Skin" :type zen/boolean}
+         :skin-comment {:text "Skin Comment" :type zen/string
+                        :code [{:system "http://loinc.com" :code "71415-4"}]}
 
-         :other {:zen/desc "Other" :type zen/boolean}
-         :other-comment {:zen/desc "Other Comment" :type zen/string}}}
+         :other-enabled {:text "Other" :type zen/boolean}
+         :other-comment {:text "Other Comment" :type zen/string
+                         #_#_:code [{:system "http://loinc.com" :code "other-enabled"}] }}} ;; What to do with this field?
 
  RoSLayout
  {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
@@ -52,71 +69,71 @@
   :layout
   {:type aidbox.sdc/col,
    :children
-   [{:bind [:loinc-71406-3]}
+   [{:bind [:provider-state-some-problems]}
     {:type aidbox.sdc/fields
      :children
      [{:type aidbox.sdc/label
        :label "Select abnormal systems"
-       :sdc/display-when (lisp/get :loinc-71406-3) }
+       :sdc/display-when (lisp/get :provider-state-some-problems)}
       {:type aidbox.sdc/fields
-       :sdc/display-when (lisp/get :loinc-71406-3)
+       :sdc/display-when (lisp/get :provider-state-some-problems)
        :children
        [{:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71407-1]}
-          {:sdc/display-when (lisp/get :loinc-71407-1)
-           :bind [:loinc-71407-1-comment]
+         [{:bind [:general-enabled]}
+          {:sdc/display-when (lisp/get :general-enabled)
+           :bind [:general-comment]
            :label "Comment"}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71409-7]}
-          {:sdc/display-when (lisp/get :loinc-71409-7)
-           :bind [:loinc-71409-7-comment]}]}
+         [{:bind [:heent-enabled]}
+          {:sdc/display-when (lisp/get :heent-enabled)
+           :bind [:heent-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71410-5]}
-          {:sdc/display-when (lisp/get :loinc-71410-5)
-           :bind [:loinc-71410-5-comment]
+         [{:bind [:cardiovascular-enabled]}
+          {:sdc/display-when (lisp/get :cardiovascular-enabled)
+           :bind [:cardiovascular-comment]
            }]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71411-3]}
-          {:sdc/display-when (lisp/get :loinc-71411-3)
-           :bind [:loinc-71411-3-comment]}]}
+         [{:bind [:respiratory-enabled]}
+          {:sdc/display-when (lisp/get :respiratory-enabled)
+           :bind [:respiratory-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71412-1]}
-          {:sdc/display-when (lisp/get :loinc-71412-1)
-           :bind [:loinc-71412-1-comment]}]}
+         [{:bind [:gastrointestinal-enabled]}
+          {:sdc/display-when (lisp/get :gastrointestinal-enabled)
+           :bind [:gastrointestinal-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71413-9]}
-          {:sdc/display-when (lisp/get :loinc-71413-9)
-           :bind [:loinc-71413-9-comment]}]}
+         [{:bind [:genitourinary-enabled]}
+          {:sdc/display-when (lisp/get :genitourinary-enabled)
+           :bind [:genitourinary-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71414-7]}
-          {:sdc/display-when (lisp/get :loinc-71414-7)
-           :bind [:loinc-71414-7-comment]}]}
+         [{:bind [:musculoskeletal-enabled]}
+          {:sdc/display-when (lisp/get :musculoskeletal-enabled)
+           :bind [:musculoskeletal-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71416-2]}
-          {:sdc/display-when (lisp/get :loinc-71416-2)
-           :bind [:loinc-71416-2-comment]}]}
+         [{:bind [:neurologic-enabled]}
+          {:sdc/display-when (lisp/get :neurologic-enabled)
+           :bind [:neurologic-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71417-0]}
-          {:sdc/display-when (lisp/get :loinc-71417-0)
-           :bind [:loinc-71417-0-comment]}]}
+         [{:bind [:psychiatric-enabled]}
+          {:sdc/display-when (lisp/get :psychiatric-enabled)
+           :bind [:psychiatric-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:loinc-71415-4]}
-          {:sdc/display-when (lisp/get :loinc-71415-4)
-           :bind [:loinc-71415-4-comment]}]}
+         [{:bind [:skin-enabled]}
+          {:sdc/display-when (lisp/get :skin-enabled)
+           :bind [:skin-comment]}]}
         {:type aidbox.sdc/row
          :children
-         [{:bind [:other]}
-          {:sdc/display-when (lisp/get :other)
+         [{:bind [:other-enabled]}
+          {:sdc/display-when (lisp/get :other-enabled)
            :bind [:other-comment]}]}]}]}]}}
 
  RoSLaunch
@@ -134,105 +151,17 @@
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
   :document RoSDocument
   :export-engine aidbox.sdc/LispExport
-  :create [(lisp/when (lisp/get :loinc-71407-1)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71407-1"}]}
-              :value {:string (lisp/get :loinc-71407-1-comment)}})
-           (lisp/when (lisp/get :loinc-71409-7)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71409-7"}]}
-              :value {:string (lisp/get :loinc-71409-7-comment)}})
-           (lisp/when (lisp/get :loinc-71410-5)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71410-5"}]}
-              :value {:string (lisp/get :loinc-71410-5-comment)}})
-           (lisp/when (lisp/get :loinc-71411-3)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71411-3"}]}
-              :value {:string (lisp/get :loinc-71411-3-comment)}})
-           (lisp/when (lisp/get :loinc-71412-1)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71412-1"}]}
-              :value {:string (lisp/get :loinc-71412-1-comment)}})
-           (lisp/when (lisp/get :loinc-71413-9)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71413-9"}]}
-              :value {:string (lisp/get :loinc-71413-9-comment)}})
-           (lisp/when (lisp/get :loinc-71414-7)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71414-7"}]}
-              :value {:string (lisp/get :loinc-71414-7-comment)}})
-           (lisp/when (lisp/get :loinc-71416-2)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71416-2"}]}
-              :value {:string (lisp/get :loinc-71416-2-comment)}})
-           (lisp/when (lisp/get :loinc-71417-0)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71417-0"}]}
-              :value {:string (lisp/get :loinc-71417-0-comment)}})
-           (lisp/when (lisp/get :loinc-71415-4)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "71415-4"}]}
-              :value {:string (lisp/get :loinc-71415-4-comment)}})
-           (lisp/when (lisp/get :other)
-             {:resourceType "Observation"
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
-              :status "final"
-              :subject   (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :code {:coding [{:code "other"}]}
-              :value {:string (lisp/get :other-comment)}})]}
+  :create [{:template aidbox.sdc/gen-observation-template :params {:path [:general-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:heent-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:cardiovascular-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:respiratory-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:gastrointestinal-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:genitourinary-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:musculoskeletal-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:neurologic-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:psychiatric-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:skin-comment]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:other-comment]}}]}
 
  RoSForm
  {:zen/tags #{aidbox.sdc/Form}
