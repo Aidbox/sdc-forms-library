@@ -165,7 +165,7 @@ a series of questions seeking to identify signs and/or symptoms which the patien
                  :require #{:enabled}
                  :keys {:enabled {:const {:value true}}}}
           :then {:type zen/map :require #{:comment}}}
-         {:then {:type zen/map}}]}
+         {:when {:type zen/map} :then {:type zen/map}}]}
 
  RoSFinalizeConstraint
  {:zen/tags #{zen/schema}
