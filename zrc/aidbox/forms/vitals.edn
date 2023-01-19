@@ -83,6 +83,7 @@ As additional option this form has BMI."
                :code [{:system "http://loinc.org" :code "39156-5"}]
                :linkId "39156-5"},
 
+
          :body-weight {:text "Weight",
                        :confirms #{aidbox.sdc.fhir/quantity}
                        :units [{:name "[lb_av]"} {:name "kg"}],
@@ -339,8 +340,14 @@ As additional option this form has BMI."
             :params {:path [:body-weight]}}
            {:template aidbox.sdc/gen-observation-template
             :params {:path [:body-height]}}
-           {:template aidbox.sdc/gen-observation-template
-            :params {:path [:bmi]}}
+           (when (get :bmi)
+             {:encounter (get :encounter),
+              :value {:Quantity {:unit "kg/m2" :value (get :bmi)}},
+              :resourceType "Observation",
+              :status "final",
+              :effective {:dateTime (get :datetime)},
+              :code {:coding [{:system "http://loinc.org" :display "BMI" :code "39156-5"}]},
+              :subject (get :patient)})
            (for [i (get :heart-rate)]
              (when (get i :value)
                {:encounter (get :encounter),
