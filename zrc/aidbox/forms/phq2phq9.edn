@@ -100,7 +100,7 @@
          :misc-yes-button              {:text "**PHQ-9 Questionnaire:** For positive depression screen or follow up"
                                         :type zen/boolean
                                         :sdc/default-value true},
-         :final-score                  {:text "UI score display"
+         :final-score                  {:zen/desc "UI score display"
                                         :type zen/number},
          :sleeping-trouble             {:text "Trouble falling or staying asleep, or sleeping too much",
                                         :confirms #{aidbox.sdc.fhir/coding LL358-3}
