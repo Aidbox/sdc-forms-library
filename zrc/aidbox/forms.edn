@@ -6,4 +6,8 @@
           aidbox.forms.ros
           aidbox.forms.advance-care-planning
           aidbox.forms.physical-exam
-          aidbox.forms.annual-wellness-visit}}
+          aidbox.forms.annual-wellness-visit
+          aidbox.forms.quid
+          aidbox.forms.aua
+          }
+ }

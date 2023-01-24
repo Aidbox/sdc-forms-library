@@ -1,0 +1,121 @@
+{ns aidbox.forms.aua
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+
+ LL3797-9
+ {:type zen/map
+  :zen/tags #{zen/schema}
+  :confirms #{aidbox.sdc.fhir/coding}
+  :enum [{:value {:display "Not at all" :code "LA6568-5" :score 0 :system "http://loinc.org"}}
+         {:value {:display "Less than 1 time in 5" :code "LA24478-2" :score 1 :system "http://loinc.org"}}
+         {:value {:display "Less than half the time" :code "LA14723-3" :score 2 :system "http://loinc.org"}}
+         {:value {:display "About half the time" :code "LA24963-3" :score 3 :system "http://loinc.org"}}
+         {:value {:display "More than half the time" :code "LA14724-1" :score 4 :system "http://loinc.org"}}
+         {:value {:display "Almost always" :code "LA13865-3" :score 5 :system "http://loinc.org"}}]}
+
+ UrologicalScoreDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :source {:uri "https://pubmed.ncbi.nlm.nih.gov/1279218/"
+           :system "https://loinc.org"
+           :code "80883-2"}
+  :zen/desc "This form consists of 7 questions used to assess the severity of symptoms associated with benign prostatic hyperplasia."
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :sdc/rules {:symptom-score (+ (get-in [:incomplete-emptying :score])
+                                (get-in [:frequency :score])
+                                (get-in [:intermittency :score])
+                                (get-in [:urgency :score])
+                                (get-in [:weak-stream :score])
+                                (get-in [:straining :score])
+                                (get-in [:nocturia :score]))
+              :score-interp  (cond
+                               (< 0 (get :symptom-score) 7)   {:display "Mild", :code "mild"},
+                               (< 8 (get :symptom-score) 19)  {:display "Moderate" :code "moderate"},
+                               (< 20 (get :symptom-score) 99) {:display "Severe" :code "severe"})}
+
+  :keys {:incomplete-emptying {:text "**Incomplete emptying:** Over the past month, how often have you had a sensation of not emptying your bladder completely after you finished urinating?"
+                               :confirms #{LL3797-9 aidbox.sdc.fhir/coding}
+                               :code [{:code "80884-0"
+                                       :system "http://loinc.org"
+                                       :display "Over the past month, how often have you had a sensation of not emptying your bladder completely after you finished urinating?"}]}
+         :frequency           {:text "**Frequency:** Over the past month, how often have you had to urinate again less than 2 hours after you finished urinating?"
+                               :confirms #{LL3797-9 aidbox.sdc.fhir/coding}
+                               :code [{:code "80885-7"
+                                       :system "http://loinc.org"
+                                       :display "Over the past month, how often have you had to urinate again less than two hours after you finished urinating?"}] }
+         :intermittency       {:text "**Intermittency:** Over the past month, how often have you found you stopped and started again several times when you urinated?"
+                               :confirms #{LL3797-9 aidbox.sdc.fhir/coding}
+                               :code [{:code "80886-5"
+                                       :system "http://loinc.org"
+                                       :display "Over the past month, how often have you found you stopped and started again several times when you urinated?"}]}
+         :urgency             {:text "**Urgency:** Over the past month, how often have you found it difficult to postpone urination?"
+                               :confirms #{LL3797-9 aidbox.sdc.fhir/coding}
+                               :code [{:code "80887-3"
+                                       :system "http://loinc.org"
+                                       :display "Over the past month, how often have you found it difficult to postpone urination?"}]}
+         :weak-stream         {:text "**Weak-stream:** Over the past month, how often have you had a weak urinary stream?"
+                               :confirms #{LL3797-9 aidbox.sdc.fhir/coding}
+                               :code [{:code "80888-1"
+                                       :system "http://loinc.org"
+                                       :display "Over the past month, how often have you had a weak urinary stream?"}]}
+         :straining           {:text "**Straining:** Over the past month, how often have you had to push or strain to begin urination?"
+                               :confirms #{LL3797-9 aidbox.sdc.fhir/coding}
+                               :code [{:code "80889-9"
+                                       :system "http://loinc.org"
+                                       :display "Over the past month, how often have you had to push or strain to begin urination?"}]}
+         :nocturia            {:text "**Nocturia:** Over the past month, how many times did you most typically get up to urinate from the time you went to bed at night until the time you got up in the morning?"
+                               :confirms #{LL3797-9 aidbox.sdc.fhir/coding}
+                               :code [{:code "80890-7"
+                                       :system "http://loinc.org"
+                                       :display "Over the past month, how many times did you most typically get up to urinate from the time you went to bed at night until the time you got up in the morning?"}]}
+         :symptom-score       {:text "Symptom score [AUASI]"
+                               :type zen/number
+                               :code [{:code "80891-5"}] }
+         :score-interp        {:zen/desc "Score Interpratation" :confirms #{aidbox.sdc.fhir/coding}}}}
+
+ UrologicalScoreLayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
+  :document UrologicalScoreDocument
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/col
+   :children [{:type aidbox.sdc/fields
+               :children [{:bind [:incomplete-emptying]}
+                          {:bind [:frequency]}
+                          {:bind [:intermittency]}
+                          {:bind [:urgency]}
+                          {:bind [:weak-stream]}
+                          {:bind [:straining]}
+                          {:bind [:nocturia]}]}
+              {:bind [:symptom-score] :label "AUA Symptom Score"}
+              {:bind [:score-interp :display]}]}}
+
+ UrologicalScoreLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document UrologicalScoreDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql ["SELECT resource #> '{subject}' FROM Encounter WHERE id = ?"
+                              (get-in [:params :encounter-id])])}}
+
+ UrologicalScoreFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :document UrologicalScoreDocument
+  :export-engine aidbox.sdc/LispExport
+  :create [{:template aidbox.sdc/gen-observation-template :params {:path [:incomplete-emptying]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:frequency]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:intermittency]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:urgency]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:weak-stream]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:straining]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:nocturia]}}
+           {:template aidbox.sdc/gen-observation-template :params {:path [:symptom-score]}}]}
+
+ UrologicalScoreForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "American Urological Association (AUA) Symptom Index [AUASI]"
+  :document UrologicalScoreDocument
+  :layout   UrologicalScoreLayout
+  :launch   UrologicalScoreLaunch
+  :finalize UrologicalScoreFinalize}}

@@ -1,0 +1,102 @@
+{ns aidbox.forms.quid
+ import #{zenbox aidbox.sdc}
+
+ quid-options
+ {:type zen/map
+  :zen/tags #{zen/schema}
+  :confirms #{aidbox.sdc.fhir/coding}
+  :enum [{:value {:display "None" :code "0" :score 0}}
+         {:value {:display "Rarely" :code "1" :score 1}}
+         {:value {:display "Once in a while" :code "2" :score 2}}
+         {:value {:display "Often" :code "3" :score 3}}
+         {:value {:display "Most of the time" :code "4" :score 4}}
+         {:value {:display "All of the time" :code "5" :score 5}}]}
+
+ QUIDDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :source {:uri "https://pubmed.ncbi.nlm.nih.gov/19787711/"}
+  :zen/desc "This form is a 6-item urinary incontinence (UI) symptom questionnaire, was developed and validated to distinguish stress and urge UI."
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :sdc/rules {:stress       (>= (+ (get-in [:quid-1 :score])
+                                   (get-in [:quid-2 :score])
+                                   (get-in [:quid-3 :score]))
+                                4)
+              :urge         (>= (+
+                                 (get-in [:quid-4 :score])
+                                 (get-in [:quid-5 :score])
+                                 (get-in [:quid-6 :score]))
+                                6)
+
+              :quid-score   (+ (get-in [:quid-1 :score])
+                               (get-in [:quid-2 :score])
+                               (get-in [:quid-3 :score])
+                               (get-in [:quid-4 :score])
+                               (get-in [:quid-5 :score])
+                               (get-in [:quid-6 :score]))
+
+              :score-interp (cond
+                              (not (or (get :stress) (get :urge)))
+                              {:display "Negative for Stress & Urge Urinary Incontinence" :code "mild"}
+                              (and (get :stress) (not (get :urge)))
+                              {:display "Positive for Stress Urinary Incontinence" :code "severe"}
+                              (and (get :urge) (not (get :stress)))
+                              {:display "Positive for Urge Urinary Incontinence" :code "severe"}
+                              (and (get :stress) (get :urge))
+                              {:display "Positive for Stress & Urge Urinary Incontinence" :code "severe"})}
+
+  :keys {:quid-1       {:text "When you cough or sneeze?"
+                        :confirms #{quid-options aidbox.sdc.fhir/coding}}
+         :quid-2       {:text "When you bend down or lift something up?"
+                        :confirms #{quid-options aidbox.sdc.fhir/coding}}
+         :quid-3       {:text "When you walk quickly, jog or exercise?"
+                        :confirms #{quid-options aidbox.sdc.fhir/coding}}
+         :quid-4       {:text "While you are undressing in order to use the toilet?"
+                        :confirms #{quid-options aidbox.sdc.fhir/coding}}
+         :quid-5       {:text "Do you get such a strong and uncomfortable need to urinate that you leak urine (even small drops) or wet yourself before reaching the toilet?"
+                        :confirms #{quid-options aidbox.sdc.fhir/coding}}
+         :quid-6       {:text "Do you have to rush to the bathroom because you get a sudden, strong need to urinate?"
+                        :confirms #{quid-options aidbox.sdc.fhir/coding}}
+         :urge         {:zen/desc "Responses to questions 4, 5 and 6 are added. If the score is 6 or greater, then it is positive for urge urinary incontinence"
+                        :type zen/boolean}
+         :stress       {:zen/desc "Responses to questions 1, 2 and 3 are added. If the score is 4 or greater, then it is positive for stress urinary incontinence"
+                        :type zen/boolean}
+         :quid-score   {:text "QUID Total Score"
+                        :type zen/number}
+         :score-interp {:text "QUID Total Score Interpretation"
+                        :confirms #{aidbox.sdc.fhir/coding}}}}
+
+ QUIDLayout
+ {:zen/tags #{aidbox.sdc/Layout}
+  :document QUIDDocument
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/col
+   :children
+   [{:type aidbox.sdc/label :label "**Do you leak urine (even small drops), wet yourself, or wet your pads or undergarments...**"}
+    {:bind [:quid-1]}
+    {:bind [:quid-2]}
+    {:bind [:quid-3]}
+    {:bind [:quid-4]}
+    {:bind [:quid-5]}
+    {:bind [:quid-6]}
+    {:bind [:quid-score] :label "QUID Score"}
+    {:bind [:score-interp :display] :label "QUID Score Interpretation"}]}}
+
+ QUIDLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document QUIDDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})}}
+
+ QUIDForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Female Urinary Incontinence Diagnosis (QUID)"
+  :document QUIDDocument
+  :layout   QUIDLayout
+  :launch   QUIDLaunch}}
