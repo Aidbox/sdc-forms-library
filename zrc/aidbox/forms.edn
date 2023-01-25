@@ -9,5 +9,6 @@
           aidbox.forms.annual-wellness-visit
           aidbox.forms.quid
           aidbox.forms.aua
+          aidbox.forms.easi
           }
  }
