@@ -1,0 +1,205 @@
+{ns aidbox.forms.social-determinants
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+
+ SocialDeterminantsDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Social Determinants of Health"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:social-determinants
+         {:type zen/map
+          :keys {:housing            {:text "**Any concerns with housing?**" :type zen/boolean}
+                 :food               {:text "**Any concerns related to food?**" :type zen/boolean}
+                 :transportation     {:text "**Any concerns with transportation?**" :type zen/boolean}
+                 :financial          {:text "**Any financial concerns?**" :type zen/boolean}
+                 :taking-medications {:text "**Any concerns taking-medications as prescribed?**" :type zen/boolean}
+                 :social-support     {:text "**Any challenges with social support?**" :type zen/boolean}
+                 :health-literacy    {:text "**Any issues with health-literacy?**" :type zen/boolean}}}
+
+         :housing
+         {:type zen/map
+          :keys {:paying-issues         {:text "Issues paying for housing?" :type zen/boolean}
+                 :stable-housing-issues {:text "Concerns with stable housing?" :type zen/boolean}
+                 :maintenance-issues    {:text "Issues with maintenance/repairs?" :type zen/boolean}
+                 :cleanliness-issues    {:text "Issues with cleanliness/hazardous living environment? (e.g. excessive objects/furniture, dirt, insects)"
+                                         :type zen/boolean}
+                 :comment-required      {:text "Comment" :type zen/boolean}
+                 :comment               {:text "Comments" :type zen/string}}}
+
+
+         :food
+         {:type zen/map
+          :keys {:access-issues              {:text "Issues with access to food?" :type zen/boolean}
+                 :healty-hood-access-issues  {:text "Issues with access to healthy food options?" :type zen/boolean}
+                 :healty-food-choices-issues {:text "Issues with healthy food choices?" :type zen/boolean}
+                 :comment-required           {:text "Comment" :type zen/boolean}
+                 :comment                    {:text "Comments" :type zen/string}}}
+
+         :transportation
+         {:type zen/map
+          :keys {:access-issues                  {:text "Issues with access to transportation?" :type zen/boolean}
+                 :driving-issues                 {:text "Issues driving self?" :type zen/boolean}
+                 :access-public-transport-issues {:text "Issues accessing public transportation?" :type zen/boolean}
+                 :comment-required               {:text "Comment" :type zen/boolean}
+                 :comment                        {:text "Comments" :type zen/string}}}
+
+         :financial
+         {:type zen/map
+          :keys {:paying-bills-issues  {:text "Issues paying bills each month?" :type zen/boolean}
+                 :making-budget-issues {:text "Issues understanding/making a budget?" :type zen/boolean}
+                 :comment-required     {:text "Comment" :type zen/boolean}
+                 :comment              {:text "Comments" :type zen/string}}}
+
+         :taking-medications
+         {:type zen/map
+          :keys {:paying-issues                       {:text "Difficulty paying for medications or co-pays?" :type zen/boolean}
+                 :remembering-trouble                 {:text "Trouble remembering to take or fill medications?" :type zen/boolean}
+                 :organizing-trouble                  {:text "Trouble organizing medications?" :type zen/boolean}
+                 :importance-understanding-difficulty {:text "Difficulty understanding the importance of medications?" :type zen/boolean}
+                 :comment-required                    {:text "Comment" :type zen/boolean}
+                 :comment                             {:text "Comments" :type zen/string}}}
+
+         :social-support
+         {:type zen/map
+          :keys {:insufficient-family-support {:text "Insufficient caregiver/family support?" :type zen/boolean}
+                 :caregiver-burnout-issues    {:text "Issues with caregiver/family burnout?" :type zen/boolean}
+                 :social-isolation            {:text "Any social isolation or loneliness?" :type zen/boolean}
+                 :violence-or-abuse           {:text "Any concerns with safety, neglect, violence, or abuse?" :type zen/boolean}
+                 :comment-required            {:text "Comment" :type zen/boolean}
+                 :comment                     {:text "Comments" :type zen/string}}}
+
+         :health-literacy
+         {:type zen/map
+          :keys {:understanding-issues    {:text "Issues understanding health information?" :type zen/boolean}
+                 :language-barrier-issues {:text "Issues with language barriers?" :type zen/boolean}
+                 :comment-required        {:text "Comment" :type zen/boolean}
+                 :comment                 {:text "Comments" :type zen/string}}}}}
+
+ SocialDeterminantsLayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
+  :document SocialDeterminantsDocument
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/col
+   :children
+   [{:bind [:social-determinants]}
+
+    {:type aidbox.sdc/fields
+     :children [{:type aidbox.sdc/row
+                 :children [{:bind [:social-determinants :housing]}
+                            {:bind [:housing :comment-required]}]}
+                {:type aidbox.sdc/fields
+                 :sdc/display-when (get-in [:social-determinants :housing])
+                 :children [{:type aidbox.sdc/row :children [{:bind [:housing :paying-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:housing :stable-housing-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:housing :maintenance-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:housing :cleanliness-issues]}]}]}
+                {:type aidbox.sdc/row
+                 :sdc/display-when (or (get-in [:housing :comment-required])
+                                       (get-in [:social-determinants :housing]))
+                 :children [{:bind [:housing :comment]}]}]}
+
+    {:type aidbox.sdc/fields
+     :children [{:type aidbox.sdc/row
+                 :children [{:bind [:social-determinants :food]}
+                            {:bind [:food :comment-required]}]}
+                {:type aidbox.sdc/fields
+                 :sdc/display-when (get-in [:social-determinants :food])
+                 :children [{:type aidbox.sdc/row :children [{:bind [:food :access-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:food :healty-hood-access-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:food :healty-food-choices-issues]}]}]}
+                {:type aidbox.sdc/row
+                 :sdc/display-when (or (get-in [:food :comment-required])
+                                       (get-in [:social-determinants :food]))
+                 :children [{:bind [:food :comment]}]}]}
+
+    {:type aidbox.sdc/fields
+     :children [{:type aidbox.sdc/row
+                 :children [{:bind [:social-determinants :transportation]}
+                            {:bind [:transportation :comment-required]}]}
+                {:type aidbox.sdc/fields
+                 :sdc/display-when (get-in [:social-determinants :transportation])
+                 :children [{:type aidbox.sdc/row :children [{:bind [:transportation :access-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:transportation :driving-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:transportation :access-public-transport-issues]}]}]}
+                {:type aidbox.sdc/row
+                 :sdc/display-when (or (get-in [:transportation :comment-required])
+                                       (get-in [:social-determinants :transportation]))
+                 :children [{:bind [:transportation :comment]}]}]}
+
+    {:type aidbox.sdc/fields
+     :children [{:type aidbox.sdc/row
+                 :children [{:bind [:social-determinants :financial]}
+                            {:bind [:financial :comment-required]}]}
+                {:type aidbox.sdc/fields
+                 :sdc/display-when (get-in [:social-determinants :financial])
+                 :children [{:type aidbox.sdc/row :children [{:bind [:financial :paying-bills-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:financial :making-budget-issues]}]}]}
+                {:type aidbox.sdc/row
+                 :sdc/display-when (or (get-in [:financial :comment-required])
+                                       (get-in [:social-determinants :financial]))
+                 :children [{:bind [:financial :comment]}]}]}
+
+    {:type aidbox.sdc/fields
+     :children [{:type aidbox.sdc/row
+                 :children [{:bind [:social-determinants :taking-medications]}
+                            {:bind [:taking-medications :comment-required]}]}
+                {:type aidbox.sdc/fields
+                 :sdc/display-when (get-in [:social-determinants :taking-medications])
+                 :children [{:type aidbox.sdc/row :children [{:bind [:taking-medications :paying-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:taking-medications :remembering-trouble]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:taking-medications :organizing-trouble]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:taking-medications :importance-understanding-difficulty]}]}]}
+                {:type aidbox.sdc/row
+                 :sdc/display-when (or (get-in [:taking-medications :comment-required])
+                                       (get-in [:social-determinants :taking-medications]))
+                 :children [{:bind [:taking-medications :comment]}]}]}
+
+    {:type aidbox.sdc/fields
+     :children [{:type aidbox.sdc/row
+                 :children [{:bind [:social-determinants :social-support]}
+                            {:bind [:social-support :comment-required]}]}
+                {:type aidbox.sdc/fields
+                 :sdc/display-when (get-in [:social-determinants :social-support])
+                 :children [{:type aidbox.sdc/row :children [{:bind [:social-support :insufficient-family-support]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:social-support :caregiver-burnout-issues]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:social-support :social-isolation]}]}
+                            {:type aidbox.sdc/row :children [{:bind [:social-support :violence-or-abuse]}]}]}
+                {:type aidbox.sdc/row
+                 :sdc/display-when (or (get-in [:social-support :comment-required])
+                                       (get-in [:social-determinants :social-support]))
+                 :children [{:bind [:social-support :comment]}]}]}
+
+    {:type aidbox.sdc/fields
+     :children
+     [{:type aidbox.sdc/row
+       :children [{:bind [:social-determinants :health-literacy]}
+                  {:bind [:health-literacy :comment-required]}]}
+      {:type aidbox.sdc/fields
+       :sdc/display-when (get-in [:social-determinants :health-literacy])
+       :children [{:type aidbox.sdc/row :children [{:bind [:health-literacy :understanding-issues]}]}
+                  {:type aidbox.sdc/row :children [{:bind [:health-literacy :language-barrier-issues]}]}]}
+      {:type aidbox.sdc/row
+       :sdc/display-when (or (get-in [:health-literacy :comment-required])
+                             (get-in [:social-determinants :health-literacy]))
+       :children [{:bind [:health-literacy :comment]}]}]}]}}
+
+ SocialDeterminantsLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document SocialDeterminantsDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})}}
+
+ SocialDeterminantsForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Social Determinants of Health"
+  :document SocialDeterminantsDocument
+  :layout   SocialDeterminantsLayout
+  :launch   SocialDeterminantsLaunch
+  ;; :finalize SocialDeterminantsFinalize
+  }}

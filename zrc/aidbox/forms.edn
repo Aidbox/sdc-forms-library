@@ -10,5 +10,6 @@
           aidbox.forms.quid
           aidbox.forms.aua
           aidbox.forms.easi
+          aidbox.forms.social-determinants
           }
  }
