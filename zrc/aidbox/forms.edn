@@ -11,5 +11,6 @@
           aidbox.forms.aua
           aidbox.forms.easi
           aidbox.forms.social-determinants
+          aidbox.forms.advanced-illness-and-frailty
           }
  }
