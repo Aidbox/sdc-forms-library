@@ -14,7 +14,7 @@
 
  QUIDDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
-  :source {:uri "https://pubmed.ncbi.nlm.nih.gov/19787711/"}
+  :source {:url "https://pubmed.ncbi.nlm.nih.gov/19787711/"}
   :zen/desc "This form is a 6-item urinary incontinence (UI) symptom questionnaire, was developed and validated to distinguish stress and urge UI."
   :type zen/map
   :confirms #{aidbox.sdc/Document}

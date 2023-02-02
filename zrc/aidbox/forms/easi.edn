@@ -10,7 +10,7 @@
 
  EASIDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
-  :source {:uri "https://www.mcgill.ca/familymed/research/projects/elder"}
+  :source {:url "https://www.mcgill.ca/familymed/research/projects/elder"}
   :zen/desc "This form is a tool to improve physician identification of elder abuse"
   :type zen/map
   :confirms #{aidbox.sdc/Document}

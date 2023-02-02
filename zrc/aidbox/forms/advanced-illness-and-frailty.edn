@@ -7,7 +7,7 @@
 
  AdvancedIllnessAndFrailtyDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
-  :source {:uri "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC314375"}
+  :source {:url "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC314375"}
   :zen/desc "This form is a brief, self-report screening instrument that can be used to identify patients most likely to have bipolar disorder."
   :type zen/map
   :confirms #{aidbox.sdc/Document}

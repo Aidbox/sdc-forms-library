@@ -21,20 +21,19 @@
                                            :form aidbox.forms.gad-7/GAD7Form}
                                    :phq2phq9 {:item aidbox.sdc/FormItem
                                               :form aidbox.forms.phq2phq9/PHQ2PHQ9Form
-                                              :sdc/enable-when (lisp/>=
-                                                                (lisp/get-in [:items :questionnaires
-                                                                              :items :gad-7
-                                                                              :document :70274-6])
-                                                                15)}}}
+                                              :sdc/enable-when (>= (get-in [:items :questionnaires
+                                                                            :items :gad-7
+                                                                            :document :70274-6])
+                                                                   15)}}}
           :physical-exam {:item aidbox.sdc/SectionItem
                           :title "Physical Exam"
                           :items {:vitals   {:item aidbox.sdc/FormItem
                                              :form  aidbox.forms.vitals/VitalsForm}
                                   :physical-exam   {:item aidbox.sdc/FormItem
                                                     :sdc/inject {:ros/general-comment
-                                                                 (lisp/get-in [:items :visit-overview
-                                                                               :items :review-of-systems
-                                                                               :document :loinc-71407-1-comment])}
+                                                                 (get-in [:items :visit-overview
+                                                                          :items :review-of-systems
+                                                                          :document :loinc-71407-1-comment])}
                                                     :form  aidbox.forms.physical-exam/PhysicalExamForm}}}
           :medication-and-allergy {:item aidbox.sdc/SectionItem
                                    :title "Allergies"

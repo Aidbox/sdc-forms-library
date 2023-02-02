@@ -14,7 +14,7 @@
 
  UrologicalScoreDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
-  :source {:uri "https://pubmed.ncbi.nlm.nih.gov/1279218/"
+  :source {:url "https://pubmed.ncbi.nlm.nih.gov/1279218/"
            :system "https://loinc.org"
            :code "80883-2"}
   :zen/desc "This form consists of 7 questions used to assess the severity of symptoms associated with benign prostatic hyperplasia."

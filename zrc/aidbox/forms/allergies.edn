@@ -81,14 +81,14 @@
   {:type aidbox.sdc/col
    :children
    [{:bind [:type]
-     :sdc/display-when (lisp/= (lisp/count (lisp/matcho-filter (lisp/get-in lisp/global [:allergies])
-                                                               {:substance {:code "409137002"}})) 0)}
+     :sdc/display-when (= (count (matcho-filter (get-in global [:allergies])
+                                                {:substance {:code "409137002"}})) 0)}
     {:bind [:type]
-     :sdc/display-when (lisp/> (lisp/count (lisp/matcho-filter (lisp/get-in lisp/global [:allergies])
-                                                               {:substance {:code "409137002"}})) 0)}
+     :sdc/display-when (> (count (matcho-filter (get-in global [:allergies])
+                                                {:substance {:code "409137002"}})) 0)}
     {:bind [:reaction]}
     {:bind [:other-reaction]
-     :sdc/display-when (lisp/> (lisp/count (lisp/matcho-filter (lisp/get-in [:reaction]) {:code "782197009"})) 0)}
+     :sdc/display-when (> (count (matcho-filter (get-in [:reaction]) {:code "782197009"})) 0)}
     {:bind [:substance]}
     {:bind [:notes]}]}}
 
@@ -115,93 +115,93 @@
               :bind [:reaction 0 :display]}]
    :quick-row [{:label "NKDA"
                 :type aidbox.sdc/add-value-button
-                :sdc/disable-when (lisp/> (lisp/- (lisp/count (lisp/matcho-filter (lisp/get-in [:allergies])
-                                                                                  {:type {:code "418634005"} :status "active"}))
-                                                  (lisp/count (lisp/matcho-filter (lisp/get-in [:allergies])
-                                                                                  {:substance {:code "409137002"}}))) 0)
+                :sdc/disable-when (> (- (count (matcho-filter (get-in [:allergies])
+                                                              {:type {:code "418634005"} :status "active"}))
+                                        (count (matcho-filter (get-in [:allergies])
+                                                              {:substance {:code "409137002"}}))) 0)
                 :value {:status "active"
                         :type {:display "Drug", :code "418634005",
                                :system "https://snomed.ct"}
                         :substance {:code "409137002" :system "http://snomed.ct" :display "No Known Drug Allergies"}}}]
    :row-actions [{:type aidbox.sdc/grid-edit-button
                   :label "Edit"
-                  :sdc/display-when (lisp/not (lisp/= (lisp/get-in [:substance :code]) "409137002"))}
+                  :sdc/display-when (not (= (get-in [:substance :code]) "409137002"))}
                  {:label "Inactivate"
                   :type aidbox.sdc/set-value-button
                   :bind [:status]
                   :value "inactive"
-                  :sdc/display-when (lisp/and (lisp/not (lisp/= "inactive" (lisp/get-in [:status])))
-                                              (lisp/not (lisp/= "409137002" (lisp/get-in [:substance :code]))))}
+                  :sdc/display-when (and (not (= "inactive" (get-in [:status])))
+                                         (not (= "409137002" (get-in [:substance :code]))))}
                  {:label "Activate"
                   :type aidbox.sdc/set-value-button
                   :bind [:status]
                   :value "active"
-                  :sdc/display-when (lisp/and (lisp/= "inactive" (lisp/get-in [:status]))
-                                              (lisp/not (lisp/= "409137002" (lisp/get-in [:substance :code])))
-                                              (lisp/not
-                                                (lisp/and
-                                                  (lisp/= "418634005" (lisp/get-in [:type :code]))
-                                                  (lisp/> (lisp/count (lisp/matcho-filter
-                                                                        (lisp/get-in lisp/global [:allergies])
-                                                                        {:substance {:code "409137002"} :status "active"})) 0))))}]
+                  :sdc/display-when (and (= "inactive" (get-in [:status]))
+                                         (not (= "409137002" (get-in [:substance :code])))
+                                         (not
+                                          (and
+                                           (= "418634005" (get-in [:type :code]))
+                                           (> (count (matcho-filter
+                                                      (get-in global [:allergies])
+                                                      {:substance {:code "409137002"} :status "active"})) 0))))}]
 
    #_#_:filters [{:engine :matcho
-              :options [{:status "active"} {}]
-              :sdc/disable-when (lisp/< (lisp/count (lisp/matcho-filter (lisp/get-in [:allergies])
-                                                                        {:status "inactive"})) 1)
-              }]}}
+                  :options [{:status "active"} {}]
+                  :sdc/disable-when (< (count (matcho-filter (get-in [:allergies])
+                                                             {:status "inactive"})) 1)
+                  }]}}
 
  AllergiesLaunch
  {:zen/tags #{aidbox.sdc/Launch}
   :document AllergiesDocument
   :params {:encounter-id {:type zen/string}}
   :populate-engine aidbox.sdc/LispPopulate
-  :populate {:author    (lisp/get-in [:ctx :user])
-             :encounter {:id (lisp/get-in [:params :encounter-id])
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id])
                          :resourceType "Encounter"}
-             :patient   (lisp/sql {:select [:#> :resource [:subject]]
-                                   :from :Encounter
-                                   :where [:= :id (lisp/get-in [:params :encounter-id])]})
-             :allergies (lisp/sql* {:select  {:allergy ^:pg/obj {:id :id
-                                                                 :substance [:#> :resource [:reaction 0 :substance :coding 0]]
-                                                                 :status [:#>> :resource [:clinicalStatus :coding 0 :code]]
-                                                                 :notes [:#>> :resource [:note 0 :text]]
-                                                                 :type ^:pg/obj {:code [:#>> :resource [:code :coding 0 :code]]
-                                                                                 :display [:#>> :resource [:code :coding 0 :display]]
-                                                                                 :system [:#>> :resource [:code :coding 0 :system]]}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})
+             :allergies (sql* {:select  {:allergy ^:pg/obj {:id :id
+                                                            :substance [:#> :resource [:reaction 0 :substance :coding 0]]
+                                                            :status [:#>> :resource [:clinicalStatus :coding 0 :code]]
+                                                            :notes [:#>> :resource [:note 0 :text]]
+                                                            :type ^:pg/obj {:code [:#>> :resource [:code :coding 0 :code]]
+                                                                            :display [:#>> :resource [:code :coding 0 :display]]
+                                                                            :system [:#>> :resource [:code :coding 0 :system]]}
 
-                                                                 :reaction ^:pg/fn [:to_jsonb [:pg/sql "knife_extract(resource#>'{reaction}', '[[\"manifestation\",0,\"coding\",0]]')"]]}}
-                                    :from :AllergyIntolerance
-                                    :where [:and
-                                            [:=
-                                             [:#>> :resource [:patient :id]]
-                                             (lisp/sql
-                                               {:select [:#> :resource [:subject :id]]
-                                                :from :Encounter
-                                                :where [:= :id (lisp/get-in [:params :encounter-id])]})]]})}}
+                                                            :reaction ^:pg/fn [:to_jsonb [:pg/sql "knife_extract(resource#>'{reaction}', '[[\"manifestation\",0,\"coding\",0]]')"]]}}
+                               :from :AllergyIntolerance
+                               :where [:and
+                                       [:=
+                                        [:#>> :resource [:patient :id]]
+                                        (sql
+                                         {:select [:#> :resource [:subject :id]]
+                                          :from :Encounter
+                                          :where [:= :id (get-in [:params :encounter-id])]})]]})}}
 
  ;; valueset populates workflow?
  AllergiesFinalize
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
   :document AllergiesDocument
   :export-engine aidbox.sdc/LispExport
-  :create [#_(lisp/rpc {:method 'aidbox.sdc/convert-document
-                      :params {:id (lisp/get :id)}})
-           (lisp/for [lisp/i (lisp/get-in [:allergies])]
-             {:id (lisp/get-in lisp/i [:id])
-              :clinicalStatus {:coding [{:code (lisp/or (lisp/get-in lisp/i [:status]) "active")}]}
+  :create [#_(rpc {:method 'aidbox.sdc/convert-document
+                   :params {:id (get :id)}})
+           (for [i (get-in [:allergies])]
+             {:id (get-in i [:id])
+              :clinicalStatus {:coding [{:code (or (get-in i [:status]) "active")}]}
               :verificationStatus {:coding [{:code "confirmed"}]}
-              :code {:coding [{:code (lisp/get-in lisp/i [:type :code])
-                               :display (lisp/get-in lisp/i [:type :display])
-                               :system (lisp/get-in lisp/i [:type :system])}]}
-              :reaction (lisp/for [lisp/j (lisp/get-in lisp/i [:reaction])]
-                          {:manifestation [{:coding [lisp/j]}]
-                           :substance {:coding [(lisp/get-in lisp/i [:substance])]}})
-              :note (lisp/when (lisp/get-in lisp/i [:notes])
-                      [{:text (lisp/get-in lisp/i [:notes])}])
-              :patient (lisp/get :patient)
-              :encounter (lisp/get :encounter)
-              :recordedDate (lisp/date)
+              :code {:coding [{:code (get-in i [:type :code])
+                               :display (get-in i [:type :display])
+                               :system (get-in i [:type :system])}]}
+              :reaction (for [j (get-in i [:reaction])]
+                          {:manifestation [{:coding [j]}]
+                           :substance {:coding [(get-in i [:substance])]}})
+              :note (when (get-in i [:notes])
+                      [{:text (get-in i [:notes])}])
+              :patient (get :patient)
+              :encounter (get :encounter)
+              :recordedDate (date)
               :resourceType "AllergyIntolerance"})]}
 
  AllergiesForm
