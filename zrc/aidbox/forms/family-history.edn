@@ -1,0 +1,76 @@
+{ns aidbox.forms.family-history
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+
+ FamilyHistoryDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Family History Document"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:paternal {:text "Paternal" :type zen/string}
+         :maternal {:text "Maternal" :type zen/string}
+         :siblings {:text "Siblings" :type zen/string}
+         :children {:text "Children" :type zen/string}}}
+
+ FamilyHistoryLayout
+ {:zen/tags #{aidbox.sdc/Layout}
+  :document FamilyHistoryDocument
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/col
+   :children
+   [{:bind [:paternal]}
+    {:bind [:maternal]}
+    {:bind [:siblings]}
+    {:bind [:children]}]}}
+
+ FamilyHistoryLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document FamilyHistoryDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})}}
+
+ FamilyHistoryFinalize
+ {:zen/tags #{aidbox.sdc/Finalize}
+  :document FamilyHistoryDocument
+  :export-engine aidbox.sdc/LispExport
+  :create [(when (get :paternal)
+             {:resourceType "FamilyMemberHistory"
+              :status "completed"
+              :date (date)
+              :patient (get :patient)
+              :relationship {:coding [{:code "FTH" :display "Father" :system "http://terminology.hl7.org/CodeSystem/v3-RoleCode"}]}
+              :note [{:text (get :paternal), :time (date)}]})
+           (when (get :maternal)
+             {:resourceType "FamilyMemberHistory"
+              :status "completed"
+              :date (date)
+              :patient (get :patient)
+              :relationship {:coding [{:code "MTH" :display "Mother" :system "http://terminology.hl7.org/CodeSystem/v3-RoleCode"}]}
+              :note [{:text (get :maternal), :time (date)}]})
+           (when (get :siblings)
+             {:resourceType "FamilyMemberHistory"
+              :status "completed"
+              :date (date)
+              :patient (get :patient)
+              :relationship {:coding [{:code "SIB" :display "Sibling" :system "http://terminology.hl7.org/CodeSystem/v3-RoleCode"}]}
+              :note [{:text (get :siblings), :time (date)}]})
+           (when (get :children)
+             {:resourceType "FamilyMemberHistory"
+              :status "completed"
+              :date (date)
+              :patient (get :patient)
+              :relationship {:coding [{:code "CHILD" :display "Child" :system "http://terminology.hl7.org/CodeSystem/v3-RoleCode"}]}
+              :note [{:text (get :children), :time (date)}]})]}
+
+ FamilyHistoryForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Family History"
+  :document FamilyHistoryDocument
+  :layout   FamilyHistoryLayout
+  :launch   FamilyHistoryLaunch
+  :finalize FamilyHistoryFinalize}}

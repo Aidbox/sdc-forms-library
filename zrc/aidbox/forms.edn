@@ -14,5 +14,6 @@
           aidbox.forms.advanced-illness-and-frailty
           aidbox.forms.pain-assessment
           aidbox.forms.living-arrangements
+          aidbox.forms.family-history
           }
  }

@@ -55,16 +55,14 @@ Did you notice any of these today or in the last 12 months?"
   :layout
   {:type aidbox.sdc/col
    :children
-   [{:type aidbox.sdc/col
-     :label "**If positive, may require referral to APS or SW for additional support.**"
-     :children
-     [{:bind [:easi-1]}
-      {:bind [:easi-2]}
-      {:bind [:easi-3]}
-      {:bind [:easi-4]}
-      {:bind [:easi-5]}
-      {:bind [:easi-6]}
-      {:bind [:easi-score :display] :label "EASI Score"}]}]}}
+   [{:type aidbox.sdc/label :label "**If positive, may require referral to APS or SW for additional support.**"}
+    {:bind [:easi-1]}
+    {:bind [:easi-2]}
+    {:bind [:easi-3]}
+    {:bind [:easi-4]}
+    {:bind [:easi-5]}
+    {:bind [:easi-6]}
+    {:bind [:easi-score :display] :label "EASI Score"}]}}
 
  EASILaunch
  {:zen/tags #{aidbox.sdc/Launch}
