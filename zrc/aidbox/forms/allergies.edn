@@ -14,64 +14,32 @@
                   :keys {:id {:type zen/string},
                          :status {:type zen/string,
                                   :sdc/default-value "active"},
-                         :substance {:type zen/map,
-                                     :zen/desc "Agent/substance",
-                                     :sdc-type aidbox.sdc/choice,
+                         :substance {:text "Agent/substance",
                                      :confirms #{aidbox.sdc.fhir/coding},
-                                     :enum [{:value {:display "Latex",
-                                                     :code "111088007",
-                                                     :system "http://snomed.ct"}}
-                                            {:value {:display "Pollen",
-                                                     :code "256259004",
-                                                     :system "http://snomed.ct"}}
-                                            {:value {:display "Grass pollen",
-                                                     :code "256277009",
-                                                     :system "http://snomed.ct"}}
-                                            {:value {:display "Horse dander",
-                                                     :code "256417003",
-                                                     :system "http://snomed.ct"}}]},
-                         :type {:type zen/map,
-                                :zen/desc "Type",
+                                     :enum [{:value {:display "Latex", :code "111088007", :system "http://snomed.ct"}}
+                                            {:value {:display "Pollen", :code "256259004", :system "http://snomed.ct"}}
+                                            {:value {:display "Grass pollen", :code "256277009", :system "http://snomed.ct"}}
+                                            {:value {:display "Horse dander", :code "256417003", :system "http://snomed.ct"}}]},
+                         :type {:text "Type",
                                 :confirms #{aidbox.sdc.fhir/coding},
-                                :sdc-type aidbox.sdc/choice,
-                                :enum [{:value {:display "Drug",
-                                                :code "418634005",
-                                                :system "http://snomed.ct"}}
-                                       {:value {:display "Food",
-                                                :code "414285001",
-                                                :system "http://snomed.ct"}}
-                                       {:value {:display "Enviornmental",
-                                                :code "426232007",
-                                                :system "http://snomed.ct"}}]},
-                         :reaction {:type zen/vector,
-                                    :sdc-type aidbox.sdc/choice,
+                                :enum [{:value {:display "Drug", :code "418634005", :system "http://snomed.ct"}}
+                                       {:value {:display "Food", :code "414285001", :system "http://snomed.ct"}}
+                                       {:value {:display "Enviornmental", :code "426232007", :system "http://snomed.ct"}}]},
+                         :reaction {:sdc-type aidbox.sdc/choice,
+                                    :type zen/vector,
                                     :zen/desc "Reaction",
-                                    :every {:type zen/map,
-                                            :zen/desc "Reaction",
-                                            :sdc-type aidbox.sdc/choice,
+                                    :every {:text "Reaction",
                                             :confirms #{aidbox.sdc.fhir/coding},
-                                            :enum [{:value {:display "Anaphylaxis",
-                                                            :code "39579001",
-                                                            :system "http://snomed.ct"}}
-                                                   {:value {:display "Headache",
-                                                            :code "25064002",
-                                                            :system "http://snomed.ct"}}
-                                                   {:value {:display "Hives (Wheal)",
-                                                            :code "247472004",
-                                                            :system "http://snomed.ct"}}
-                                                   {:value {:display "Nausea",
-                                                            :code "422587007",
-                                                            :system "http://snomed.ct"}}
-                                                   {:value {:display "Vomiting",
-                                                            :code "422400008",
-                                                            :system "http://snomed.ct"}}
-                                                   {:value {:display "Other",
-                                                            :code "782197009",
-                                                            :system "http://snomed.ct"}}]}},
+                                            :enum [{:value {:display "Anaphylaxis", :code "39579001", :system "http://snomed.ct"}}
+                                                   {:value {:display "Headache", :code "25064002", :system "http://snomed.ct"}}
+                                                   {:value {:display "Hives (Wheal)", :code "247472004", :system "http://snomed.ct"}}
+                                                   {:value {:display "Nausea", :code "422587007", :system "http://snomed.ct"}}
+                                                   {:value {:display "Vomiting", :code "422400008", :system "http://snomed.ct"}}
+                                                   {:value {:display "Other", :code "782197009", :system "http://snomed.ct"}}]}},
                          :other-reaction {:type zen/string,
-                                          :zen/desc "Other reaction"},
+                                          :text "Other reaction"},
                          :notes {:type zen/string,
-                                 :zen/desc "Notes"}}}}}}
+                                 :text "Notes"}}}}}}
 
 
  AllergyInplaceForm
@@ -92,7 +60,6 @@
     {:bind [:substance]}
     {:bind [:notes]}]}}
 
- ;; dates: added date, inactivate date
  AllergiesLayout
  {:zen/tags #{aidbox.sdc/Layout}
   :document AllergiesDocument
@@ -102,8 +69,7 @@
    :bind [:allergies]
    :new-form {:form-ref AllergyInplaceForm}
    :edit-form {:form-ref AllergyInplaceForm}
-   :empty-widget {:type aidbox.sdc/label
-                  :label "No active allergies"}
+   :empty-widget {:type aidbox.sdc/label :label "No active allergies"}
    :columns [{:label "Agent / Substance"
               :type aidbox.sdc/label
               :bind [:substance :display]}
@@ -138,12 +104,11 @@
                   :value "active"
                   :sdc/display-when (and (= "inactive" (get-in [:status]))
                                          (not (= "409137002" (get-in [:substance :code])))
-                                         (not
-                                          (and
-                                           (= "418634005" (get-in [:type :code]))
-                                           (> (count (matcho-filter
-                                                      (get-in global [:allergies])
-                                                      {:substance {:code "409137002"} :status "active"})) 0))))}]
+                                         (not (and
+                                               (= "418634005" (get-in [:type :code]))
+                                               (> (count (matcho-filter
+                                                          (get-in global [:allergies])
+                                                          {:substance {:code "409137002"} :status "active"})) 0))))}]
 
    #_#_:filters [{:engine :matcho
                   :options [{:status "active"} {}]
@@ -156,38 +121,33 @@
   :document AllergiesDocument
   :params {:encounter-id {:type zen/string}}
   :populate-engine aidbox.sdc/LispPopulate
-  :populate {:author    (get-in [:ctx :user])
-             :encounter {:id (get-in [:params :encounter-id])
-                         :resourceType "Encounter"}
-             :patient   (sql {:select [:#> :resource [:subject]]
-                              :from :Encounter
-                              :where [:= :id (get-in [:params :encounter-id])]})
-             :allergies (sql* {:select  {:allergy ^:pg/obj {:id :id
-                                                            :substance [:#> :resource [:reaction 0 :substance :coding 0]]
-                                                            :status [:#>> :resource [:clinicalStatus :coding 0 :code]]
-                                                            :notes [:#>> :resource [:note 0 :text]]
-                                                            :type ^:pg/obj {:code [:#>> :resource [:code :coding 0 :code]]
-                                                                            :display [:#>> :resource [:code :coding 0 :display]]
-                                                                            :system [:#>> :resource [:code :coding 0 :system]]}
+  :populate (let [patient (sql {:select [:#> :resource [:subject]]
+                                :from :Encounter
+                                :where [:= :id (get-in [:params :encounter-id])]})]
+              {:author    (get-in [:ctx :user])
+               :encounter {:id (get-in [:params :encounter-id])
+                           :resourceType "Encounter"}
+               :patient   patient
+               :allergies
+               (sql* {:select
+                      {:allergy
+                       ^:pg/obj {:id :id
+                                 :substance [:#> :resource [:reaction 0 :substance :coding 0]]
+                                 :status [:#>> :resource [:clinicalStatus :coding 0 :code]]
+                                 :notes [:#>> :resource [:note 0 :text]]
+                                 :type ^:pg/obj {:code [:#>> :resource [:code :coding 0 :code]]
+                                                 :display [:#>> :resource [:code :coding 0 :display]]
+                                                 :system [:#>> :resource [:code :coding 0 :system]]}
+                                 :reaction ^:pg/fn [:to_jsonb [:pg/sql "knife_extract(resource#>'{reaction}', '[[\"manifestation\",0,\"coding\",0]]')"]]}}
+                      :from :AllergyIntolerance
+                      :where [:= [:#>> :resource [:patient :id]] (get patient :id)]})})}
 
-                                                            :reaction ^:pg/fn [:to_jsonb [:pg/sql "knife_extract(resource#>'{reaction}', '[[\"manifestation\",0,\"coding\",0]]')"]]}}
-                               :from :AllergyIntolerance
-                               :where [:and
-                                       [:=
-                                        [:#>> :resource [:patient :id]]
-                                        (sql
-                                         {:select [:#> :resource [:subject :id]]
-                                          :from :Encounter
-                                          :where [:= :id (get-in [:params :encounter-id])]})]]})}}
 
- ;; valueset populates workflow?
  AllergiesFinalize
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
   :document AllergiesDocument
   :export-engine aidbox.sdc/LispExport
-  :create [#_(rpc {:method 'aidbox.sdc/convert-document
-                   :params {:id (get :id)}})
-           (for [i (get-in [:allergies])]
+  :create [(for [i (get-in [:allergies])]
              {:id (get-in i [:id])
               :clinicalStatus {:coding [{:code (or (get-in i [:status]) "active")}]}
               :verificationStatus {:coding [{:code "confirmed"}]}
