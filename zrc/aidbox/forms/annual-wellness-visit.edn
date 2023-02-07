@@ -3,7 +3,6 @@
           aidbox.forms.vitals
           aidbox.forms.phq2phq9
           aidbox.forms.gad-7
-          aidbox.forms.allergies
           aidbox.forms.ros
           aidbox.forms.physical-exam}
 
@@ -34,9 +33,5 @@
                                                                  (get-in [:items :visit-overview
                                                                           :items :review-of-systems
                                                                           :document :loinc-71407-1-comment])}
-                                                    :form  aidbox.forms.physical-exam/PhysicalExamForm}}}
-          :medication-and-allergy {:item aidbox.sdc/SectionItem
-                                   :title "Allergies"
-                                   :items {:allergies {:item aidbox.sdc/FormItem
-                                                       :form aidbox.forms.allergies/AllergiesForm}}}}}
+                                                    :form  aidbox.forms.physical-exam/PhysicalExamForm}}}}}
  }
