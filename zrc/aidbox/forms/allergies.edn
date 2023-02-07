@@ -25,8 +25,7 @@
                                 :enum [{:value {:display "Drug", :code "418634005", :system "http://snomed.ct"}}
                                        {:value {:display "Food", :code "414285001", :system "http://snomed.ct"}}
                                        {:value {:display "Enviornmental", :code "426232007", :system "http://snomed.ct"}}]},
-                         :reaction {:sdc-type aidbox.sdc/choice,
-                                    :type zen/vector,
+                         :reaction {:type zen/vector,
                                     :zen/desc "Reaction",
                                     :every {:text "Reaction",
                                             :confirms #{aidbox.sdc.fhir/coding},
@@ -75,7 +74,7 @@
               :bind [:substance :display]}
              {:label "Type"
               :type aidbox.sdc/label
-              :bind [:type]}
+              :bind [:type :display]}
              {:label "Reaction"
               :type aidbox.sdc/label
               :bind [:reaction 0 :display]}]
