@@ -359,8 +359,7 @@
    :children
    [{:bind [:code]}
     {:type aidbox.sdc/row
-     :children [{:bind [:surgeryDateTime]
-                 :controlOptions {:maxDate (date)}}
+     :children [{:bind [:surgeryDateTime]}
                 {:type aidbox.sdc/col}]}
     {:bind [:notes]}]}}
 
