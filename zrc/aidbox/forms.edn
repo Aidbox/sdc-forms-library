@@ -16,5 +16,6 @@
           aidbox.forms.living-arrangements
           aidbox.forms.family-history
           aidbox.forms.mdq
+          aidbox.forms.substance-use
           }
  }
