@@ -239,8 +239,7 @@ Liquor: 1.5 oz."
                                                      :zen/desc "Would you like help now?"}
                        ;; DSM-5 Drug End
                        }}
-         :dsm-drug-score {
-                          :type zen/number
+         :dsm-drug-score {:type zen/number
                           :sdc-type aidbox.sdc/calculated
                           :zen/desc "Patient has Substance Use Disorder based on DSM-5 Criteria"}}}
 
@@ -273,31 +272,28 @@ Liquor: 1.5 oz."
    [;; Nicotine Section
     {:bind [:nicotine :substance-use-nicotine]}
     {:type aidbox.sdc/fields
-
      :children
      [{:type aidbox.sdc/fields
        :sdc/display-when (lisp/get :enable-nicotine)
        :children
-       [{ :bind [:nicotine :substance-use-nicotine-types]}
-        { :bind [:nicotine :substance-use-nicotine-other]
+       [{:bind [:nicotine :substance-use-nicotine-types]}
+        {:bind [:nicotine :substance-use-nicotine-other]
          :sdc/display-when (lisp/get :enable-other-nicotine)}
-        { :bind [:nicotine :substance-use-nicotine-currently]}
-        { :bind [:nicotine :substance-use-nicotine-frequency]
+        {:bind [:nicotine :substance-use-nicotine-currently]}
+        {:bind [:nicotine :substance-use-nicotine-frequency]
          :sdc/display-when (lisp/get-in [:nicotine :substance-use-nicotine-currently])}
-        { :bind [:nicotine :substance-use-nicotine-document-use]}
-        { :bind [:nicotine :substance-use-nicotine-20-pack]}
-        { :bind [:nicotine :substance-use-nicotine-cessation-interest]}]}]}
+        {:bind [:nicotine :substance-use-nicotine-document-use]}
+        {:bind [:nicotine :substance-use-nicotine-20-pack]}
+        {:bind [:nicotine :substance-use-nicotine-cessation-interest]}]}]}
 
     ;; Alcohol Section
     {:bind [:alcohol :substance-use-alcohol]}
     {:type aidbox.sdc/fields
-
-
      :children
      [{:type aidbox.sdc/fields
        :sdc/display-when (lisp/get :enable-alcohol)
        :children
-       [{ :bind [:alcohol :substance-use-alcohol-types]}
+       [{:bind [:alcohol :substance-use-alcohol-types]}
         {:bind [:alcohol :substance-use-alcohol-frequency]}
         {:bind [:alcohol :substance-use-alcohol-frequency-qualifier]}
         {:bind [:alcohol :substance-use-alcohol-comments]}
@@ -317,151 +313,90 @@ Liquor: 1.5 oz."
                                (lisp/get-in [:alcohol :dsm-enabled-alcohol])
                                (lisp/get-in [:alcohol :dsm-enabled-alcohol-yes-default]))
            :children [{:type aidbox.sdc/fields
-
-                       :label "**Over the past 12 months, has the patient had any of below:**"
-
                        :children
-                       [{:type aidbox.sdc/fields
-                         }
-
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-1]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-2]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-3]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-4]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-5]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-6]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-7]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-8]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-9]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-10]}]}
-                        {:type aidbox.sdc/row
-
-                         :children [{
-                                     :bind [:alcohol :dsm :dsm-alcohol-11]}]}]}
+                       [{:type aidbox.sdc/label,
+                         :label "**Over the past 12 months, has the patient had any of below:**"}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-1]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-2]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-3]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-4]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-5]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-6]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-7]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-8]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-9]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-10]}]}
+                        {:type aidbox.sdc/row,
+                         :children [{:bind [:alcohol :dsm :dsm-alcohol-11]}]}]}
                       {:bind [:dsm-alcohol-score]
-                       :label "Patient has Alcohol Use Disorder based on DSM-5 Criteria"
+                       :label "Patient has Alcohol Use Disorder based on DSM-5 Criteria"}]}]}
 
-                       }]}]}
         {:type aidbox.sdc/row
          :sdc/display-when (lisp/get :enable-dsm-alcohol-help-questions)
          :children
-         [{ :bind [:alcohol :substance-use-alcohol-help-before]}
-          { :bind [:alcohol :substance-use-alcohol-help-now]}]}]}]}
+         [{:bind [:alcohol :substance-use-alcohol-help-before]}
+          {:bind [:alcohol :substance-use-alcohol-help-now]}]}]}]}
 
     ;; Drug Section
     {:bind [:drug :substance-use-drug]}
     {:type aidbox.sdc/fields
-
-
      :children
      [{:type aidbox.sdc/col
        :sdc/display-when (lisp/get-in [:drug :substance-use-drug])
        :children
-       [{ :bind [:drug :substance-use-drug-types]}
+       [{:bind [:drug :substance-use-drug-types]}
         {:sdc/display-when (lisp/get :enable-other-drug)
-          :bind [:drug :substance-use-drug-other]}
-        {
-         :sdc/display-when (lisp/not (lisp/= (lisp/get :possible-drug-dsm) true))
+         :bind [:drug :substance-use-drug-other]}
+        {:sdc/display-when (lisp/not (lisp/= (lisp/get :possible-drug-dsm) true))
          :bind [:drug :dsm-enabled-drug]}
-        {
-         :sdc/display-when (lisp/= (lisp/get :possible-drug-dsm) true)
+        {:sdc/display-when (lisp/= (lisp/get :possible-drug-dsm) true)
          :bind [:drug :dsm-enabled-drug-yes-default]}
-
         {:type aidbox.sdc/fields
-
-
          :children
          [{:type aidbox.sdc/fields
-
-           :label "**Over the past 12 months, has the patient had any of below:**"
-
            :sdc/display-when (lisp/get-in [:enabled-dsm-drug])
-
            :children
-           [{:type aidbox.sdc/fields
-             }
-
+           [{:type aidbox.sdc/label
+             :label "**Over the past 12 months, has the patient had any of below:**"}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-1]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-1]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-2]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-2]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-3]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-3]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-4]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-4]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-5]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-5]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-6]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-6]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-7]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-7]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-8]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-8]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-9]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-9]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-10]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-10]}]}
             {:type aidbox.sdc/row
-
-             :children [{
-                         :bind [:drug :dsm :dsm-drug-11]}]}
+             :children [{:bind [:drug :dsm :dsm-drug-11]}]}
             {:bind [:dsm-drug-score]
              :label "Patient has Substance Use Disorder based on DSM-5 Criteria"}]}]}
         {:type aidbox.sdc/row
          :sdc/display-when (lisp/get :enable-dsm-drug-help-questions)
          :children
-         [{ :bind [:drug :substance-use-drug-help-before]}
-          { :bind [:drug :substance-use-drug-help-now]}]}]}]}]}}
+         [{:bind [:drug :substance-use-drug-help-before]}
+          {:bind [:drug :substance-use-drug-help-now]}]}]}]}]}}
 
  SubstanceUseLaunch
  {:zen/tags #{aidbox.sdc/Launch}
@@ -563,8 +498,7 @@ Liquor: 1.5 oz."
                             :display "False"
                             :system "https://loinc.org"})]}}})
 
-
-           ;; Extract drug usage
+;; Extract drug usage
            (lisp/for [lisp/i (lisp/get-in [:drug :substance-use-drug-types])]
              (lisp/when (lisp/not (lisp/= (lisp/get-in lisp/i [:code]) "drug-other"))
                {:resourceType "Observation"
@@ -591,7 +525,4 @@ Liquor: 1.5 oz."
   :document SubstanceUseDocument
   :layout   SubstanceUseLayout
   :launch   SubstanceUseLaunch
-  :finalize SubstanceUseFinalize}
-
-
- }
+  :finalize SubstanceUseFinalize}}
