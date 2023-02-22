@@ -16,5 +16,6 @@
           aidbox.forms.family-history
           aidbox.forms.mdq
           aidbox.forms.substance-use
+          aidbox.forms.past-surgical-history
           }
  }
