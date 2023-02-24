@@ -1,0 +1,402 @@
+{ns aidbox.forms.problems-list
+ import #{zenbox aidbox.sdc  aidbox.sdc.fhir}
+
+ Problem
+ {:zen/tags #{zen/schema}
+  :zen/desc "SnomedCT Conditions (disorders)"
+  :confirms #{aidbox.sdc.fhir/coding}
+  :enum [{:value {:code "88996004", :system "http://snomed.info/sct", :display "Lichen"}}
+         {:value {:code "48347002", :system "http://snomed.info/sct", :display "Humidifier lung"}}
+         {:value {:code "1119304009", :system "http://snomed.info/sct", :display "Chronic post-COVID-19 syndrome"}}
+         {:value {:code "234994006", :system "http://snomed.info/sct", :display "Chronic gingival condition"}}
+         {:value {:code "400190005", :system "http://snomed.info/sct", :display "Atrophic condition of skin"}}
+         {:value {:code "402757006", :system "http://snomed.info/sct", :display "Drug-induced oral condition"}}
+         {:value {:code "191447007", :system "http://snomed.info/sct", :display "Organic psychotic condition"}}
+         {:value {:code "414025005", :system "http://snomed.info/sct", :display "Disorder of fetus or newborn"}}
+         {:value {:code "9760005", :system "http://snomed.info/sct", :display "Deferred diagnosis on Axis I"}}
+         {:value {:code "49271002", :system "http://snomed.info/sct", :display "Deferred diagnosis on Axis II"}}
+         {:value {:code "193844000", :system "http://snomed.info/sct", :display "Keratoconus, stable condition"}}
+         {:value {:code "25029006", :system "http://snomed.info/sct", :display "Deferred diagnosis on Axis III"}}
+         {:value {:code "402586007", :system "http://snomed.info/sct", :display "Secondary eczematous condition"}}
+         {:value {:code "24782002", :system "http://snomed.info/sct", :display "Hypertrophic condition of skin"}}
+         {:value {:code "238602009", :system "http://snomed.info/sct", :display "Psoriasis with eczema"}}
+         {:value {:code "268957000", :system "http://snomed.info/sct", :display "Neurotic condition, insight present"}}
+         {:value {:code "428708005", :system "http://snomed.info/sct", :display "Secondary parasomnia"}}
+         {:value {:code "268958005", :system "http://snomed.info/sct", :display "Poor insight into neurotic condition"}}
+         {:value {:code "201307004", :system "http://snomed.info/sct", :display "Scar conditions and fibrosis of skin"}}
+         {:value {:code "846641006", :system "http://snomed.info/sct", :display "Respiratory condition caused by vapors"}}
+         {:value {:code "47374004", :system "http://snomed.info/sct", :display "Tarsal tunnel syndrome"}}
+         {:value {:code "17849001", :system "http://snomed.info/sct", :display "Respiratory condition of fetus OR newborn"}}
+         {:value {:code "234997004", :system "http://snomed.info/sct", :display "Chronic gingival granulomatous condition"}}
+         {:value {:code "69588003", :system "http://snomed.info/sct", :display "Erythema chronica migrans"}}
+         {:value {:code "363246002", :system "http://snomed.info/sct", :display "Nutritional deficiency associated condition"}}
+         {:value {:code "28676002", :system "http://snomed.info/sct", :display "Mood disorder with manic features due to general medical condition"}}
+         {:value {:code "724764007", :system "http://snomed.info/sct", :display "Chorea co-occurrent and due to Huntington disease-like condition"}}
+         {:value {:code "846634000", :system "http://snomed.info/sct", :display "Chronic respiratory condition caused by fumes"}}
+         {:value {:code "846635004", :system "http://snomed.info/sct", :display "Chronic respiratory condition caused by vapors"}}
+         {:value {:code "281581004", :system "http://snomed.info/sct", :display "Poor condition at birth without known asphyxia"}}
+         {:value {:code "61170000", :system "http://snomed.info/sct", :display "Stomatitis"}}
+         {:value {:code "846640007", :system "http://snomed.info/sct", :display "Respiratory condition caused by chemical fumes"}}
+         {:value {:code "37739004", :system "http://snomed.info/sct", :display "Mood disorder due to a general medical condition"}}
+         {:value {:code "52910006", :system "http://snomed.info/sct", :display "Anxiety disorder due to a general medical condition"}}
+         {:value {:code "268612007", :system "http://snomed.info/sct", :display "Senile and presenile organic psychotic conditions"}}
+         {:value {:code "75837004", :system "http://snomed.info/sct", :display "Mood disorder with depressive features due to general medical condition"}}
+         {:value {:code "27971000119105", :system "http://snomed.info/sct", :display "Insomnia co-occurrent and due to medical condition"}}
+         {:value {:code "111447004", :system "http://snomed.info/sct", :display "Placental condition affecting management of mother"}}
+         {:value {:code "106009009", :system "http://snomed.info/sct", :display "Fetal condition affecting obstetrical care of mother"}}
+         {:value {:code "846636003", :system "http://snomed.info/sct", :display "Chronic respiratory condition caused by chemical fumes"}}
+         {:value {:code "41168002", :system "http://snomed.info/sct", :display "Condition in fetus originating in the perinatal period"}}
+         {:value {:code "89385006", :system "http://snomed.info/sct", :display "Limited duction associated with other condition of eye"}}
+         {:value {:code "81402009", :system "http://snomed.info/sct", :display "Fetal or neonatal effect of condition of umbilical cord"}}
+         {:value {:code "106008001", :system "http://snomed.info/sct", :display "Delivery AND/OR maternal condition affecting management"}}
+         {:value {:code "846642004", :system "http://snomed.info/sct", :display "Respiratory condition caused by chemical fumes and vapors"}}
+         {:value {:code "109456000", :system "http://snomed.info/sct", :display "Multiple supernumerary teeth related to systemic condition"}}
+         {:value {:code "105451000119102", :system "http://snomed.info/sct", :display "Amnestic disorder associated with general medical condition"}}
+         {:value {:code "199314001", :system "http://snomed.info/sct", :display "Normal delivery but ante- or post- natal conditions present"}}
+         {:value {:code "22419002", :system "http://snomed.info/sct", :display "Mood disorder with mixed features due to general medical condition"}}
+         {:value {:code "235042004", :system "http://snomed.info/sct", :display "Melanin pigmentation of oral mucosa associated with systemic condition"}}
+         {:value {:code "127701000119109", :system "http://snomed.info/sct", :display "Congenital positive ulnar variant of wrist"}}
+         {:value {:code "77486005", :system "http://snomed.info/sct", :display "Mood disorder with major depressive-like episode due to general medical condition"}}
+         {:value {:code "12011000119105", :system "http://snomed.info/sct", :display "Congenital pes valgo planus"}}
+         {:value {:code "708654005", :system "http://snomed.info/sct", :display "Convergent root proximity"}}
+         {:value {:code "36813001", :system "http://snomed.info/sct", :display "Placenta previa"}}
+         {:value {:code "788465007", :system "http://snomed.info/sct", :display "Repetitive motion disorder"}}
+         {:value {:code "25201000119104", :system "http://snomed.info/sct", :display "Transitional lumbosacral vertebra"}}
+         {:value {:code "703234002", :system "http://snomed.info/sct", :display "Familial hyperaldosteronism type 3"}}
+         {:value {:code "609389009", :system "http://snomed.info/sct", :display "High risk of heart failure, stage B"}}
+         {:value {:code "128207002", :system "http://snomed.info/sct", :display "Giant axonal neuropathy"}}
+         {:value {:code "715395008", :system "http://snomed.info/sct", :display "Familial atrial fibrillation"}}
+         {:value {:code "715924009", :system "http://snomed.info/sct", :display "Disruptive mood dysregulation disorder"}}
+         {:value {:code "704190008", :system "http://snomed.info/sct", :display "Massive ovarian edema"}}
+         {:value {:code "22649008", :system "http://snomed.info/sct", :display "Photodermatitis"}}
+         {:value {:code "772791006", :system "http://snomed.info/sct", :display "Sarcopenia"}}
+         {:value {:code "703264005", :system "http://snomed.info/sct", :display "Secondary osteoporosis"}}
+         {:value {:code "707606004", :system "http://snomed.info/sct", :display "Non-plaque induced gingival disease"}}
+         {:value {:code "716697002", :system "http://snomed.info/sct", :display "Hereditary persistence of alpha-fetoprotein"}}
+         {:value {:code "703318003", :system "http://snomed.info/sct", :display "Neoaortic valve stenosis"}}
+         {:value {:code "29268000", :system "http://snomed.info/sct", :display "Contact hypersensitivity"}}
+         {:value {:code "715316005", :system "http://snomed.info/sct", :display "Neurogenic arthrogryposis multiplex congenita"}}
+         {:value {:code "717799003", :system "http://snomed.info/sct", :display "Superior semicircular canal dehiscence syndrome"}}
+         {:value {:code "237061004", :system "http://snomed.info/sct", :display "Ovarian remnant syndrome"}}
+         {:value {:code "717181004", :system "http://snomed.info/sct", :display "Hyperprolinemia type 2"}}
+         {:value {:code "703195007", :system "http://snomed.info/sct", :display "Neoaortic valve regurgitation"}}
+         {:value {:code "703196008", :system "http://snomed.info/sct", :display "Postprocedural stenosis of tricuspid valve"}}
+         {:value {:code "703185000", :system "http://snomed.info/sct", :display "Neopulmonary valve regurgitation"}}
+         {:value {:code "719408007", :system "http://snomed.info/sct", :display "Lethal omphalocele with cleft palate syndrome"}}
+         {:value {:code "709073001", :system "http://snomed.info/sct", :display "Neurocognitive disorder"}}
+         {:value {:code "723829000", :system "http://snomed.info/sct", :display "Pulmonary fibrosis, hepatic hyperplasia, bone marrow hypoplasia syndrome"}}
+         {:value {:code "732928005", :system "http://snomed.info/sct", :display "Aplasia of trochlea of humerus"}}
+         {:value {:code "703619001", :system "http://snomed.info/sct", :display "Pelvic girdle pain"}}
+         {:value {:code "770761005", :system "http://snomed.info/sct", :display "Phalangeal microgeodic syndrome"}}
+         {:value {:code "765471005", :system "http://snomed.info/sct", :display "X-linked intellectual disability, hypogonadism, ichthyosis, obesity, short stature syndrome"}}
+         {:value {:code "784332006", :system "http://snomed.info/sct", :display "Spondyloarthritis"}}
+         {:value {:code "703186004", :system "http://snomed.info/sct", :display "Neopulmonary valve stenosis"}}
+         {:value {:code "1237339005", :system "http://snomed.info/sct", :display "Severe primary trimethylaminuria"}}
+         {:value {:code "719306007", :system "http://snomed.info/sct", :display "Steatocystoma multiplex with natal tooth syndrome"}}
+         {:value {:code "13003007", :system "http://snomed.info/sct", :display "Cystathioninuria"}}
+         {:value {:code "1260096003", :system "http://snomed.info/sct", :display "Wasting syndrome due to acquired immunodeficiency syndrome"}}
+         {:value {:code "723499000", :system "http://snomed.info/sct", :display "Ring dermoid of cornea"}}
+         {:value {:code "721057002", :system "http://snomed.info/sct", :display "Thoracic insufficiency syndrome"}}
+         {:value {:code "1230343006", :system "http://snomed.info/sct", :display "Distal hereditary motor neuropathy type 2"}}
+         {:value {:code "715402001", :system "http://snomed.info/sct", :display "Hereditary glucocorticoid resistance"}}
+         {:value {:code "1217207008", :system "http://snomed.info/sct", :display "Congenital oculomotor nerve palsy"}}
+         {:value {:code "723453002", :system "http://snomed.info/sct", :display "Pterygia, heart anomaly, autosomal recessive inheritance, vertebral defect, ear anomaly, radial defect syndrome"}}
+         {:value {:code "715533002", :system "http://snomed.info/sct", :display "Microcephaly, microphthalmia, ectrodactyly of lower limbs and prognathism syndrome"}}
+         {:value {:code "719164000", :system "http://snomed.info/sct", :display "Symmetrical thalamic calcification"}}
+         {:value {:code "389239007", :system "http://snomed.info/sct", :display "Raine dysplasia"}}
+         {:value {:code "1263461006", :system "http://snomed.info/sct", :display "Isolated congenital distichiasis"}}
+         {:value {:code "719379001", :system "http://snomed.info/sct", :display "Microcephalus with cardiac defect and lung malsegmentation syndrome"}}
+         {:value {:code "1230314003", :system "http://snomed.info/sct", :display "Fecal incontinence following creation of ileo-anal pouch"}}
+         {:value {:code "1230066003", :system "http://snomed.info/sct", :display "Isolated microspherophakia"}}
+         {:value {:code "726629006", :system "http://snomed.info/sct", :display "Scalp defect postaxial polydactyly syndrome"}}
+         {:value {:code "773489008", :system "http://snomed.info/sct", :display "Hereditary cryohydrocytosis with normal stomatin"}}
+         {:value {:code "719839000", :system "http://snomed.info/sct", :display "Tubular renal disease with cardiomyopathy syndrome"}}
+         {:value {:code "764460003", :system "http://snomed.info/sct", :display "Spondyloepimetaphyseal dysplasia anauxetic type"}}
+         {:value {:code "715529009", :system "http://snomed.info/sct", :display "Progressive deafness with stapes fixation"}}
+         {:value {:code "719043002", :system "http://snomed.info/sct", :display "Vertebral abnormality, anal atresia, cardiac abnormality, tracheo-esophageal fistula, renal anomaly, limb defect syndrome with hydrocephalus"}}
+         {:value {:code "1187194006", :system "http://snomed.info/sct", :display "Chronic enteropathy associated with solute carrier organic anion transporter family member 2A1 gene"}}
+         {:value {:code "722032005", :system "http://snomed.info/sct", :display "Karsch Neugebauer syndrome"}}
+         {:value {:code "1186656004", :system "http://snomed.info/sct", :display "Congenital deficiency of cochlear nerve"}}
+         {:value {:code "722031003", :system "http://snomed.info/sct", :display "Kapur Toriello syndrome"}}
+         {:value {:code "723552005", :system "http://snomed.info/sct", :display "Transient neonatal multiple acyl-coenzyme A dehydrogenase deficiency"}}
+         {:value {:code "719158007", :system "http://snomed.info/sct", :display "Syndactyly type 4"}}
+         {:value {:code "702829000", :system "http://snomed.info/sct", :display "Warsaw breakage syndrome"}}
+         {:value {:code "733031004", :system "http://snomed.info/sct", :display "Epilepsy, microcephaly, skeletal dysplasia syndrome"}}
+         {:value {:code "723336008", :system "http://snomed.info/sct", :display "Fallot complex with intellectual disability and growth delay syndrome"}}
+         {:value {:code "771309000", :system "http://snomed.info/sct", :display "Autosomal recessive lymphoproliferative disease"}}
+         {:value {:code "732262003", :system "http://snomed.info/sct", :display "Marfanoid syndrome De Silva type"}}
+         {:value {:code "1234823004", :system "http://snomed.info/sct", :display "Idiopathic peliosis hepatis"}}
+         {:value {:code "719689005", :system "http://snomed.info/sct", :display "Multiple epiphyseal dysplasia Beighton type"}}
+         {:value {:code "1169365006", :system "http://snomed.info/sct", :display "Aquagenic palmoplantar keratoderma"}}
+         {:value {:code "1197364005", :system "http://snomed.info/sct", :display "Idiopathic spontaneous coronary artery dissection"}}
+         {:value {:code "716180009", :system "http://snomed.info/sct", :display "Odontoma dysphagia syndrome"}}
+         {:value {:code "1231182008", :system "http://snomed.info/sct", :display "Isolated osteopoikilosis"}}
+         {:value {:code "769036006", :system "http://snomed.info/sct", :display "Acroangiodermatitis of skin"}}
+         {:value {:code "1197365006", :system "http://snomed.info/sct", :display "Familial cavitary optic disc anomaly"}}
+         {:value {:code "1260190007", :system "http://snomed.info/sct", :display "Ventilator-induced diaphragmatic dysfunction"}}
+         {:value {:code "1197489003", :system "http://snomed.info/sct", :display "Familial chylomicronemia syndrome"}}
+         {:value {:code "719377004", :system "http://snomed.info/sct", :display "Microcephalus with albinism and digital anomaly syndrome"}}
+         {:value {:code "719687007", :system "http://snomed.info/sct", :display "Gingival fibromatosis with facial dysmorphism syndrome"}}
+         {:value {:code "726082003", :system "http://snomed.info/sct", :display "Immunotactoid glomerulonephritis"}}
+         {:value {:code "763532008", :system "http://snomed.info/sct", :display "Familial nasal acilia"}}
+         {:value {:code "724170007", :system "http://snomed.info/sct", :display "Mesoaxial synostotic syndactyly with phalangeal reduction syndrome"}}
+         {:value {:code "719688002", :system "http://snomed.info/sct", :display "Multiple epiphyseal dysplasia Al-Gazali type"}}
+         {:value {:code "1222668001", :system "http://snomed.info/sct", :display "Cadherin EGF LAG seven-pass G-type receptor 1-related late-onset primary lymphedema"}}
+         {:value {:code "716701004", :system "http://snomed.info/sct", :display "Epidermolysis bullosa simplex co-occurrent with pyloric atresia"}}
+         {:value {:code "722209002", :system "http://snomed.info/sct", :display "Spastic paraplegia, intellectual disability, palmoplantar hyperkeratosis syndrome"}}
+         {:value {:code "717823001", :system "http://snomed.info/sct", :display "Chondrodysplasia, dentinogenesis imperfecta, joint laxity syndrome"}}
+         {:value {:code "725034002", :system "http://snomed.info/sct", :display "Familial platelet syndrome with predisposition to acute myelogenous leukemia"}}
+         {:value {:code "1231148002", :system "http://snomed.info/sct", :display "Linear verrucous nevus syndrome"}}
+         {:value {:code "724069009", :system "http://snomed.info/sct", :display "Patterson Stevenson Fontaine syndrome"}}
+         {:value {:code "719845008", :system "http://snomed.info/sct", :display "Van den Ende-Gupta syndrome"}}
+         {:value {:code "719304005", :system "http://snomed.info/sct", :display "Spondylometaphyseal dysplasia Schmidt type"}}
+         {:value {:code "718579008", :system "http://snomed.info/sct", :display "X-linked endothelial dystrophy of cornea"}}
+         {:value {:code "737580004", :system "http://snomed.info/sct", :display "Idiopathic bilateral vestibulopathy"}}
+         {:value {:code "720602007", :system "http://snomed.info/sct", :display "Camptodactyly syndrome Guadalajara type 1"}}
+         {:value {:code "1197754004", :system "http://snomed.info/sct", :display "Congenital brachyesophagus, intrathoracic stomach, vertebral anomalies syndrome"}}
+         {:value {:code "726613003", :system "http://snomed.info/sct", :display "Dilatation of common bile duct due to harmful use of ketamine"}}
+         {:value {:code "1230002004", :system "http://snomed.info/sct", :display "Liver adenomatosis"}}
+         {:value {:code "1228861004", :system "http://snomed.info/sct", :display "Kaposiform lymphangiomatosis"}}
+         {:value {:code "721008000", :system "http://snomed.info/sct", :display "Hall Riggs syndrome"}}
+         {:value {:code "789187001", :system "http://snomed.info/sct", :display "X-linked acrogigantism due to Xq26 microduplication"}}
+         {:value {:code "1231757001", :system "http://snomed.info/sct", :display "Idiopathic optic perineuritis"}}
+         {:value {:code "771077007", :system "http://snomed.info/sct", :display "Intellectual disability, short stature, hypertelorism syndrome"}}
+         {:value {:code "724016008", :system "http://snomed.info/sct", :display "Ptosis, upper ocular movement limitation, absence of lacrimal punctum syndrome"}}
+         {:value {:code "719159004", :system "http://snomed.info/sct", :display "Syndactyly type 5"}}
+         {:value {:code "254125009", :system "http://snomed.info/sct", :display "Axial osteosclerosis"}}
+         {:value {:code "1231179003", :system "http://snomed.info/sct", :display "Idiopathic avascular necrosis of bone"}}
+         {:value {:code "765170001", :system "http://snomed.info/sct", :display "Sodium voltage-gated channel alpha subunit 8-related epilepsy with encephalopathy"}}
+         {:value {:code "1220591004", :system "http://snomed.info/sct", :display "Pediatric collagenous gastritis"}}
+         {:value {:code "716091000", :system "http://snomed.info/sct", :display "Holoprosencephaly and postaxial polydactyly syndrome"}}
+         {:value {:code "1237513008", :system "http://snomed.info/sct", :display "Osteosclerotic metaphyseal dysplasia"}}
+         {:value {:code "715535009", :system "http://snomed.info/sct", :display "Keratosis palmoplantaris and arrhythmogenic cardiomyopathy syndrome"}}
+         {:value {:code "726051002", :system "http://snomed.info/sct", :display "Myotonia congenita"}}
+         {:value {:code "723333000", :system "http://snomed.info/sct", :display "Faciocardiorenal syndrome"}}
+         {:value {:code "718183003", :system "http://snomed.info/sct", :display "Familial thyroid dyshormonogenesis"}}
+         {:value {:code "1222676004", :system "http://snomed.info/sct", :display "Mueller Weiss syndrome"}}
+         {:value {:code "720751000", :system "http://snomed.info/sct", :display "Corticosteroid sensitive aseptic abscess syndrome"}}
+         {:value {:code "361203007", :system "http://snomed.info/sct", :display "Malonic aciduria"}}
+         {:value {:code "734028007", :system "http://snomed.info/sct", :display "49,XYYYY syndrome"}}
+         {:value {:code "1251446004", :system "http://snomed.info/sct", :display "NAD(P)HX dehydratase deficiency"}}
+         {:value {:code "715908008", :system "http://snomed.info/sct", :display "Epithelial recurrent erosion dystrophy of cornea"}}
+         {:value {:code "717286002", :system "http://snomed.info/sct", :display "Grayson Wilbrandt dystrophy of cornea"}}
+         {:value {:code "725029001", :system "http://snomed.info/sct", :display "Frontonasal dysplasia with alopecia and genital anomaly syndrome"}}
+         {:value {:code "1162804003", :system "http://snomed.info/sct", :display "Hereditary congenital prekallikrein deficiency"}}
+         {:value {:code "1222655009", :system "http://snomed.info/sct", :display "Optic atrophy, ataxia, peripheral neuropathy, global developmental delay syndrome"}}
+         {:value {:code "720604008", :system "http://snomed.info/sct", :display "Cap polyposis"}}
+         {:value {:code "768846004", :system "http://snomed.info/sct", :display "N-glycanase 1 congenital disorder of deglycosylation"}}
+         {:value {:code "715991005", :system "http://snomed.info/sct", :display "Crane Heise syndrome"}}
+         {:value {:code "408539000", :system "http://snomed.info/sct", :display "Insulin autoimmune syndrome"}}
+         {:value {:code "1156419009", :system "http://snomed.info/sct", :display "Hepatocellular adenoma"}}
+         {:value {:code "1186710001", :system "http://snomed.info/sct", :display "Leukoencephalopathy with calcifications and cysts"}}
+         {:value {:code "722675000", :system "http://snomed.info/sct", :display "Laryngo-onycho-cutaneous syndrome"}}
+         {:value {:code "722067005", :system "http://snomed.info/sct", :display "Severe combined immunodeficiency with hypereosinophilia"}}
+         {:value {:code "720416007", :system "http://snomed.info/sct", :display "Acrocapitofemoral dysplasia"}}
+         {:value {:code "723448007", :system "http://snomed.info/sct", :display "Polyvalvular heart disease syndrome"}}
+         {:value {:code "720812002", :system "http://snomed.info/sct", :display "Craniosynostosis, anal anomaly, porokeratosis syndrome"}}
+         {:value {:code "1237343009", :system "http://snomed.info/sct", :display "Otodental syndrome"}}
+         {:value {:code "721873007", :system "http://snomed.info/sct", :display "Joubert syndrome with orofaciodigital defect"}}
+         {:value {:code "771235001", :system "http://snomed.info/sct", :display "Vasoproliferative tumor of retina"}}
+         {:value {:code "723582004", :system "http://snomed.info/sct", :display "Subepithelial mucinous corneal dystrophy"}}
+         {:value {:code "764739008", :system "http://snomed.info/sct", :display "Proximal chromosome 18q deletion syndrome"}}
+         {:value {:code "1172589000", :system "http://snomed.info/sct", :display "Congenital omphalocele, diaphragmatic hernia, cardiovascular anomalies, radial ray defect syndrome"}}
+         {:value {:code "722385008", :system "http://snomed.info/sct", :display "Cerebral dysgenesis, neuropathy, ichthyosis, palmoplantar keratoderma syndrome"}}
+         {:value {:code "719274008", :system "http://snomed.info/sct", :display "Primary pigmented nodular adrenocortical disease"}}
+         {:value {:code "1197204009", :system "http://snomed.info/sct", :display "Adult hepatocellular carcinoma"}}
+         {:value {:code "721835008", :system "http://snomed.info/sct", :display "Acrofrontofacionasal dysostosis type 2"}}
+         {:value {:code "1234821002", :system "http://snomed.info/sct", :display "Primary intrahepatic lithiasis"}}
+         {:value {:code "1230290005", :system "http://snomed.info/sct", :display "Cytokine release syndrome due to chimeric antigen receptor T-cell immunotherapy"}}
+         {:value {:code "716098006", :system "http://snomed.info/sct", :display "Congenital bowing of long bone"}}
+         {:value {:code "726708009", :system "http://snomed.info/sct", :display "Familial isolated congenital asplenia"}}
+         {:value {:code "768677000", :system "http://snomed.info/sct", :display "Protein phosphatase 2 regulatory subunit b (b56) delta-related intellectual disability"}}
+         {:value {:code "717459000", :system "http://snomed.info/sct", :display "Congenital primary megaureter"}}
+         {:value {:code "717771007", :system "http://snomed.info/sct", :display "Cloverleaf skull with multiple congenital anomalies syndrome"}}
+         {:value {:code "717231003", :system "http://snomed.info/sct", :display "Periodic fever and aphthous stomatitis with pharyngitis and cervical lymphadenitis syndrome"}}
+         {:value {:code "1187508009", :system "http://snomed.info/sct", :display "Immunoglobulin G4 related aortitis"}}
+         {:value {:code "719296002", :system "http://snomed.info/sct", :display "Posterior amorphous corneal dystrophy"}}
+         {:value {:code "1230342001", :system "http://snomed.info/sct", :display "Hepatitis B reinfection following transplantation of liver"}}
+         {:value {:code "768470007", :system "http://snomed.info/sct", :display "Aldosterone-producing adenoma"}}
+         {:value {:code "719171005", :system "http://snomed.info/sct", :display "Spondyloepimetaphyseal dysplasia Missouri type"}}
+         {:value {:code "715531000", :system "http://snomed.info/sct", :display "Tibial aplasia and ectrodactyly syndrome"}}
+         {:value {:code "722005000", :system "http://snomed.info/sct", :display "Iron-refractory iron deficiency anemia"}}
+         {:value {:code "719432000", :system "http://snomed.info/sct", :display "Late-onset junctional epidermolysis bullosa"}}
+         {:value {:code "715534008", :system "http://snomed.info/sct", :display "Infantile convulsion and choreoathetosis syndrome"}}
+         {:value {:code "715374003", :system "http://snomed.info/sct", :display "Autosomal dominant optic atrophy plus syndrome"}}
+         {:value {:code "1237617004", :system "http://snomed.info/sct", :display "Hypereosinophilic syndrome due to disease"}}
+         {:value {:code "768555009", :system "http://snomed.info/sct", :display "5q31.3 microdeletion syndrome"}}
+         {:value {:code "715780008", :system "http://snomed.info/sct", :display "Lissencephaly type 1 due to doublecortin gene mutation"}}
+         {:value {:code "719397009", :system "http://snomed.info/sct", :display "Mesomelic dysplasia Kantaputra type"}}
+         {:value {:code "1230323000", :system "http://snomed.info/sct", :display "Sepsis of premature infant"}}
+         {:value {:code "718096004", :system "http://snomed.info/sct", :display "Hepatoportal sclerosis"}}
+         {:value {:code "721880009", :system "http://snomed.info/sct", :display "Congenital microgastria with limb reduction defect syndrome"}}
+         {:value {:code "768667002", :system "http://snomed.info/sct", :display "Nucleotide binding oligomerization domain containing 2-associated autoinflammatory disease"}}
+         {:value {:code "765434008", :system "http://snomed.info/sct", :display "Human immunodeficiency virus type I enhancer binding protein 2 related intellectual disability"}}
+         {:value {:code "38371006", :system "http://snomed.info/sct", :display "Poland anomaly"}}
+         {:value {:code "768843007", :system "http://snomed.info/sct", :display "Tall stature, intellectual disability, facial dysmorphism syndrome"}}
+         {:value {:code "1197363004", :system "http://snomed.info/sct", :display "Pediatric arterial ischemic stroke"}}
+         {:value {:code "720984008", :system "http://snomed.info/sct", :display "Angel-shaped phalangoepiphyseal dysplasia"}}
+         {:value {:code "720430002", :system "http://snomed.info/sct", :display "Acrofacial dysostosis Rodriguez type"}}
+         {:value {:code "719104003", :system "http://snomed.info/sct", :display "Autosomal recessive palmoplantar keratoderma and congenital alopecia syndrome"}}
+         {:value {:code "773230003", :system "http://snomed.info/sct", :display "Cyclin-dependent kinase-like 5 deficiency"}}
+         {:value {:code "723553000", :system "http://snomed.info/sct", :display "Transient bullous dermolysis of newborn"}}
+         {:value {:code "718721006", :system "http://snomed.info/sct", :display "Congenital analbuminemia"}}
+         {:value {:code "234451005", :system "http://snomed.info/sct", :display "Acquired von Willebrand disease"}}
+         {:value {:code "768560008", :system "http://snomed.info/sct", :display "Melanoma differentiation-associated gene 5 deficiency"}}
+         {:value {:code "190687004", :system "http://snomed.info/sct", :display "Phenylketonuria"}}
+         {:value {:code "724282009", :system "http://snomed.info/sct", :display "Hypoparathyroidism, deafness, renal disease syndrome"}}
+         {:value {:code "1162918009", :system "http://snomed.info/sct", :display "Infective dermatitis associated with human T-cell lymphotropic virus 1 infection"}}
+         {:value {:code "722452004", :system "http://snomed.info/sct", :display "Preaxial deficiency, postaxial polydactyly, hypospadias syndrome"}}
+         {:value {:code "766986002", :system "http://snomed.info/sct", :display "Acute adrenal insufficiency"}}
+         {:value {:code "721105004", :system "http://snomed.info/sct", :display "Klippel Trenaunay syndrome"}}
+         {:value {:code "764861005", :system "http://snomed.info/sct", :display "Intellectual disability Birk-Barel type"}}
+         {:value {:code "733604003", :system "http://snomed.info/sct", :display "Microcephalus, lymphedema, chorioretinopathy syndrome"}}
+         {:value {:code "1010685005", :system "http://snomed.info/sct", :display "Oculo-auriculo-vertebral spectrum"}}
+         {:value {:code "722477003", :system "http://snomed.info/sct", :display "Toriello Carey syndrome"}}
+         {:value {:code "725296006", :system "http://snomed.info/sct", :display "Mucolipidosis type IV"}}
+         {:value {:code "725097006", :system "http://snomed.info/sct", :display "Crisponi syndrome"}}
+         {:value {:code "733492003", :system "http://snomed.info/sct", :display "Carney triad"}}
+         {:value {:code "765057007", :system "http://snomed.info/sct", :display "BRCA1 associated protein 1 tumor predisposition syndrome"}}]}
+
+
+
+ ProblemsListDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Problems"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:patient {:type zen/map
+                   :keys {:birthDate {:type zen/string}
+                          :gender {:type zen/string}}}
+         :conditions {:type zen/vector,
+                      :every {:type zen/map,
+                              :require #{:problem}
+                              :keys {:id             {:type zen/string}
+                                     :category       {:type zen/map
+                                                      :keys {:text {:type zen/string}
+                                                             :code {:type zen/string}}}
+                                     :problem        {:text "Condition" :confirms #{Problem}}
+                                     :clinicalStatus {:text "Clinical Status"
+                                                      :type zen/string
+                                                      :sdc/default-value "active"}
+                                     :onsetDateTime  {:text "Onset date (optional)" :type zen/date}
+                                     :comments       {:text "Comments" :type zen/string}
+                                     :duplicates     {:type zen/vector
+                                                      :every {:text "Duplicates" :confirms #{aidbox.sdc.fhir/coding}}}
+                                     :showDetails    {:type zen/boolean}}}}}}
+
+
+
+ ProblemsListLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document ProblemsListDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate (let [patient-id (sql {:select [:#> :resource [:subject :id]]
+                                   :from :Encounter
+                                   :where [:= :id (get-in [:params :encounter-id])]})]
+              {:author     (get-in [:ctx :user])
+               :encounter  {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+               :patient    (sql {:select {:patient ^:pg/obj {:id :id
+                                                             :resourceType "Patient"
+                                                             :gender [:#> :resource [:gender]]
+                                                             :birthDate [:#> :resource [:birthDate]]}}
+                                 :from :Patient
+                                 :where [:= :id patient-id]})
+               :conditions (sql* {:select {:condition
+                                           ^:pg/obj {:id :id
+                                                     :problem [:#> :resource [:code :coding 0]]
+                                                     :onsetDateTime [:#> :resource [:onset :dateTime]]
+                                                     :comments [:#> :resource [:note 0 :text]]
+                                                     :clinicalStatus [:#> :resource [:clinicalStatus :coding 0 :code]]
+                                                     :showDetails false}}
+                                  :from :Condition
+                                  :where [:and
+                                          [:= [:#>> :resource [:subject :id]] patient-id]
+                                          [:= [:#>> :resource [:clinicalStatus :coding 0 :code]] "active"]
+                                          [:= [:#>> :resource [:verificationStatus :coding 0 :code]] "confirmed"]]})})}
+
+
+ ConditionInplaceForm
+ {:zen/tags #{aidbox.sdc/Layout}
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/fields
+   :children [{:bind [:problem]}
+              {:type aidbox.sdc/row
+               :children [{:type aidbox.sdc/col
+                           :children [{:bind [:onsetDateTime]}]}
+                          {:type aidbox.sdc/col}]}
+              {:bind [:comments]}]}}
+
+ ProblemDetails
+ {:zen/tags #{aidbox.sdc/Layout}
+  :engine aidbox.sdc/Hiccup
+  :layout {:type aidbox.sdc/fields
+           :children [{:type aidbox.sdc/label
+                       :bind [:comments]
+                       :label "Comments"}]}}
+
+ ProblemsListLayout
+ {:zen/tags #{aidbox.sdc/Layout}
+  :document ProblemsListDocument
+  :engine aidbox.sdc/Hiccup
+  :layout {:type aidbox.sdc/grid-editor
+           :bind [:conditions]
+           :columns    [{:label "Condition"
+                         :type aidbox.sdc/fields
+                         :children [{:type aidbox.sdc/label :bind [:problem :display]}]}
+                        {:label "Onset date"
+                         :type aidbox.sdc/label
+                         :bind [:onsetDateTime]}]
+           :row-actions [{:type aidbox.sdc/grid-edit-button :label "Edit"}]
+           :new-form    {:form-ref ConditionInplaceForm}
+           :edit-form   {:form-ref ConditionInplaceForm}
+           :row-details {:form-ref ProblemDetails :sdc/display-when (get :comments)}}}
+
+
+ ProblemsListFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :document ProblemsListDocument
+  :export-engine aidbox.sdc/LispExport
+  :patch [(for [j (sql* {:select  {:id :id}
+                         :from :Condition
+                         :where [:and
+                                 (when (> (count (get-in [:conditions])) 0)
+                                   [:not [:in :id [:pg/params-list (for [i (get-in [:conditions])] (str (get i :id)))]]])
+                                 [:= [:#>> :resource [:subject :id]] (get-in [:patient :id])]
+                                 [:= [:#>> :resource [:clinicalStatus :coding 0 :code]] "active"]
+                                 [:= [:#>> :resource [:verificationStatus :coding 0 :code]] "confirmed"]]})]
+            {:resourceType "Condition"
+             :id j
+             :verificationStatus {:coding [{:system "http://terminology.hl7.org/CodeSystem/condition-ver-status"
+                                            :code "entered-in-error"}]}})]
+  :create [(for [i (get-in [:conditions])]
+             {:id (get-in i [:id])
+              :resourceType "Condition"
+              :clinicalStatus {:coding [{:code (get i :clinicalStatus) :system "http://terminology.hl7.org/CodeSystem/condition-clinical"}]}
+              :verificationStatus {:coding [{:code "confirmed" :system "http://terminology.hl7.org/CodeSystem/condition-ver-status"}]}
+
+              :category [{:coding [{:code "problem-list-item"
+                                    :system "http://terminology.hl7.org/CodeSystem/condition-category"}]}
+
+                         {:coding [{:system "urn:oid:2.16.840.1.113883.3.247.1.1"
+                                    :code (get-in i [:problem :code])
+                                    :display (get-in i [:problem :display])}]}]
+              :code         {:coding [(get-in i [:problem])]
+                             :text   (get-in i [:problem :display])}
+              :onset        {:dateTime (get-in i [:onsetDateTime])}
+              :subject      (select-keys (get :patient) [:id :resourceType])
+              :encounter    (get :encounter)
+              :recordedDate (date)
+              :note         (when (get-in i [:comments])
+                              [{:text (get-in i [:comments])}])})]}
+
+
+ ProblemsListForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Active Problems"
+  :document ProblemsListDocument
+  :layout   ProblemsListLayout
+  :launch   ProblemsListLaunch
+  :finalize ProblemsListFinalize}
+ }

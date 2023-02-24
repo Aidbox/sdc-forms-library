@@ -1,5 +1,5 @@
 {ns aidbox.forms.past-surgical-history
- import #{zenbox aidbox.sdc aidbox.forms.problems-list.document}
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
 
  SurgicalProcedures
  {:zen/tags #{zen/schema}

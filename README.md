@@ -13,6 +13,7 @@ Forms library contains next common forms:
 - Pain assessment
 - Past Surgical History
 - Physical exam
+- Problems list
 - Review of systems
 - Social determinants
 - Substance Use
