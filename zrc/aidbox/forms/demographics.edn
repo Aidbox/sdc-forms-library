@@ -1,0 +1,136 @@
+{ns aidbox.forms.demographics
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+
+ ;;
+ ;; Demographics
+ ;;
+ DemographicsDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Demographics"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:occupation {:text "Former/Current Occupation", :type zen/string}
+         :language   {:text "Preferred Language"
+                      :enum [{:value {:code "en" :display "English" :system "urn:ietf:bcp:47"}}
+                             {:value {:code "es" :display "Spanish" :system "urn:ietf:bcp:47"}}
+                             {:value {:code "vi" :display "Vietnamese" :system "urn:ietf:bcp:47"}}
+                             {:value {:code "ch" :display "Chinese" :system "urn:ietf:bcp:47"}}
+                             {:value {:code "288600000" :display "Noncommunicative" :system "http://snomed.info/sct"}}
+                             {:value {:code "other" :display "Other"}}]}
+         :language-other {:text "Specify Other"
+                          :confirms #{aidbox.sdc.fhir/coding}
+                          :sdc/options aidbox.sdc.options/valueset
+                          :valueset "http://hl7.org/fhir/ValueSet/all-languages"} ;; TODO: Add fixtures with valueset or inline it here
+         :marital-status {:text "Marital Status"
+                          :confirms #{aidbox.sdc.fhir/coding}
+                          :enum [{:value {:display "Single", :code "U", :system "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"}}
+                                 {:value {:display "Married", :code "M", :system "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"}}
+                                 {:value {:display "Widowed", :code "W", :system "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"}}
+                                 {:value {:display "Divorced", :code "D", :system "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"}}
+                                 {:value {:display "Separated", :code "L", :system "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"}}]}
+         :sexual-history {:text "Sexual History", :type zen/string}}}
+
+ DemographicsLayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
+  :document DemographicsDocument
+  :engine aidbox.sdc/Hiccup
+  :layout {:type aidbox.sdc/col
+           :children [{:bind [:occupation]}
+                      {:bind [:language]}
+                      {:sdc/display-when (= (get-in [:language :code]) "other")
+                       :bind [:language-other]}
+                      {:bind [:marital-status]}
+                      {:bind [:sexual-history]}]}}
+
+ DemographicsLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document DemographicsDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})
+             :language (sql
+                        ["select
+                           case
+                           when language->>'code' = 'en' then language
+                           when language->>'code' = 'es' then language
+                           when language->>'code' = 'vi' then language
+                           when language->>'code' = 'ch' then language
+                           when language <> 'null'::jsonb then jsonb_build_object('code', 'other', 'display', 'Other')
+                           when noncommunicative <> 'null'::jsonb then noncommunicative
+                           end
+                           from (select
+                                 patient.resource#>'{communication,0,language,coding,0}' as language ,
+                                 observation.resource#>'{value,CodeableConcept,coding,0}' as noncommunicative
+                                 from patient
+                                 left join observation on observation.resource#>>'{subject,id}' = patient.id
+                                 and knife_extract_text(observation.resource, '[[\"code\",\"coding\",\"code\"]]') && ARRAY['able-to-communicate']
+                                 where patient.id = (select resource#>>'{subject,id}' from encounter where id = ?)
+                                 ) as s1 limit 1",
+                         (get-in [:params :encounter-id])])
+             :language-other (sql
+                              ["select patient.resource#>'{communication,0,language,coding,0}' as language
+                                from patient
+                                where patient.id = (select resource#>>'{subject,id}' from encounter where id = ?)"
+                               (get-in [:params :encounter-id])])
+             :marital-status (sql ["select resource#>'{maritalStatus,coding,0}' from patient
+                                         where id = ( select resource#>>'{subject,id}' from encounter
+                                                      where id = ?)"
+                                   (get-in [:params :encounter-id])])}}
+
+ DemographicsConstraints
+ {:zen/tags #{zen/schema}
+  :type zen/case
+  :case [{:when {:type zen/map
+                 :require #{:language :marital-status}
+                 :keys {:language {:const {:value {:code "other" :display "Other"}}}}}
+          :then {:type zen/map
+                 :keys {:language-other {:confirms #{aidbox.sdc.fhir/coding}
+                                         :type zen/map
+                                         :require #{:code :display :system}}}
+                 :require #{:language-other}}}
+         {:when {:type zen/map
+                 :require #{:language :marital-status}}}]}
+
+ DemographicsFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :document DemographicsDocument
+  :profile DemographicsConstraints
+  :export-engine aidbox.sdc/LispExport
+  :patch [{:resourceType "Patient"
+           :id (get-in [:patient :id])
+           :maritalStatus {:coding [(get :marital-status)]}
+           :communication (cond
+                            (= (get-in [:language :code]) "288600000") []
+                            (= (get-in [:language :code]) "other") [{:language {:coding [(get :language-other)]}}]
+                            :else [{:language {:coding [(get :language)]}}])}]
+
+  :create [(when (= (get-in [:language :code]) "288600000")
+             {:resourceType "Observation"
+              :effective {:dateTime (date)}
+              :issued (date)
+              :status "final"
+              :code {:coding [{:code "able-to-communicate" :display "Able to communicate"}]}
+              :subject   (get :patient)
+              :encounter (get :encounter)
+              :value {:CodeableConcept {:coding [(get :language)]}}})
+           (when (get :sexual-history)
+             {:resourceType "Observation"
+              :effective {:dateTime (date)}
+              :issued (date)
+              :status "final"
+              :code {:coding [{:code "11350-6" :display "History of Sexual behavior Narrative" :system "https://loinc.org"}]}
+              :subject   (get :patient)
+              :encounter (get :encounter)
+              :value {:string (get :sexual-history)}})]}
+
+ DemographicsForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Demographics"
+  :document DemographicsDocument
+  :layout   DemographicsLayout
+  :launch   DemographicsLaunch
+  :finalize DemographicsFinalize}}

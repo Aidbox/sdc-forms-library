@@ -5,6 +5,7 @@ Forms library contains next common forms:
 - Advance care planning
 - Advanced illness and frailty
 - American Urological Association (AUA) Symptom Index [AUASI]
+- Demographics
 - Elder Abuse Suspicion Index (EASI)
 - Female Urinary Incontinence Diagnosis (QUID)
 - GAD-7

@@ -19,5 +19,6 @@
           aidbox.forms.past-surgical-history
           aidbox.forms.problems-list
           aidbox.forms.hpi
+          aidbox.forms.demographics
           }
  }
