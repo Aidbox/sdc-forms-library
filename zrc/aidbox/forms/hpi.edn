@@ -1,0 +1,118 @@
+{ns aidbox.forms.hpi
+ import #{zenbox aidbox.sdc  aidbox.sdc.fhir}
+
+
+ HPIDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "History of present illness form specifies the main reason for visit and gives the specific details regarding the presenting illness"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+
+  :keys {:chief-complaint
+         {:text "Chief Complaint"
+          :type zen/string
+          :code {:code "46239-0" :system "https://loinc.org"}}
+
+         :history-of-present-illness
+         {:text "History of Present Illness"
+          :sdc-type aidbox.sdc/text
+          :type zen/string
+          :code {:code "10164-2" :system "https://loinc.org"}}
+
+         :ros-confirm
+         {:text "**ROS**: I have reviewed and attest that all 10 systems are negative except as noted in HPI."
+          :help "**Systems**
+
+* General
+* HEENT
+* Cardiovascular
+* Respiratory
+* Gastrointestinal
+* Genitourinary
+* Musculoskeletal
+* Neurologic
+* Psychiatric
+* Skin"
+          :type zen/boolean
+          :sdc/default-value false}
+
+         :hpi-present
+         {:type zen/vector
+          :every {:text "Who is present during exam?"
+                  :confirms #{aidbox.sdc.fhir/coding}
+                  :enum [{:value {:display "Spouse", :code "LA15637-4", :system "https://loinc.org"}}
+                         {:value {:display "Partner", :code "LA15646-5", :system "http://loinc.org"}}
+                         {:value {:display "Child", :code "LA15639-0", :system "http://loinc.org"}}
+                         {:value {:display "Grandchild", :code "LA15315-7", :system "http://loinc.org"}}
+                         {:value {:display "Stepchild", :code "LA15643-2", :system "http://loinc.org"}}
+                         {:value {:display "Child-in-law", :code "LA15638-2", :system "http://loinc.org"}}
+                         {:value {:display "Caregiver", :code "LA10052-1", :system "http://loinc.org"}}
+                         {:value {:display "Home Health Aide", :code "LA6320-1", :system "http://loinc.org"}}
+                         {:value {:display "Relative", :code "LA15640-8", :system "http://loinc.org"}}
+                         {:value {:display "Other", :code "LA15649-9", :system "http://loinc.org"}}]}}
+
+         :hpi-present-other
+         {:text "Specify Other"
+          :type zen/string}}}
+
+ HPILayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
+  :document HPIDocument
+  :engine aidbox.sdc/Hiccup
+  :sdc/rules {:enable-other-present (> (count (matcho-filter
+                                               (get-in [:hpi-present])
+                                               {:code "LA15649-9"}))
+                                       0)}
+  :layout
+  {:type aidbox.sdc/col
+   :children
+   [{:bind [:chief-complaint]}
+    {:bind [:history-of-present-illness]}
+    {:bind [:ros-confirm]}
+    {:bind [:hpi-present]}
+    {:bind [:hpi-present-other]
+     :sdc/display-when (get :enable-other-present)}]}}
+
+ HPILaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document HPIDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})
+             :chief-complaint (sql ["select resource#>>'{value,string}' from observation WHERE
+                                        ((resource#>>'{encounter,id}' = ?) AND
+                                        (resource#>>'{code,coding,0,code}' = ?))"
+                                  (get-in [:params :encounter-id])
+                                  "75325-1"])}}
+
+ HPIFinalizeConstraints
+ {:zen/tags #{zen/schema}
+  :type zen/map
+  :require #{:chief-complaint :history-of-present-illness :hpi-present :ros-confirm}
+  :keys {:ros-confirm {:const {:value true}}}}
+
+ HPIFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :document HPIDocument
+  :profile HPIFinalizeConstraints
+  :export-engine aidbox.sdc/LispExport
+  :create [{:resourceType "Condition"
+            :category [{:coding [{:system "http://terminology.hl7.org/CodeSystem/condition-category"
+                                  :code "problem-list-item"
+                                  :display  "Problem list item"}]}]
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :recordedDate (date)
+            :note [{:text (get :chief-complaint)}]}]}
+
+ HPIForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "History of Present Illness"
+  :document HPIDocument
+  :layout   HPILayout
+  :launch   HPILaunch
+  :finalize HPIFinalize}}

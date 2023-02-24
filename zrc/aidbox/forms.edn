@@ -18,5 +18,6 @@
           aidbox.forms.substance-use
           aidbox.forms.past-surgical-history
           aidbox.forms.problems-list
+          aidbox.forms.hpi
           }
  }

@@ -8,6 +8,7 @@ Forms library contains next common forms:
 - Elder Abuse Suspicion Index (EASI)
 - Female Urinary Incontinence Diagnosis (QUID)
 - GAD-7
+- History of present illness
 - Living Arrangements
 - PHQ2/PHQ9 Depression Form
 - Pain assessment
