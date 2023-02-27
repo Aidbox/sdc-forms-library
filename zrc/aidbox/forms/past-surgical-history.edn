@@ -8,329 +8,329 @@
   :confirms #{aidbox.sdc.fhir/coding}
   :enum [{:value {:code "43209959" :system "http://hl7.org/fhir/sid/icd-10-cm" :display "No history of previous surgery"}}
          {:value {:code "416128008" :system "http://snomed.info/sct" :display "No history of procedure"}}
-         {:value {:code "387713003", :system "http://snomed.ct", :display "Surgical procedure"}}
-         {:value {:code "81733005", :system "http://snomed.ct", :display "Dental surgical procedure"}}
-         {:value {:code "372132004", :system "http://snomed.ct", :display "Surgical procedure by RNFA"}}
-         {:value {:code "783170008", :system "http://snomed.ct", :display "Surgical procedure on thigh"}}
-         {:value {:code "274330002", :system "http://snomed.ct", :display "Surgical biopsy"}}
-         {:value {:code "4365001", :system "http://snomed.ct", :display "Surgical repair"}}
-         {:value {:code "231686003", :system "http://snomed.ct", :display "Surgical procedure on orbit"}}
-         {:value {:code "128303001", :system "http://snomed.ct", :display "Surgical removal"}}
-         {:value {:code "39228008", :system "http://snomed.ct", :display "Surgical pathology procedure"}}
-         {:value {:code "405638000", :system "http://snomed.ct", :display "Accessory surgical procedure"}}
-         {:value {:code "1202017008", :system "http://snomed.ct", :display "Surgical procedure with flap"}}
-         {:value {:code "385487005", :system "http://snomed.ct", :display "Surgical procedure on thorax"}}
-         {:value {:code "9667001", :system "http://snomed.ct", :display "Surgical avulsion"}}
-         {:value {:code "10444003", :system "http://snomed.ct", :display "Surgical procedure on omentum"}}
-         {:value {:code "85876005", :system "http://snomed.ct", :display "Endoscopic surgical procedure"}}
-         {:value {:code "265294002", :system "http://snomed.ct", :display "Surgical iridotomy"}}
-         {:value {:code "1258951009", :system "http://snomed.ct", :display "Orthodontic surgical procedure"}}
-         {:value {:code "265289002", :system "http://snomed.ct", :display "Surgical iridectomy"}}
-         {:value {:code "128304007", :system "http://snomed.ct", :display "Surgical extraction"}}
-         {:value {:code "363317007", :system "http://snomed.ct", :display "Surgical manipulation procedure"}}
-         {:value {:code "737301002", :system "http://snomed.ct", :display "Prophylactic surgical procedure"}}
-         {:value {:code "274353001", :system "http://snomed.ct", :display "Anal surgical biopsy"}}
-         {:value {:code "371587008", :system "http://snomed.ct", :display "Surgical procedure on eye region"}}
-         {:value {:code "385488000", :system "http://snomed.ct", :display "Surgical procedure on chest wall"}}
-         {:value {:code "389269000", :system "http://snomed.ct", :display "Surgical precautions"}}
-         {:value {:code "373353005", :system "http://snomed.ct", :display "Surgical procedure on eye proper"}}
-         {:value {:code "274071003", :system "http://snomed.ct", :display "Diathermy - surgical"}}
-         {:value {:code "363152007", :system "http://snomed.ct", :display "Immune system surgical procedure"}}
-         {:value {:code "165129008", :system "http://snomed.ct", :display "Surgical biopsy taken"}}
-         {:value {:code "408736005", :system "http://snomed.ct", :display "Surgical pneumothorax"}}
-         {:value {:code "373351007", :system "http://snomed.ct", :display "Surgical procedure on soft tissue"}}
-         {:value {:code "112802009", :system "http://snomed.ct", :display "Cardiovascular surgical procedure"}}
-         {:value {:code "33398007", :system "http://snomed.ct", :display "Surgical sequestration"}}
-         {:value {:code "274341000", :system "http://snomed.ct", :display "Surgical biopsy of lip"}}
-         {:value {:code "274338009", :system "http://snomed.ct", :display "Surgical biopsy of ear"}}
-         {:value {:code "274336008", :system "http://snomed.ct", :display "Surgical biopsy of eye"}}
-         {:value {:code "29971002", :system "http://snomed.ct", :display "Surgical procedure on external ear"}}
-         {:value {:code "274339001", :system "http://snomed.ct", :display "Surgical biopsy of nose"}}
-         {:value {:code "274333000", :system "http://snomed.ct", :display "Surgical biopsy of bone"}}
-         {:value {:code "363321000", :system "http://snomed.ct", :display "Surgical repair procedure by device"}}
-         {:value {:code "363323002", :system "http://snomed.ct", :display "Surgical repair procedure by method"}}
-         {:value {:code "17639001", :system "http://snomed.ct", :display "Surgical procedure on ocular muscle"}}
-         {:value {:code "49509003", :system "http://snomed.ct", :display "Lymphatic system surgical procedure"}}
-         {:value {:code "128324006", :system "http://snomed.ct", :display "Arthroscopy with surgical procedure"}}
-         {:value {:code "274350003", :system "http://snomed.ct", :display "Gastric surgical biopsy"}}
-         {:value {:code "443641009", :system "http://snomed.ct", :display "Surgical procedure on skin of chest"}}
-         {:value {:code "308000002", :system "http://snomed.ct", :display "Surgical biopsy of skin"}}
-         {:value {:code "231735002", :system "http://snomed.ct", :display "Surgical trabeculoplasty"}}
-         {:value {:code "274345009", :system "http://snomed.ct", :display "Surgical biopsy of uvula"}}
-         {:value {:code "274351004", :system "http://snomed.ct", :display "Surgical biopsy of colon"}}
-         {:value {:code "363318002", :system "http://snomed.ct", :display "Surgical removal of skin"}}
-         {:value {:code "428490009", :system "http://snomed.ct", :display "Surgical procedure on cervical spine"}}
-         {:value {:code "274334006", :system "http://snomed.ct", :display "Surgical biopsy of joint"}}
-         {:value {:code "274364003", :system "http://snomed.ct", :display "Surgical biopsy of penis"}}
-         {:value {:code "128326008", :system "http://snomed.ct", :display "Bronchoscopy with surgical procedure"}}
-         {:value {:code "103710003", :system "http://snomed.ct", :display "Microscopy during surgical procedure"}}
-         {:value {:code "274343002", :system "http://snomed.ct", :display "Salivary surgical biopsy"}}
-         {:value {:code "373391005", :system "http://snomed.ct", :display "Surgical ocular refractive procedure"}}
-         {:value {:code "274355008", :system "http://snomed.ct", :display "Surgical biopsy of liver"}}
-         {:value {:code "274365002", :system "http://snomed.ct", :display "Surgical biopsy of ovary"}}
-         {:value {:code "274368000", :system "http://snomed.ct", :display "Surgical biopsy of vulva"}}
-         {:value {:code "268413008", :system "http://snomed.ct", :display "Surgical biopsy of eyelid"}}
-         {:value {:code "274369008", :system "http://snomed.ct", :display "Endocrine surgical biopsy"}}
-         {:value {:code "1805005", :system "http://snomed.ct", :display "Surgical closure of stoma"}}
-         {:value {:code "234085002", :system "http://snomed.ct", :display "Surgical avulsion of vein"}}
-         {:value {:code "274359002", :system "http://snomed.ct", :display "Surgical biopsy of ureter"}}
-         {:value {:code "274363009", :system "http://snomed.ct", :display "Surgical biopsy of testis"}}
-         {:value {:code "274367005", :system "http://snomed.ct", :display "Surgical biopsy of vagina"}}
-         {:value {:code "274346005", :system "http://snomed.ct", :display "Surgical biopsy of tonsil"}}
-         {:value {:code "22523008", :system "http://snomed.ct", :display "Male surgical sterilization procedure"}}
-         {:value {:code "85089003", :system "http://snomed.ct", :display "Surgical closure of shunt"}}
-         {:value {:code "274366001", :system "http://snomed.ct", :display "Surgical biopsy of cervix"}}
-         {:value {:code "274331003", :system "http://snomed.ct", :display "Surgical biopsy of breast"}}
-         {:value {:code "274358005", :system "http://snomed.ct", :display "Surgical biopsy of kidney"}}
-         {:value {:code "274344008", :system "http://snomed.ct", :display "Surgical biopsy of palate"}}
-         {:value {:code "1230415001", :system "http://snomed.ct", :display "Surgical procedure on left eye region"}}
-         {:value {:code "107784002", :system "http://snomed.ct", :display "Surgical procedure on lower extremity"}}
-         {:value {:code "165130003", :system "http://snomed.ct", :display "Surgical biopsy not taken"}}
-         {:value {:code "25852009", :system "http://snomed.ct", :display "Surgical closure of pouch"}}
-         {:value {:code "274342007", :system "http://snomed.ct", :display "Surgical biopsy of tongue"}}
-         {:value {:code "274332005", :system "http://snomed.ct", :display "Surgical biopsy of muscle"}}
-         {:value {:code "287517000", :system "http://snomed.ct", :display "Surgical biopsy of artery"}}
-         {:value {:code "274352006", :system "http://snomed.ct", :display "Surgical biopsy of rectum"}}
-         {:value {:code "274337004", :system "http://snomed.ct", :display "Surgical biopsy of cornea"}}
-         {:value {:code "1163360005", :system "http://snomed.ct", :display "Surgical procedure on skeletal system"}}
-         {:value {:code "173317005", :system "http://snomed.ct", :display "Surgical exposure of tooth"}}
-         {:value {:code "274347001", :system "http://snomed.ct", :display "Surgical biopsy of pharynx"}}
-         {:value {:code "1230417009", :system "http://snomed.ct", :display "Surgical procedure on both eye regions"}}
-         {:value {:code "274370009", :system "http://snomed.ct", :display "Surgical biopsy of thyroid"}}
-         {:value {:code "82904003", :system "http://snomed.ct", :display "Surgical closure of window"}}
-         {:value {:code "274360007", :system "http://snomed.ct", :display "Surgical biopsy of bladder"}}
-         {:value {:code "274361006", :system "http://snomed.ct", :display "Surgical biopsy of urethra"}}
-         {:value {:code "1230416000", :system "http://snomed.ct", :display "Surgical procedure on right eye region"}}
-         {:value {:code "266749002", :system "http://snomed.ct", :display "Referral to surgical fitter"}}
-         {:value {:code "29454005", :system "http://snomed.ct", :display "Surgical occlusion of aorta"}}
-         {:value {:code "177129005", :system "http://snomed.ct", :display "Surgical induction of labor"}}
-         {:value {:code "710504000", :system "http://snomed.ct", :display "Categorizing surgical wound"}}
-         {:value {:code "118453005", :system "http://snomed.ct", :display "Surgical destruction of web"}}
-         {:value {:code "363324008", :system "http://snomed.ct", :display "Surgical repair procedure by morphology"}}
-         {:value {:code "274362004", :system "http://snomed.ct", :display "Surgical biopsy of prostate"}}
-         {:value {:code "287569005", :system "http://snomed.ct", :display "Intraspinal surgical biopsy"}}
-         {:value {:code "274354007", :system "http://snomed.ct", :display "Surgical biopsy of pancreas"}}
-         {:value {:code "281811000", :system "http://snomed.ct", :display "Arthroscopic surgical procedure on knee"}}
-         {:value {:code "302483003", :system "http://snomed.ct", :display "Surgical spinal manipulation"}}
-         {:value {:code "306550005", :system "http://snomed.ct", :display "Discharge by surgical fitter"}}
-         {:value {:code "287558007", :system "http://snomed.ct", :display "Surgical biopsy of diaphragm"}}
-         {:value {:code "41687007", :system "http://snomed.ct", :display "Surgical repair of inner ear"}}
-         {:value {:code "303968006", :system "http://snomed.ct", :display "Removal of surgical material"}}
-         {:value {:code "306180006", :system "http://snomed.ct", :display "Referral to surgical service"}}
-         {:value {:code "274348006", :system "http://snomed.ct", :display "Surgical biopsy of intestine"}}
-         {:value {:code "287570006", :system "http://snomed.ct", :display "Intracranial surgical biopsy"}}
-         {:value {:code "274349003", :system "http://snomed.ct", :display "Surgical biopsy of esophagus"}}
-         {:value {:code "225148005", :system "http://snomed.ct", :display "Surgical debridement of wound"}}
-         {:value {:code "373198009", :system "http://snomed.ct", :display "Vascular surgical procedure on lower limb"}}
-         {:value {:code "274372001", :system "http://snomed.ct", :display "Surgical biopsy of lymph node"}}
-         {:value {:code "274051007", :system "http://snomed.ct", :display "Surgical reduction of fracture"}}
-         {:value {:code "231725008", :system "http://snomed.ct", :display "Surgical peripheral iridectomy"}}
-         {:value {:code "387687001", :system "http://snomed.ct", :display "Surgical manipulation of joint"}}
-         {:value {:code "447296009", :system "http://snomed.ct", :display "Surgical procedure on middle and inner ear"}}
-         {:value {:code "183689004", :system "http://snomed.ct", :display "General surgical self-referral"}}
-         {:value {:code "307986005", :system "http://snomed.ct", :display "Surgical biopsy of parathyroid"}}
-         {:value {:code "274052000", :system "http://snomed.ct", :display "Surgical dislocation reduction"}}
-         {:value {:code "397819007", :system "http://snomed.ct", :display "Application of surgical drapes"}}
-         {:value {:code "287527006", :system "http://snomed.ct", :display "Surgical biopsy of pericardium"}}
-         {:value {:code "265730005", :system "http://snomed.ct", :display "Surgical manipulation of coccyx"}}
-         {:value {:code "5722009", :system "http://snomed.ct", :display "Surgical reanastomosis of colon"}}
-         {:value {:code "301089009", :system "http://snomed.ct", :display "Surgical dilatation of duodenum"}}
-         {:value {:code "438782001", :system "http://snomed.ct", :display "Surgical procedure on pterygopalatine fossa"}}
-         {:value {:code "287564000", :system "http://snomed.ct", :display "Surgical biopsy of external ear"}}
-         {:value {:code "128325007", :system "http://snomed.ct", :display "Direct laryngoscopy with surgical procedure"}}
-         {:value {:code "288084007", :system "http://snomed.ct", :display "Infected tissue surgical toilet"}}
-         {:value {:code "47585001", :system "http://snomed.ct", :display "Surgical closure of anastomosis"}}
-         {:value {:code "171902006", :system "http://snomed.ct", :display "Thoracic surgical sympathectomy"}}
-         {:value {:code "387832004", :system "http://snomed.ct", :display "Surgical exploration of scrotum"}}
-         {:value {:code "128992008", :system "http://snomed.ct", :display "Surgical removal of foreign body"}}
-         {:value {:code "608849003", :system "http://snomed.ct", :display "Surgical procedure on eye proper using laser"}}
-         {:value {:code "287525003", :system "http://snomed.ct", :display "Surgical biopsy of male perineum"}}
-         {:value {:code "307987001", :system "http://snomed.ct", :display "Surgical biopsy of adrenal gland"}}
-         {:value {:code "231704008", :system "http://snomed.ct", :display "Surgical superficial keratectomy"}}
-         {:value {:code "287568002", :system "http://snomed.ct", :display "Peripheral nerve surgical biopsy"}}
-         {:value {:code "236219009", :system "http://snomed.ct", :display "Surgical closure of bladder neck"}}
-         {:value {:code "274357000", :system "http://snomed.ct", :display "Surgical biopsy of urinary tract"}}
-         {:value {:code "61892004", :system "http://snomed.ct", :display "Repair with surgical advancement"}}
-         {:value {:code "274340004", :system "http://snomed.ct", :display "Surgical biopsy of oral structure"}}
-         {:value {:code "231680009", :system "http://snomed.ct", :display "Surgical procedure on superior oblique muscle"}}
-         {:value {:code "373359009", :system "http://snomed.ct", :display "Surgical closure of eye structure"}}
-         {:value {:code "274356009", :system "http://snomed.ct", :display "Surgical biopsy of biliary system"}}
-         {:value {:code "274335007", :system "http://snomed.ct", :display "Surgical biopsy of nervous system"}}
-         {:value {:code "278500000", :system "http://snomed.ct", :display "Surgical transposition of stomach"}}
-         {:value {:code "262794006", :system "http://snomed.ct", :display "Surgical transection of esophagus"}}
-         {:value {:code "363064002", :system "http://snomed.ct", :display "Site specific immune system surgical procedure"}}
-         {:value {:code "36771004", :system "http://snomed.ct", :display "Surgical occlusion of blood vessel"}}
-         {:value {:code "231076003", :system "http://snomed.ct", :display "Surgical ablation of celiac plexus"}}
-         {:value {:code "231708006", :system "http://snomed.ct", :display "Surgical correction of astigmatism"}}
-         {:value {:code "188383006", :system "http://snomed.ct", :display "Surgical repair of lower extremity"}}
-         {:value {:code "363319005", :system "http://snomed.ct", :display "Surgical repair of upper extremity"}}
-         {:value {:code "234673006", :system "http://snomed.ct", :display "Surgical removal of impacted tooth"}}
-         {:value {:code "287522000", :system "http://snomed.ct", :display "Surgical biopsy of female perineum"}}
-         {:value {:code "287559004", :system "http://snomed.ct", :display "Surgical biopsy of small intestine"}}
-         {:value {:code "361156002", :system "http://snomed.ct", :display "Surgical repair of prolapsed uterus"}}
-         {:value {:code "243636003", :system "http://snomed.ct", :display "Surgical repair of vertebral column"}}
-         {:value {:code "287523005", :system "http://snomed.ct", :display "Surgical biopsy of female genitalia"}}
-         {:value {:code "446117002", :system "http://snomed.ct", :display "Surgical exposure of impacted tooth"}}
-         {:value {:code "265214001", :system "http://snomed.ct", :display "Surgical manipulation of ankle joint"}}
-         {:value {:code "71868008", :system "http://snomed.ct", :display "Surgical occlusion of abdominal vein"}}
-         {:value {:code "287518005", :system "http://snomed.ct", :display "Surgical biopsy of peripheral vessel"}}
-         {:value {:code "282045006", :system "http://snomed.ct", :display "Surgical investigation of tooth root"}}
-         {:value {:code "231747008", :system "http://snomed.ct", :display "Surgical capsulotomy of lens capsule"}}
-         {:value {:code "387689003", :system "http://snomed.ct", :display "Surgical manipulation of elbow joint"}}
-         {:value {:code "387698000", :system "http://snomed.ct", :display "Surgical manipulation of wrist joint"}}
-         {:value {:code "428562007", :system "http://snomed.ct", :display "Surgical reopening of anterior nares"}}
-         {:value {:code "1173011006", :system "http://snomed.ct", :display "Repair of hernia using surgical mesh"}}
-         {:value {:code "265729000", :system "http://snomed.ct", :display "Surgical manipulation of lumbar spine"}}
-         {:value {:code "9221009", :system "http://snomed.ct", :display "Surgical treatment of septic abortion"}}
-         {:value {:code "239531006", :system "http://snomed.ct", :display "Surgical manipulation of arthroplasty"}}
-         {:value {:code "90089003", :system "http://snomed.ct", :display "Surgical occlusion of thoracic artery"}}
-         {:value {:code "13707001", :system "http://snomed.ct", :display "Surgical repair and revision of stoma"}}
-         {:value {:code "301067005", :system "http://snomed.ct", :display "Surgical removal of third molar tooth"}}
-         {:value {:code "66284001", :system "http://snomed.ct", :display "Surgical repair and revision of pouch"}}
-         {:value {:code "5648005", :system "http://snomed.ct", :display "Surgical repair and revision of shunt"}}
-         {:value {:code "363308007", :system "http://snomed.ct", :display "Site specific lymphatic system surgical procedure"}}
-         {:value {:code "9217002", :system "http://snomed.ct", :display "Surgical fracture of nasal turbinates"}}
-         {:value {:code "78739008", :system "http://snomed.ct", :display "Surgical occlusion of abdominal artery"}}
-         {:value {:code "287563006", :system "http://snomed.ct", :display "Surgical biopsy of subcutaneous tissue"}}
-         {:value {:code "64941009", :system "http://snomed.ct", :display "Surgical pneumoperitoneum by injection"}}
-         {:value {:code "699253003", :system "http://snomed.ct", :display "Surgical manipulation of joint of knee"}}
-         {:value {:code "301298001", :system "http://snomed.ct", :display "Surgical dilatation of small intestine"}}
-         {:value {:code "17100006", :system "http://snomed.ct", :display "Surgical repair of artery of extremity"}}
-         {:value {:code "78891000", :system "http://snomed.ct", :display "Surgical repair and revision of window"}}
-         {:value {:code "77687009", :system "http://snomed.ct", :display "Surgical occlusion of upper limb veins"}}
-         {:value {:code "61825006", :system "http://snomed.ct", :display "Surgical occlusion of lower limb veins"}}
-         {:value {:code "234670009", :system "http://snomed.ct", :display "Surgical removal of non-impacted tooth"}}
-         {:value {:code "609197007", :system "http://snomed.ct", :display "Endoscopic surgical procedure on colon using laser"}}
-         {:value {:code "35947009", :system "http://snomed.ct", :display "Surgical reduction of torsion of testis"}}
-         {:value {:code "609196003", :system "http://snomed.ct", :display "Endoscopic surgical procedure on rectum using laser"}}
-         {:value {:code "25410008", :system "http://snomed.ct", :display "Surgical occlusion of lower limb artery"}}
-         {:value {:code "387685009", :system "http://snomed.ct", :display "Surgical manipulation of shoulder joint"}}
-         {:value {:code "51574001", :system "http://snomed.ct", :display "Surgical occlusion of upper limb artery"}}
-         {:value {:code "265727003", :system "http://snomed.ct", :display "Surgical manipulation of cervical spine"}}
-         {:value {:code "265728008", :system "http://snomed.ct", :display "Surgical manipulation of thoracic spine"}}
-         {:value {:code "58401002", :system "http://snomed.ct", :display "Surgical removal of residual tooth roots"}}
-         {:value {:code "13163006", :system "http://snomed.ct", :display "Surgical transfer with flap construction"}}
-         {:value {:code "176889002", :system "http://snomed.ct", :display "Surgical control of hemorrhage of uterus"}}
-         {:value {:code "3249005", :system "http://snomed.ct", :display "Surgical construction of filtration bleb"}}
-         {:value {:code "449864000", :system "http://snomed.ct", :display "Surgical fixation of arytenoid cartilage"}}
-         {:value {:code "609284002", :system "http://snomed.ct", :display "Endoscopic surgical procedure on stomach using laser"}}
-         {:value {:code "6441000179108", :system "http://snomed.ct", :display "Surgical removal of sinus of natal cleft"}}
-         {:value {:code "8224008", :system "http://snomed.ct", :display "Surgical occlusion of intracranial artery"}}
-         {:value {:code "287540001", :system "http://snomed.ct", :display "Surgical biopsy of male genital structure"}}
-         {:value {:code "363316003", :system "http://snomed.ct", :display "Surgical implantation to lymphatic system"}}
-         {:value {:code "237015004", :system "http://snomed.ct", :display "Surgical control of postpartum hemorrhage"}}
-         {:value {:code "447083001", :system "http://snomed.ct", :display "Surgical procedure on skin and/or subcutaneous tissue"}}
-         {:value {:code "609194000", :system "http://snomed.ct", :display "Endoscopic surgical procedure on duodenum using laser"}}
-         {:value {:code "287560009", :system "http://snomed.ct", :display "Surgical biopsy of gastrointestinal tract"}}
-         {:value {:code "113136009", :system "http://snomed.ct", :display "Gingival curettage surgical, per quadrant"}}
-         {:value {:code "172548007", :system "http://snomed.ct", :display "Surgical removal of foreign body from lens"}}
-         {:value {:code "278691000", :system "http://snomed.ct", :display "Procedure related to surgical arteriovenous connection"}}
-         {:value {:code "183473005", :system "http://snomed.ct", :display "Oral surgical emergency hospital admission"}}
-         {:value {:code "40834003", :system "http://snomed.ct", :display "Complex surgical repair of wounds of trunk"}}
-         {:value {:code "307523006", :system "http://snomed.ct", :display "Surgical manipulation of lumbosacral spine"}}
-         {:value {:code "373385008", :system "http://snomed.ct", :display "Surgical repair of head and neck structure"}}
-         {:value {:code "287557002", :system "http://snomed.ct", :display "Surgical biopsy of external auditory canal"}}
-         {:value {:code "609283008", :system "http://snomed.ct", :display "Endoscopic surgical procedure on esophagus using laser"}}
-         {:value {:code "116016000", :system "http://snomed.ct", :display "Open surgical placement of gastrostomy tube"}}
-         {:value {:code "45102007", :system "http://snomed.ct", :display "Surgical repair of posterior segment of eye"}}
-         {:value {:code "88141006", :system "http://snomed.ct", :display "Surgical repair and revision of anastomosis"}}
-         {:value {:code "719280000", :system "http://snomed.ct", :display "Repair of lumbar hernia using surgical mesh"}}
-         {:value {:code "409056005", :system "http://snomed.ct", :display "Verification of surgical site and laterality"}}
-         {:value {:code "719283003", :system "http://snomed.ct", :display "Repair of ventral hernia using surgical mesh"}}
-         {:value {:code "80724002", :system "http://snomed.ct", :display "Circumcision by surgical excision on newborn"}}
-         {:value {:code "719277001", :system "http://snomed.ct", :display "Repair of sciatic hernia using surgical mesh"}}
-         {:value {:code "46196009", :system "http://snomed.ct", :display "Surgical construction of arteriovenous shunt"}}
-         {:value {:code "234676003", :system "http://snomed.ct", :display "Surgical repair of perforation of tooth root"}}
-         {:value {:code "769401004", :system "http://snomed.ct", :display "Collection of body fluid from surgical drain"}}
-         {:value {:code "719285005", :system "http://snomed.ct", :display "Repair of gluteal hernia using surgical mesh"}}
-         {:value {:code "719288007", :system "http://snomed.ct", :display "Repair of femoral hernia using surgical mesh"}}
-         {:value {:code "46214004", :system "http://snomed.ct", :display "Surgical occlusion of artery of head and neck"}}
-         {:value {:code "173330006", :system "http://snomed.ct", :display "Surgical arrest of post-extraction hemorrhage"}}
-         {:value {:code "87423009", :system "http://snomed.ct", :display "Surgical procedure for isolation of tooth with rubber dam"}}
-         {:value {:code "446576006", :system "http://snomed.ct", :display "Surgical procedure on vascular structure of adrenal gland"}}
-         {:value {:code "229458006", :system "http://snomed.ct", :display "Manipulation of the knee joint - non-surgical"}}
-         {:value {:code "447183004", :system "http://snomed.ct", :display "Surgical procedure using stereotactic ultrasound guidance"}}
-         {:value {:code "719265006", :system "http://snomed.ct", :display "Repair of inguinal hernia using surgical mesh"}}
-         {:value {:code "719261002", :system "http://snomed.ct", :display "Repair of perineal hernia using surgical mesh"}}
-         {:value {:code "59661004", :system "http://snomed.ct", :display "Surgical repair of urinary stress incontinence"}}
-         {:value {:code "719281001", :system "http://snomed.ct", :display "Repair of lumbar hernia using surgical sutures"}}
-         {:value {:code "719290008", :system "http://snomed.ct", :display "Repair of umbilical hernia using surgical mesh"}}
-         {:value {:code "363315004", :system "http://snomed.ct", :display "Surgical implantation to cardiovascular system"}}
-         {:value {:code "173285007", :system "http://snomed.ct", :display "Surgical removal of impacted third molar tooth"}}
-         {:value {:code "229463005", :system "http://snomed.ct", :display "Manipulation of the ankle joint - non-surgical"}}
-         {:value {:code "444700004", :system "http://snomed.ct", :display "Surgical procedure on primary malignant neoplasm of breast"}}
-         {:value {:code "59578001", :system "http://snomed.ct", :display "Surgical pneumoperitoneum for collapse of lung"}}
-         {:value {:code "80722003", :system "http://snomed.ct", :display "Surgical correction of inverted pregnant uterus"}}
-         {:value {:code "719262009", :system "http://snomed.ct", :display "Repair of perineal hernia using surgical suture"}}
-         {:value {:code "719286006", :system "http://snomed.ct", :display "Repair of gluteal hernia using surgical sutures"}}
-         {:value {:code "719726009", :system "http://snomed.ct", :display "Repair of ventral hernia using surgical sutures"}}
-         {:value {:code "229449004", :system "http://snomed.ct", :display "Manipulation of the carpal bones - non-surgical"}}
-         {:value {:code "719291007", :system "http://snomed.ct", :display "Repair of epigastric hernia using surgical mesh"}}
-         {:value {:code "719279003", :system "http://snomed.ct", :display "Repair of sciatic hernia using surgical sutures"}}
-         {:value {:code "719287002", :system "http://snomed.ct", :display "Repair of femoral hernia using surgical sutures"}}
-         {:value {:code "771856008", :system "http://snomed.ct", :display "Repair of incisional hernia using surgical mesh"}}
-         {:value {:code "239449009", :system "http://snomed.ct", :display "Surgical manipulation of temporomandibular joint"}}
-         {:value {:code "238167000", :system "http://snomed.ct", :display "Repair of inguinal hernia using surgical sutures"}}
-         {:value {:code "719264005", :system "http://snomed.ct", :display "Repair of parastomal hernia using surgical suture"}}
-         {:value {:code "719289004", :system "http://snomed.ct", :display "Repair of umbilical hernia using surgical sutures"}}
-         {:value {:code "221947009", :system "http://snomed.ct", :display "Reconstruction of surgically divided vas deferens"}}
-         {:value {:code "609285001", :system "http://snomed.ct", :display "Endoscopic surgical procedure on colon and rectum using laser"}}
-         {:value {:code "758601001", :system "http://snomed.ct", :display "Repair of left femoral hernia using surgical mesh"}}
-         {:value {:code "758662006", :system "http://snomed.ct", :display "Repair of left inguinal hernia using surgical mesh"}}
-         {:value {:code "234671008", :system "http://snomed.ct", :display "Surgical removal of non-impacted third molar tooth"}}
-         {:value {:code "238185007", :system "http://snomed.ct", :display "Repair of epigastric hernia using surgical sutures"}}
-         {:value {:code "758602008", :system "http://snomed.ct", :display "Repair of right femoral hernia using surgical mesh"}}
-         {:value {:code "307108005", :system "http://snomed.ct", :display "Surgical extraction of impacted supernumerary tooth"}}
-         {:value {:code "234674000", :system "http://snomed.ct", :display "Surgical removal of impacted permanent canine tooth"}}
-         {:value {:code "758663001", :system "http://snomed.ct", :display "Repair of right inguinal hernia using surgical mesh"}}
-         {:value {:code "58425005", :system "http://snomed.ct", :display "Surgical closure of tracheostomy with plastic repair"}}
-         {:value {:code "609195004", :system "http://snomed.ct", :display "Endoscopic surgical procedure on lesion of esophagus using laser"}}
-         {:value {:code "609286000", :system "http://snomed.ct", :display "Endoscopic surgical procedure on stomach and duodenum using laser"}}
-         {:value {:code "49651002", :system "http://snomed.ct", :display "Complex surgical repair of eyelids, nose, ears and lips"}}
-         {:value {:code "89844005", :system "http://snomed.ct", :display "Surgical reduction of torsion of testis with orchiopexy"}}
-         {:value {:code "307107000", :system "http://snomed.ct", :display "Surgical extraction of non-impacted supernumerary tooth"}}
-         {:value {:code "234672001", :system "http://snomed.ct", :display "Surgical removal of non-impacted permanent canine tooth"}}
-         {:value {:code "440300008", :system "http://snomed.ct", :display "Surgical lengthening of radius and ulna with autografts"}}
-         {:value {:code "108105007", :system "http://snomed.ct", :display "Obstetrics surgical repair, closure AND/OR reconstruction"}}
-         {:value {:code "5191001", :system "http://snomed.ct", :display "Surgical treatment of missed abortion of second trimester"}}
-         {:value {:code "49404006", :system "http://snomed.ct", :display "Surgical collapse of lung by destruction of phrenic nerve"}}
-         {:value {:code "773228000", :system "http://snomed.ct", :display "Laparoscopic repair of femoral hernia using surgical mesh"}}
-         {:value {:code "443398006", :system "http://snomed.ct", :display "Surgical removal of prosthetic implant from abdominal wall"}}
-         {:value {:code "773225002", :system "http://snomed.ct", :display "Laparoscopic repair of inguinal hernia using surgical mesh"}}
-         {:value {:code "450826000", :system "http://snomed.ct", :display "Surgical procedure on internal thoracic artery by transluminal approach"}}
-         {:value {:code "425640000", :system "http://snomed.ct", :display "Repair of recurrent umbilical hernia using surgical sutures"}}
-         {:value {:code "173440008", :system "http://snomed.ct", :display "Surgical arrest of postoperative bleeding from tonsillar bed"}}
-         {:value {:code "447844004", :system "http://snomed.ct", :display "Wedge excision of cervix uteri and suturing of surgical wound"}}
-         {:value {:code "762456000", :system "http://snomed.ct", :display "Repair of recurrent paraumbilical hernia with surgical sutures"}}
-         {:value {:code "746215009", :system "http://snomed.ct", :display "Laparoscopic repair of left inguinal hernia using surgical mesh"}}
-         {:value {:code "6130009", :system "http://snomed.ct", :display "Surgical exposure of impacted or unerupted tooth to aid eruption"}}
-         {:value {:code "746220009", :system "http://snomed.ct", :display "Laparoscopic repair of right inguinal hernia using surgical mesh"}}
-         {:value {:code "445912000", :system "http://snomed.ct", :display "Excision of fallopian tube and surgical removal of ectopic pregnancy"}}
-         {:value {:code "80703007", :system "http://snomed.ct", :display "Removal of surgically implanted material from posterior segment of eye"}}
-         {:value {:code "52355007", :system "http://snomed.ct", :display "Surgical exposure of impacted or unerupted tooth for orthodontic reason"}}
-         {:value {:code "782969002", :system "http://snomed.ct", :display "Laparoscopic pectopexy with fixation of cervical stump using surgical mesh"}}
-         {:value {:code "767379005", :system "http://snomed.ct", :display "Surgical reduction of torsion of right testis with fixation of left testis"}}
-         {:value {:code "767378002", :system "http://snomed.ct", :display "Surgical reduction of torsion of left testis with fixation of right testis"}}
-         {:value {:code "782970001", :system "http://snomed.ct", :display "Laparoscopic pectopexy with fixation of fornix of vagina using surgical mesh"}}
-         {:value {:code "64584004", :system "http://snomed.ct", :display "Removal of impacted tooth, completely bony, with unusual surgical complications"}}
-         {:value {:code "773133007", :system "http://snomed.ct", :display "Surgical distraction of externally adjustable spinal deformity correction system"}}
-         {:value {:code "785883009", :system "http://snomed.ct", :display "Removal of surgically implanted extraocular implant from posterior segment of eye"}}
-         {:value {:code "84799005", :system "http://snomed.ct", :display "Surgical transfer of bilateral parotid ducts with ligation of bilateral submandibular ducts"}}
-         {:value {:code "440438008", :system "http://snomed.ct", :display "Closed reduction of dislocation of glenohumeral joint and fracture of surgical neck of humerus"}}
-         {:value {:code "442907005", :system "http://snomed.ct", :display "Surgical removal of single chamber pacing cardioverter defibrillator electrode by transthoracic approach"}}
-         {:value {:code "178376007", :system "http://snomed.ct", :display "Reopening of cranium and re-exploration of intracranial operation site and surgical arrest of postoperative bleeding"}}
-         {:value {:code "177768005", :system "http://snomed.ct", :display "Reopening of chest and re-exploration of intra-abdominal operation site and surgical arrest of postoperative bleeding"}}
-         {:value {:code "177956008", :system "http://snomed.ct", :display "Reopening of abdomen and re-exploration of intra-abdominal operation site and surgical arrest of postoperative bleeding"}}
-         {:value {:code "68381003", :system "http://snomed.ct", :display "Surgical removal of erupted tooth requiring elevation of mucoperiosteal flap and removal of bone and/or section of tooth"}}
-         {:value {:code "443477007", :system "http://snomed.ct", :display "Surgical removal of transvenous electrode of dual chamber pacing cardioverter defibrillator pulse generator by transvenous approach"}}
-         {:value {:code "443958002", :system "http://snomed.ct", :display "Surgical removal of transvenous electrode of single chamber pacing cardioverter defibrillator pulse generator by transvenous approach"}}
-         {:value {:code "443358009", :system "http://snomed.ct", :display "Surgical removal of transvenous electrode of dual chamber pacing cardioverter defibrillator pulse generator by transthoracic approach"}}
-         {:value {:code "443676006", :system "http://snomed.ct", :display "Surgical removal of transvenous electrode of single chamber pacing cardioverter defibrillator pulse generator by transthoracic approach"}}
-         {:value {:code "719670005", :system "http://snomed.ct",
+         {:value {:code "387713003", :system "http://snomed.info/sct", :display "Surgical procedure"}}
+         {:value {:code "81733005", :system "http://snomed.info/sct", :display "Dental surgical procedure"}}
+         {:value {:code "372132004", :system "http://snomed.info/sct", :display "Surgical procedure by RNFA"}}
+         {:value {:code "783170008", :system "http://snomed.info/sct", :display "Surgical procedure on thigh"}}
+         {:value {:code "274330002", :system "http://snomed.info/sct", :display "Surgical biopsy"}}
+         {:value {:code "4365001", :system "http://snomed.info/sct", :display "Surgical repair"}}
+         {:value {:code "231686003", :system "http://snomed.info/sct", :display "Surgical procedure on orbit"}}
+         {:value {:code "128303001", :system "http://snomed.info/sct", :display "Surgical removal"}}
+         {:value {:code "39228008", :system "http://snomed.info/sct", :display "Surgical pathology procedure"}}
+         {:value {:code "405638000", :system "http://snomed.info/sct", :display "Accessory surgical procedure"}}
+         {:value {:code "1202017008", :system "http://snomed.info/sct", :display "Surgical procedure with flap"}}
+         {:value {:code "385487005", :system "http://snomed.info/sct", :display "Surgical procedure on thorax"}}
+         {:value {:code "9667001", :system "http://snomed.info/sct", :display "Surgical avulsion"}}
+         {:value {:code "10444003", :system "http://snomed.info/sct", :display "Surgical procedure on omentum"}}
+         {:value {:code "85876005", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure"}}
+         {:value {:code "265294002", :system "http://snomed.info/sct", :display "Surgical iridotomy"}}
+         {:value {:code "1258951009", :system "http://snomed.info/sct", :display "Orthodontic surgical procedure"}}
+         {:value {:code "265289002", :system "http://snomed.info/sct", :display "Surgical iridectomy"}}
+         {:value {:code "128304007", :system "http://snomed.info/sct", :display "Surgical extraction"}}
+         {:value {:code "363317007", :system "http://snomed.info/sct", :display "Surgical manipulation procedure"}}
+         {:value {:code "737301002", :system "http://snomed.info/sct", :display "Prophylactic surgical procedure"}}
+         {:value {:code "274353001", :system "http://snomed.info/sct", :display "Anal surgical biopsy"}}
+         {:value {:code "371587008", :system "http://snomed.info/sct", :display "Surgical procedure on eye region"}}
+         {:value {:code "385488000", :system "http://snomed.info/sct", :display "Surgical procedure on chest wall"}}
+         {:value {:code "389269000", :system "http://snomed.info/sct", :display "Surgical precautions"}}
+         {:value {:code "373353005", :system "http://snomed.info/sct", :display "Surgical procedure on eye proper"}}
+         {:value {:code "274071003", :system "http://snomed.info/sct", :display "Diathermy - surgical"}}
+         {:value {:code "363152007", :system "http://snomed.info/sct", :display "Immune system surgical procedure"}}
+         {:value {:code "165129008", :system "http://snomed.info/sct", :display "Surgical biopsy taken"}}
+         {:value {:code "408736005", :system "http://snomed.info/sct", :display "Surgical pneumothorax"}}
+         {:value {:code "373351007", :system "http://snomed.info/sct", :display "Surgical procedure on soft tissue"}}
+         {:value {:code "112802009", :system "http://snomed.info/sct", :display "Cardiovascular surgical procedure"}}
+         {:value {:code "33398007", :system "http://snomed.info/sct", :display "Surgical sequestration"}}
+         {:value {:code "274341000", :system "http://snomed.info/sct", :display "Surgical biopsy of lip"}}
+         {:value {:code "274338009", :system "http://snomed.info/sct", :display "Surgical biopsy of ear"}}
+         {:value {:code "274336008", :system "http://snomed.info/sct", :display "Surgical biopsy of eye"}}
+         {:value {:code "29971002", :system "http://snomed.info/sct", :display "Surgical procedure on external ear"}}
+         {:value {:code "274339001", :system "http://snomed.info/sct", :display "Surgical biopsy of nose"}}
+         {:value {:code "274333000", :system "http://snomed.info/sct", :display "Surgical biopsy of bone"}}
+         {:value {:code "363321000", :system "http://snomed.info/sct", :display "Surgical repair procedure by device"}}
+         {:value {:code "363323002", :system "http://snomed.info/sct", :display "Surgical repair procedure by method"}}
+         {:value {:code "17639001", :system "http://snomed.info/sct", :display "Surgical procedure on ocular muscle"}}
+         {:value {:code "49509003", :system "http://snomed.info/sct", :display "Lymphatic system surgical procedure"}}
+         {:value {:code "128324006", :system "http://snomed.info/sct", :display "Arthroscopy with surgical procedure"}}
+         {:value {:code "274350003", :system "http://snomed.info/sct", :display "Gastric surgical biopsy"}}
+         {:value {:code "443641009", :system "http://snomed.info/sct", :display "Surgical procedure on skin of chest"}}
+         {:value {:code "308000002", :system "http://snomed.info/sct", :display "Surgical biopsy of skin"}}
+         {:value {:code "231735002", :system "http://snomed.info/sct", :display "Surgical trabeculoplasty"}}
+         {:value {:code "274345009", :system "http://snomed.info/sct", :display "Surgical biopsy of uvula"}}
+         {:value {:code "274351004", :system "http://snomed.info/sct", :display "Surgical biopsy of colon"}}
+         {:value {:code "363318002", :system "http://snomed.info/sct", :display "Surgical removal of skin"}}
+         {:value {:code "428490009", :system "http://snomed.info/sct", :display "Surgical procedure on cervical spine"}}
+         {:value {:code "274334006", :system "http://snomed.info/sct", :display "Surgical biopsy of joint"}}
+         {:value {:code "274364003", :system "http://snomed.info/sct", :display "Surgical biopsy of penis"}}
+         {:value {:code "128326008", :system "http://snomed.info/sct", :display "Bronchoscopy with surgical procedure"}}
+         {:value {:code "103710003", :system "http://snomed.info/sct", :display "Microscopy during surgical procedure"}}
+         {:value {:code "274343002", :system "http://snomed.info/sct", :display "Salivary surgical biopsy"}}
+         {:value {:code "373391005", :system "http://snomed.info/sct", :display "Surgical ocular refractive procedure"}}
+         {:value {:code "274355008", :system "http://snomed.info/sct", :display "Surgical biopsy of liver"}}
+         {:value {:code "274365002", :system "http://snomed.info/sct", :display "Surgical biopsy of ovary"}}
+         {:value {:code "274368000", :system "http://snomed.info/sct", :display "Surgical biopsy of vulva"}}
+         {:value {:code "268413008", :system "http://snomed.info/sct", :display "Surgical biopsy of eyelid"}}
+         {:value {:code "274369008", :system "http://snomed.info/sct", :display "Endocrine surgical biopsy"}}
+         {:value {:code "1805005", :system "http://snomed.info/sct", :display "Surgical closure of stoma"}}
+         {:value {:code "234085002", :system "http://snomed.info/sct", :display "Surgical avulsion of vein"}}
+         {:value {:code "274359002", :system "http://snomed.info/sct", :display "Surgical biopsy of ureter"}}
+         {:value {:code "274363009", :system "http://snomed.info/sct", :display "Surgical biopsy of testis"}}
+         {:value {:code "274367005", :system "http://snomed.info/sct", :display "Surgical biopsy of vagina"}}
+         {:value {:code "274346005", :system "http://snomed.info/sct", :display "Surgical biopsy of tonsil"}}
+         {:value {:code "22523008", :system "http://snomed.info/sct", :display "Male surgical sterilization procedure"}}
+         {:value {:code "85089003", :system "http://snomed.info/sct", :display "Surgical closure of shunt"}}
+         {:value {:code "274366001", :system "http://snomed.info/sct", :display "Surgical biopsy of cervix"}}
+         {:value {:code "274331003", :system "http://snomed.info/sct", :display "Surgical biopsy of breast"}}
+         {:value {:code "274358005", :system "http://snomed.info/sct", :display "Surgical biopsy of kidney"}}
+         {:value {:code "274344008", :system "http://snomed.info/sct", :display "Surgical biopsy of palate"}}
+         {:value {:code "1230415001", :system "http://snomed.info/sct", :display "Surgical procedure on left eye region"}}
+         {:value {:code "107784002", :system "http://snomed.info/sct", :display "Surgical procedure on lower extremity"}}
+         {:value {:code "165130003", :system "http://snomed.info/sct", :display "Surgical biopsy not taken"}}
+         {:value {:code "25852009", :system "http://snomed.info/sct", :display "Surgical closure of pouch"}}
+         {:value {:code "274342007", :system "http://snomed.info/sct", :display "Surgical biopsy of tongue"}}
+         {:value {:code "274332005", :system "http://snomed.info/sct", :display "Surgical biopsy of muscle"}}
+         {:value {:code "287517000", :system "http://snomed.info/sct", :display "Surgical biopsy of artery"}}
+         {:value {:code "274352006", :system "http://snomed.info/sct", :display "Surgical biopsy of rectum"}}
+         {:value {:code "274337004", :system "http://snomed.info/sct", :display "Surgical biopsy of cornea"}}
+         {:value {:code "1163360005", :system "http://snomed.info/sct", :display "Surgical procedure on skeletal system"}}
+         {:value {:code "173317005", :system "http://snomed.info/sct", :display "Surgical exposure of tooth"}}
+         {:value {:code "274347001", :system "http://snomed.info/sct", :display "Surgical biopsy of pharynx"}}
+         {:value {:code "1230417009", :system "http://snomed.info/sct", :display "Surgical procedure on both eye regions"}}
+         {:value {:code "274370009", :system "http://snomed.info/sct", :display "Surgical biopsy of thyroid"}}
+         {:value {:code "82904003", :system "http://snomed.info/sct", :display "Surgical closure of window"}}
+         {:value {:code "274360007", :system "http://snomed.info/sct", :display "Surgical biopsy of bladder"}}
+         {:value {:code "274361006", :system "http://snomed.info/sct", :display "Surgical biopsy of urethra"}}
+         {:value {:code "1230416000", :system "http://snomed.info/sct", :display "Surgical procedure on right eye region"}}
+         {:value {:code "266749002", :system "http://snomed.info/sct", :display "Referral to surgical fitter"}}
+         {:value {:code "29454005", :system "http://snomed.info/sct", :display "Surgical occlusion of aorta"}}
+         {:value {:code "177129005", :system "http://snomed.info/sct", :display "Surgical induction of labor"}}
+         {:value {:code "710504000", :system "http://snomed.info/sct", :display "Categorizing surgical wound"}}
+         {:value {:code "118453005", :system "http://snomed.info/sct", :display "Surgical destruction of web"}}
+         {:value {:code "363324008", :system "http://snomed.info/sct", :display "Surgical repair procedure by morphology"}}
+         {:value {:code "274362004", :system "http://snomed.info/sct", :display "Surgical biopsy of prostate"}}
+         {:value {:code "287569005", :system "http://snomed.info/sct", :display "Intraspinal surgical biopsy"}}
+         {:value {:code "274354007", :system "http://snomed.info/sct", :display "Surgical biopsy of pancreas"}}
+         {:value {:code "281811000", :system "http://snomed.info/sct", :display "Arthroscopic surgical procedure on knee"}}
+         {:value {:code "302483003", :system "http://snomed.info/sct", :display "Surgical spinal manipulation"}}
+         {:value {:code "306550005", :system "http://snomed.info/sct", :display "Discharge by surgical fitter"}}
+         {:value {:code "287558007", :system "http://snomed.info/sct", :display "Surgical biopsy of diaphragm"}}
+         {:value {:code "41687007", :system "http://snomed.info/sct", :display "Surgical repair of inner ear"}}
+         {:value {:code "303968006", :system "http://snomed.info/sct", :display "Removal of surgical material"}}
+         {:value {:code "306180006", :system "http://snomed.info/sct", :display "Referral to surgical service"}}
+         {:value {:code "274348006", :system "http://snomed.info/sct", :display "Surgical biopsy of intestine"}}
+         {:value {:code "287570006", :system "http://snomed.info/sct", :display "Intracranial surgical biopsy"}}
+         {:value {:code "274349003", :system "http://snomed.info/sct", :display "Surgical biopsy of esophagus"}}
+         {:value {:code "225148005", :system "http://snomed.info/sct", :display "Surgical debridement of wound"}}
+         {:value {:code "373198009", :system "http://snomed.info/sct", :display "Vascular surgical procedure on lower limb"}}
+         {:value {:code "274372001", :system "http://snomed.info/sct", :display "Surgical biopsy of lymph node"}}
+         {:value {:code "274051007", :system "http://snomed.info/sct", :display "Surgical reduction of fracture"}}
+         {:value {:code "231725008", :system "http://snomed.info/sct", :display "Surgical peripheral iridectomy"}}
+         {:value {:code "387687001", :system "http://snomed.info/sct", :display "Surgical manipulation of joint"}}
+         {:value {:code "447296009", :system "http://snomed.info/sct", :display "Surgical procedure on middle and inner ear"}}
+         {:value {:code "183689004", :system "http://snomed.info/sct", :display "General surgical self-referral"}}
+         {:value {:code "307986005", :system "http://snomed.info/sct", :display "Surgical biopsy of parathyroid"}}
+         {:value {:code "274052000", :system "http://snomed.info/sct", :display "Surgical dislocation reduction"}}
+         {:value {:code "397819007", :system "http://snomed.info/sct", :display "Application of surgical drapes"}}
+         {:value {:code "287527006", :system "http://snomed.info/sct", :display "Surgical biopsy of pericardium"}}
+         {:value {:code "265730005", :system "http://snomed.info/sct", :display "Surgical manipulation of coccyx"}}
+         {:value {:code "5722009", :system "http://snomed.info/sct", :display "Surgical reanastomosis of colon"}}
+         {:value {:code "301089009", :system "http://snomed.info/sct", :display "Surgical dilatation of duodenum"}}
+         {:value {:code "438782001", :system "http://snomed.info/sct", :display "Surgical procedure on pterygopalatine fossa"}}
+         {:value {:code "287564000", :system "http://snomed.info/sct", :display "Surgical biopsy of external ear"}}
+         {:value {:code "128325007", :system "http://snomed.info/sct", :display "Direct laryngoscopy with surgical procedure"}}
+         {:value {:code "288084007", :system "http://snomed.info/sct", :display "Infected tissue surgical toilet"}}
+         {:value {:code "47585001", :system "http://snomed.info/sct", :display "Surgical closure of anastomosis"}}
+         {:value {:code "171902006", :system "http://snomed.info/sct", :display "Thoracic surgical sympathectomy"}}
+         {:value {:code "387832004", :system "http://snomed.info/sct", :display "Surgical exploration of scrotum"}}
+         {:value {:code "128992008", :system "http://snomed.info/sct", :display "Surgical removal of foreign body"}}
+         {:value {:code "608849003", :system "http://snomed.info/sct", :display "Surgical procedure on eye proper using laser"}}
+         {:value {:code "287525003", :system "http://snomed.info/sct", :display "Surgical biopsy of male perineum"}}
+         {:value {:code "307987001", :system "http://snomed.info/sct", :display "Surgical biopsy of adrenal gland"}}
+         {:value {:code "231704008", :system "http://snomed.info/sct", :display "Surgical superficial keratectomy"}}
+         {:value {:code "287568002", :system "http://snomed.info/sct", :display "Peripheral nerve surgical biopsy"}}
+         {:value {:code "236219009", :system "http://snomed.info/sct", :display "Surgical closure of bladder neck"}}
+         {:value {:code "274357000", :system "http://snomed.info/sct", :display "Surgical biopsy of urinary tract"}}
+         {:value {:code "61892004", :system "http://snomed.info/sct", :display "Repair with surgical advancement"}}
+         {:value {:code "274340004", :system "http://snomed.info/sct", :display "Surgical biopsy of oral structure"}}
+         {:value {:code "231680009", :system "http://snomed.info/sct", :display "Surgical procedure on superior oblique muscle"}}
+         {:value {:code "373359009", :system "http://snomed.info/sct", :display "Surgical closure of eye structure"}}
+         {:value {:code "274356009", :system "http://snomed.info/sct", :display "Surgical biopsy of biliary system"}}
+         {:value {:code "274335007", :system "http://snomed.info/sct", :display "Surgical biopsy of nervous system"}}
+         {:value {:code "278500000", :system "http://snomed.info/sct", :display "Surgical transposition of stomach"}}
+         {:value {:code "262794006", :system "http://snomed.info/sct", :display "Surgical transection of esophagus"}}
+         {:value {:code "363064002", :system "http://snomed.info/sct", :display "Site specific immune system surgical procedure"}}
+         {:value {:code "36771004", :system "http://snomed.info/sct", :display "Surgical occlusion of blood vessel"}}
+         {:value {:code "231076003", :system "http://snomed.info/sct", :display "Surgical ablation of celiac plexus"}}
+         {:value {:code "231708006", :system "http://snomed.info/sct", :display "Surgical correction of astigmatism"}}
+         {:value {:code "188383006", :system "http://snomed.info/sct", :display "Surgical repair of lower extremity"}}
+         {:value {:code "363319005", :system "http://snomed.info/sct", :display "Surgical repair of upper extremity"}}
+         {:value {:code "234673006", :system "http://snomed.info/sct", :display "Surgical removal of impacted tooth"}}
+         {:value {:code "287522000", :system "http://snomed.info/sct", :display "Surgical biopsy of female perineum"}}
+         {:value {:code "287559004", :system "http://snomed.info/sct", :display "Surgical biopsy of small intestine"}}
+         {:value {:code "361156002", :system "http://snomed.info/sct", :display "Surgical repair of prolapsed uterus"}}
+         {:value {:code "243636003", :system "http://snomed.info/sct", :display "Surgical repair of vertebral column"}}
+         {:value {:code "287523005", :system "http://snomed.info/sct", :display "Surgical biopsy of female genitalia"}}
+         {:value {:code "446117002", :system "http://snomed.info/sct", :display "Surgical exposure of impacted tooth"}}
+         {:value {:code "265214001", :system "http://snomed.info/sct", :display "Surgical manipulation of ankle joint"}}
+         {:value {:code "71868008", :system "http://snomed.info/sct", :display "Surgical occlusion of abdominal vein"}}
+         {:value {:code "287518005", :system "http://snomed.info/sct", :display "Surgical biopsy of peripheral vessel"}}
+         {:value {:code "282045006", :system "http://snomed.info/sct", :display "Surgical investigation of tooth root"}}
+         {:value {:code "231747008", :system "http://snomed.info/sct", :display "Surgical capsulotomy of lens capsule"}}
+         {:value {:code "387689003", :system "http://snomed.info/sct", :display "Surgical manipulation of elbow joint"}}
+         {:value {:code "387698000", :system "http://snomed.info/sct", :display "Surgical manipulation of wrist joint"}}
+         {:value {:code "428562007", :system "http://snomed.info/sct", :display "Surgical reopening of anterior nares"}}
+         {:value {:code "1173011006", :system "http://snomed.info/sct", :display "Repair of hernia using surgical mesh"}}
+         {:value {:code "265729000", :system "http://snomed.info/sct", :display "Surgical manipulation of lumbar spine"}}
+         {:value {:code "9221009", :system "http://snomed.info/sct", :display "Surgical treatment of septic abortion"}}
+         {:value {:code "239531006", :system "http://snomed.info/sct", :display "Surgical manipulation of arthroplasty"}}
+         {:value {:code "90089003", :system "http://snomed.info/sct", :display "Surgical occlusion of thoracic artery"}}
+         {:value {:code "13707001", :system "http://snomed.info/sct", :display "Surgical repair and revision of stoma"}}
+         {:value {:code "301067005", :system "http://snomed.info/sct", :display "Surgical removal of third molar tooth"}}
+         {:value {:code "66284001", :system "http://snomed.info/sct", :display "Surgical repair and revision of pouch"}}
+         {:value {:code "5648005", :system "http://snomed.info/sct", :display "Surgical repair and revision of shunt"}}
+         {:value {:code "363308007", :system "http://snomed.info/sct", :display "Site specific lymphatic system surgical procedure"}}
+         {:value {:code "9217002", :system "http://snomed.info/sct", :display "Surgical fracture of nasal turbinates"}}
+         {:value {:code "78739008", :system "http://snomed.info/sct", :display "Surgical occlusion of abdominal artery"}}
+         {:value {:code "287563006", :system "http://snomed.info/sct", :display "Surgical biopsy of subcutaneous tissue"}}
+         {:value {:code "64941009", :system "http://snomed.info/sct", :display "Surgical pneumoperitoneum by injection"}}
+         {:value {:code "699253003", :system "http://snomed.info/sct", :display "Surgical manipulation of joint of knee"}}
+         {:value {:code "301298001", :system "http://snomed.info/sct", :display "Surgical dilatation of small intestine"}}
+         {:value {:code "17100006", :system "http://snomed.info/sct", :display "Surgical repair of artery of extremity"}}
+         {:value {:code "78891000", :system "http://snomed.info/sct", :display "Surgical repair and revision of window"}}
+         {:value {:code "77687009", :system "http://snomed.info/sct", :display "Surgical occlusion of upper limb veins"}}
+         {:value {:code "61825006", :system "http://snomed.info/sct", :display "Surgical occlusion of lower limb veins"}}
+         {:value {:code "234670009", :system "http://snomed.info/sct", :display "Surgical removal of non-impacted tooth"}}
+         {:value {:code "609197007", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on colon using laser"}}
+         {:value {:code "35947009", :system "http://snomed.info/sct", :display "Surgical reduction of torsion of testis"}}
+         {:value {:code "609196003", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on rectum using laser"}}
+         {:value {:code "25410008", :system "http://snomed.info/sct", :display "Surgical occlusion of lower limb artery"}}
+         {:value {:code "387685009", :system "http://snomed.info/sct", :display "Surgical manipulation of shoulder joint"}}
+         {:value {:code "51574001", :system "http://snomed.info/sct", :display "Surgical occlusion of upper limb artery"}}
+         {:value {:code "265727003", :system "http://snomed.info/sct", :display "Surgical manipulation of cervical spine"}}
+         {:value {:code "265728008", :system "http://snomed.info/sct", :display "Surgical manipulation of thoracic spine"}}
+         {:value {:code "58401002", :system "http://snomed.info/sct", :display "Surgical removal of residual tooth roots"}}
+         {:value {:code "13163006", :system "http://snomed.info/sct", :display "Surgical transfer with flap construction"}}
+         {:value {:code "176889002", :system "http://snomed.info/sct", :display "Surgical control of hemorrhage of uterus"}}
+         {:value {:code "3249005", :system "http://snomed.info/sct", :display "Surgical construction of filtration bleb"}}
+         {:value {:code "449864000", :system "http://snomed.info/sct", :display "Surgical fixation of arytenoid cartilage"}}
+         {:value {:code "609284002", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on stomach using laser"}}
+         {:value {:code "6441000179108", :system "http://snomed.info/sct", :display "Surgical removal of sinus of natal cleft"}}
+         {:value {:code "8224008", :system "http://snomed.info/sct", :display "Surgical occlusion of intracranial artery"}}
+         {:value {:code "287540001", :system "http://snomed.info/sct", :display "Surgical biopsy of male genital structure"}}
+         {:value {:code "363316003", :system "http://snomed.info/sct", :display "Surgical implantation to lymphatic system"}}
+         {:value {:code "237015004", :system "http://snomed.info/sct", :display "Surgical control of postpartum hemorrhage"}}
+         {:value {:code "447083001", :system "http://snomed.info/sct", :display "Surgical procedure on skin and/or subcutaneous tissue"}}
+         {:value {:code "609194000", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on duodenum using laser"}}
+         {:value {:code "287560009", :system "http://snomed.info/sct", :display "Surgical biopsy of gastrointestinal tract"}}
+         {:value {:code "113136009", :system "http://snomed.info/sct", :display "Gingival curettage surgical, per quadrant"}}
+         {:value {:code "172548007", :system "http://snomed.info/sct", :display "Surgical removal of foreign body from lens"}}
+         {:value {:code "278691000", :system "http://snomed.info/sct", :display "Procedure related to surgical arteriovenous connection"}}
+         {:value {:code "183473005", :system "http://snomed.info/sct", :display "Oral surgical emergency hospital admission"}}
+         {:value {:code "40834003", :system "http://snomed.info/sct", :display "Complex surgical repair of wounds of trunk"}}
+         {:value {:code "307523006", :system "http://snomed.info/sct", :display "Surgical manipulation of lumbosacral spine"}}
+         {:value {:code "373385008", :system "http://snomed.info/sct", :display "Surgical repair of head and neck structure"}}
+         {:value {:code "287557002", :system "http://snomed.info/sct", :display "Surgical biopsy of external auditory canal"}}
+         {:value {:code "609283008", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on esophagus using laser"}}
+         {:value {:code "116016000", :system "http://snomed.info/sct", :display "Open surgical placement of gastrostomy tube"}}
+         {:value {:code "45102007", :system "http://snomed.info/sct", :display "Surgical repair of posterior segment of eye"}}
+         {:value {:code "88141006", :system "http://snomed.info/sct", :display "Surgical repair and revision of anastomosis"}}
+         {:value {:code "719280000", :system "http://snomed.info/sct", :display "Repair of lumbar hernia using surgical mesh"}}
+         {:value {:code "409056005", :system "http://snomed.info/sct", :display "Verification of surgical site and laterality"}}
+         {:value {:code "719283003", :system "http://snomed.info/sct", :display "Repair of ventral hernia using surgical mesh"}}
+         {:value {:code "80724002", :system "http://snomed.info/sct", :display "Circumcision by surgical excision on newborn"}}
+         {:value {:code "719277001", :system "http://snomed.info/sct", :display "Repair of sciatic hernia using surgical mesh"}}
+         {:value {:code "46196009", :system "http://snomed.info/sct", :display "Surgical construction of arteriovenous shunt"}}
+         {:value {:code "234676003", :system "http://snomed.info/sct", :display "Surgical repair of perforation of tooth root"}}
+         {:value {:code "769401004", :system "http://snomed.info/sct", :display "Collection of body fluid from surgical drain"}}
+         {:value {:code "719285005", :system "http://snomed.info/sct", :display "Repair of gluteal hernia using surgical mesh"}}
+         {:value {:code "719288007", :system "http://snomed.info/sct", :display "Repair of femoral hernia using surgical mesh"}}
+         {:value {:code "46214004", :system "http://snomed.info/sct", :display "Surgical occlusion of artery of head and neck"}}
+         {:value {:code "173330006", :system "http://snomed.info/sct", :display "Surgical arrest of post-extraction hemorrhage"}}
+         {:value {:code "87423009", :system "http://snomed.info/sct", :display "Surgical procedure for isolation of tooth with rubber dam"}}
+         {:value {:code "446576006", :system "http://snomed.info/sct", :display "Surgical procedure on vascular structure of adrenal gland"}}
+         {:value {:code "229458006", :system "http://snomed.info/sct", :display "Manipulation of the knee joint - non-surgical"}}
+         {:value {:code "447183004", :system "http://snomed.info/sct", :display "Surgical procedure using stereotactic ultrasound guidance"}}
+         {:value {:code "719265006", :system "http://snomed.info/sct", :display "Repair of inguinal hernia using surgical mesh"}}
+         {:value {:code "719261002", :system "http://snomed.info/sct", :display "Repair of perineal hernia using surgical mesh"}}
+         {:value {:code "59661004", :system "http://snomed.info/sct", :display "Surgical repair of urinary stress incontinence"}}
+         {:value {:code "719281001", :system "http://snomed.info/sct", :display "Repair of lumbar hernia using surgical sutures"}}
+         {:value {:code "719290008", :system "http://snomed.info/sct", :display "Repair of umbilical hernia using surgical mesh"}}
+         {:value {:code "363315004", :system "http://snomed.info/sct", :display "Surgical implantation to cardiovascular system"}}
+         {:value {:code "173285007", :system "http://snomed.info/sct", :display "Surgical removal of impacted third molar tooth"}}
+         {:value {:code "229463005", :system "http://snomed.info/sct", :display "Manipulation of the ankle joint - non-surgical"}}
+         {:value {:code "444700004", :system "http://snomed.info/sct", :display "Surgical procedure on primary malignant neoplasm of breast"}}
+         {:value {:code "59578001", :system "http://snomed.info/sct", :display "Surgical pneumoperitoneum for collapse of lung"}}
+         {:value {:code "80722003", :system "http://snomed.info/sct", :display "Surgical correction of inverted pregnant uterus"}}
+         {:value {:code "719262009", :system "http://snomed.info/sct", :display "Repair of perineal hernia using surgical suture"}}
+         {:value {:code "719286006", :system "http://snomed.info/sct", :display "Repair of gluteal hernia using surgical sutures"}}
+         {:value {:code "719726009", :system "http://snomed.info/sct", :display "Repair of ventral hernia using surgical sutures"}}
+         {:value {:code "229449004", :system "http://snomed.info/sct", :display "Manipulation of the carpal bones - non-surgical"}}
+         {:value {:code "719291007", :system "http://snomed.info/sct", :display "Repair of epigastric hernia using surgical mesh"}}
+         {:value {:code "719279003", :system "http://snomed.info/sct", :display "Repair of sciatic hernia using surgical sutures"}}
+         {:value {:code "719287002", :system "http://snomed.info/sct", :display "Repair of femoral hernia using surgical sutures"}}
+         {:value {:code "771856008", :system "http://snomed.info/sct", :display "Repair of incisional hernia using surgical mesh"}}
+         {:value {:code "239449009", :system "http://snomed.info/sct", :display "Surgical manipulation of temporomandibular joint"}}
+         {:value {:code "238167000", :system "http://snomed.info/sct", :display "Repair of inguinal hernia using surgical sutures"}}
+         {:value {:code "719264005", :system "http://snomed.info/sct", :display "Repair of parastomal hernia using surgical suture"}}
+         {:value {:code "719289004", :system "http://snomed.info/sct", :display "Repair of umbilical hernia using surgical sutures"}}
+         {:value {:code "221947009", :system "http://snomed.info/sct", :display "Reconstruction of surgically divided vas deferens"}}
+         {:value {:code "609285001", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on colon and rectum using laser"}}
+         {:value {:code "758601001", :system "http://snomed.info/sct", :display "Repair of left femoral hernia using surgical mesh"}}
+         {:value {:code "758662006", :system "http://snomed.info/sct", :display "Repair of left inguinal hernia using surgical mesh"}}
+         {:value {:code "234671008", :system "http://snomed.info/sct", :display "Surgical removal of non-impacted third molar tooth"}}
+         {:value {:code "238185007", :system "http://snomed.info/sct", :display "Repair of epigastric hernia using surgical sutures"}}
+         {:value {:code "758602008", :system "http://snomed.info/sct", :display "Repair of right femoral hernia using surgical mesh"}}
+         {:value {:code "307108005", :system "http://snomed.info/sct", :display "Surgical extraction of impacted supernumerary tooth"}}
+         {:value {:code "234674000", :system "http://snomed.info/sct", :display "Surgical removal of impacted permanent canine tooth"}}
+         {:value {:code "758663001", :system "http://snomed.info/sct", :display "Repair of right inguinal hernia using surgical mesh"}}
+         {:value {:code "58425005", :system "http://snomed.info/sct", :display "Surgical closure of tracheostomy with plastic repair"}}
+         {:value {:code "609195004", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on lesion of esophagus using laser"}}
+         {:value {:code "609286000", :system "http://snomed.info/sct", :display "Endoscopic surgical procedure on stomach and duodenum using laser"}}
+         {:value {:code "49651002", :system "http://snomed.info/sct", :display "Complex surgical repair of eyelids, nose, ears and lips"}}
+         {:value {:code "89844005", :system "http://snomed.info/sct", :display "Surgical reduction of torsion of testis with orchiopexy"}}
+         {:value {:code "307107000", :system "http://snomed.info/sct", :display "Surgical extraction of non-impacted supernumerary tooth"}}
+         {:value {:code "234672001", :system "http://snomed.info/sct", :display "Surgical removal of non-impacted permanent canine tooth"}}
+         {:value {:code "440300008", :system "http://snomed.info/sct", :display "Surgical lengthening of radius and ulna with autografts"}}
+         {:value {:code "108105007", :system "http://snomed.info/sct", :display "Obstetrics surgical repair, closure AND/OR reconstruction"}}
+         {:value {:code "5191001", :system "http://snomed.info/sct", :display "Surgical treatment of missed abortion of second trimester"}}
+         {:value {:code "49404006", :system "http://snomed.info/sct", :display "Surgical collapse of lung by destruction of phrenic nerve"}}
+         {:value {:code "773228000", :system "http://snomed.info/sct", :display "Laparoscopic repair of femoral hernia using surgical mesh"}}
+         {:value {:code "443398006", :system "http://snomed.info/sct", :display "Surgical removal of prosthetic implant from abdominal wall"}}
+         {:value {:code "773225002", :system "http://snomed.info/sct", :display "Laparoscopic repair of inguinal hernia using surgical mesh"}}
+         {:value {:code "450826000", :system "http://snomed.info/sct", :display "Surgical procedure on internal thoracic artery by transluminal approach"}}
+         {:value {:code "425640000", :system "http://snomed.info/sct", :display "Repair of recurrent umbilical hernia using surgical sutures"}}
+         {:value {:code "173440008", :system "http://snomed.info/sct", :display "Surgical arrest of postoperative bleeding from tonsillar bed"}}
+         {:value {:code "447844004", :system "http://snomed.info/sct", :display "Wedge excision of cervix uteri and suturing of surgical wound"}}
+         {:value {:code "762456000", :system "http://snomed.info/sct", :display "Repair of recurrent paraumbilical hernia with surgical sutures"}}
+         {:value {:code "746215009", :system "http://snomed.info/sct", :display "Laparoscopic repair of left inguinal hernia using surgical mesh"}}
+         {:value {:code "6130009", :system "http://snomed.info/sct", :display "Surgical exposure of impacted or unerupted tooth to aid eruption"}}
+         {:value {:code "746220009", :system "http://snomed.info/sct", :display "Laparoscopic repair of right inguinal hernia using surgical mesh"}}
+         {:value {:code "445912000", :system "http://snomed.info/sct", :display "Excision of fallopian tube and surgical removal of ectopic pregnancy"}}
+         {:value {:code "80703007", :system "http://snomed.info/sct", :display "Removal of surgically implanted material from posterior segment of eye"}}
+         {:value {:code "52355007", :system "http://snomed.info/sct", :display "Surgical exposure of impacted or unerupted tooth for orthodontic reason"}}
+         {:value {:code "782969002", :system "http://snomed.info/sct", :display "Laparoscopic pectopexy with fixation of cervical stump using surgical mesh"}}
+         {:value {:code "767379005", :system "http://snomed.info/sct", :display "Surgical reduction of torsion of right testis with fixation of left testis"}}
+         {:value {:code "767378002", :system "http://snomed.info/sct", :display "Surgical reduction of torsion of left testis with fixation of right testis"}}
+         {:value {:code "782970001", :system "http://snomed.info/sct", :display "Laparoscopic pectopexy with fixation of fornix of vagina using surgical mesh"}}
+         {:value {:code "64584004", :system "http://snomed.info/sct", :display "Removal of impacted tooth, completely bony, with unusual surgical complications"}}
+         {:value {:code "773133007", :system "http://snomed.info/sct", :display "Surgical distraction of externally adjustable spinal deformity correction system"}}
+         {:value {:code "785883009", :system "http://snomed.info/sct", :display "Removal of surgically implanted extraocular implant from posterior segment of eye"}}
+         {:value {:code "84799005", :system "http://snomed.info/sct", :display "Surgical transfer of bilateral parotid ducts with ligation of bilateral submandibular ducts"}}
+         {:value {:code "440438008", :system "http://snomed.info/sct", :display "Closed reduction of dislocation of glenohumeral joint and fracture of surgical neck of humerus"}}
+         {:value {:code "442907005", :system "http://snomed.info/sct", :display "Surgical removal of single chamber pacing cardioverter defibrillator electrode by transthoracic approach"}}
+         {:value {:code "178376007", :system "http://snomed.info/sct", :display "Reopening of cranium and re-exploration of intracranial operation site and surgical arrest of postoperative bleeding"}}
+         {:value {:code "177768005", :system "http://snomed.info/sct", :display "Reopening of chest and re-exploration of intra-abdominal operation site and surgical arrest of postoperative bleeding"}}
+         {:value {:code "177956008", :system "http://snomed.info/sct", :display "Reopening of abdomen and re-exploration of intra-abdominal operation site and surgical arrest of postoperative bleeding"}}
+         {:value {:code "68381003", :system "http://snomed.info/sct", :display "Surgical removal of erupted tooth requiring elevation of mucoperiosteal flap and removal of bone and/or section of tooth"}}
+         {:value {:code "443477007", :system "http://snomed.info/sct", :display "Surgical removal of transvenous electrode of dual chamber pacing cardioverter defibrillator pulse generator by transvenous approach"}}
+         {:value {:code "443958002", :system "http://snomed.info/sct", :display "Surgical removal of transvenous electrode of single chamber pacing cardioverter defibrillator pulse generator by transvenous approach"}}
+         {:value {:code "443358009", :system "http://snomed.info/sct", :display "Surgical removal of transvenous electrode of dual chamber pacing cardioverter defibrillator pulse generator by transthoracic approach"}}
+         {:value {:code "443676006", :system "http://snomed.info/sct", :display "Surgical removal of transvenous electrode of single chamber pacing cardioverter defibrillator pulse generator by transthoracic approach"}}
+         {:value {:code "719670005", :system "http://snomed.info/sct",
                   :display "Surgical procedure (or procedures) by which a transgender person's physical appearance and function of their existing sexual characteristics are altered to resemble that of their identified gender."}}
-         {:value {:code "1184601001", :system "http://snomed.ct",
+         {:value {:code "1184601001", :system "http://snomed.info/sct",
                   :display "A surgical cardiac procedure involving repair of the aortic valve by implanting a replacement valve (within a stent) into the previously implanted aortic valve without removing the old, damaged valve or the previously implanted valve."}}
-         {:value {:code "1231726001", :system "http://snomed.ct",
+         {:value {:code "1231726001", :system "http://snomed.info/sct",
                   :display "A surgical procedure where a catheter is passed through a cut in the chest wall and then through the heart wall (transapical) and positioned across the leaking mitral valve. A bioprosthetic mitral valve is then passed through the tube (transcatheter) and placed within the existing surgically implanted mitral valve ring. The aim is to treat the leaking mitral valve without needing to repeat open-heart surgery."}}]}
 
  PastSurgicalHistoryDocument
