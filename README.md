@@ -11,6 +11,7 @@ Forms library contains next common forms:
 - Functional status
 - GAD-7
 - History of present illness
+- Lifestyle
 - Living Arrangements
 - PHQ2/PHQ9 Depression Form
 - Pain assessment

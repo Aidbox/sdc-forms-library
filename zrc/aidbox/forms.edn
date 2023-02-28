@@ -21,5 +21,6 @@
           aidbox.forms.hpi
           aidbox.forms.demographics
           aidbox.forms.functional-status
+          aidbox.forms.lifestyle
           }
  }

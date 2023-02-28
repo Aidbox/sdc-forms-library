@@ -1,0 +1,344 @@
+{ns aidbox.forms.lifestyle
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+
+ LifestyleDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Lifestyle"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :sdc/rules {:stop-bang-score (+ (get-in [:stop-bang-1])
+                                  (get-in [:stop-bang-2])
+                                  (get-in [:stop-bang-3])
+                                  (get-in [:stop-bang-4])
+                                  (get-in [:stop-bang-5])
+                                  (get-in [:stop-bang-6])
+                                  (get-in [:stop-bang-7])
+                                  (get-in [:stop-bang-8]))}
+  :keys {:nutrition
+         {:type zen/map
+          :keys {:enabled {:text "**Nutrition:** Any concerns about patient's nutrition or weight?"
+                           :type zen/boolean}
+                 :patient-diet {:text "What is the patient's typical diet?"
+                                :type zen/string}
+
+                 :nutrition-type
+                 {:text "Please specify concerns"
+                  :type zen/vector
+                  :every {:text "Please specify concerns"
+                          :confirms #{aidbox.sdc.fhir/coding}
+                          :enum [{:value {:display "Malnutrition" :code "nutrition-malnutrition"}}
+                                 {:value {:display "Overweight/Obesity" :code "nutrition-obesity"}}
+                                 {:value {:display "Other" :code "nutrition-other"}}]}}
+
+                 :nutrition-type-other {:text "Specify Other" :type zen/string}
+
+                 :malnutrition-trouble-eating {:text "Any trouble eating, chewing or swallowing?" :type zen/boolean}
+                 :malnutrition-dentition      {:text "Any problems with dentition?" :type zen/boolean}
+                 :malnutrition-feeding-tube   {:text "Does the patient have a feeding tube?" :type zen/boolean}
+                 :malnutrition-feeding-tube-details   {:text "Formula, frequency, volume & daily total caloric intake" :type zen/string}
+                 :malnutrition-unintended-weight-loss {:text "Has the patient had any unintended weight loss?" :type zen/boolean}
+
+                 :malnutrition-estimated-weight-loss
+                 {:text "Estimated weight loss"
+                  :units [{:name "lbs"}]
+                  :confirms #{aidbox.sdc.fhir/quantity}}
+
+                 :malnutrition-weight-loss-duration
+                 {:text "Duration"
+                  :confirms #{aidbox.sdc.fhir/coding}
+                  :enum [{:value {:display "1 week"    :score 1  :code "wk"  :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "2 weeks"   :score 2  :code "wk" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "3 weeks"   :score 3  :code "wk" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "1 month"   :score 1  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "2 months"  :score 2  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "3 months"  :score 3  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "4 months"  :score 4  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "5 months"  :score 5  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "6 months"  :score 6  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "7 months"  :score 7  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "8 months"  :score 8  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "9 months"  :score 9  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "10 months" :score 10 :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "11 months" :score 11 :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "12 months" :score 12 :code "mo" :system "https://ucum.nlm.nih.gov/"}}]}
+
+                 :malnutrition-reduced-muscle-mass
+                 {:text "Does the patient have reduced muscle mass?"
+                  :confirms #{aidbox.sdc.fhir/coding}
+                  :enum [{:value {:display "Mild" :code "reduced-muscle-mass-1"}}
+                         {:value {:display "Moderate" :code "reduced-muscle-mass-2"}}
+                         {:value {:display "Severe" :code "reduced-muscle-mass-3"}}
+                         {:value {:display "None" :code "reduced-muscle-mass-none"}}
+                         {:value {:display "Unknown" :code "reduced-muscle-mass-unknown"}}]}
+
+                 :malnutrition-reduced-nutrition
+                 {:text "Has the patient had reduced nutritional intake?"
+                  :confirms #{aidbox.sdc.fhir/coding}
+                  :enum [{:value {:display "Yes, over >2 weeks" :code "reduced-nutrition-1"}}
+                         {:value {:display "Yes, >50% past week" :code "reduced-nutrition-2"}}
+                         {:value {:display "None" :code "reduced-nutrition-3"}}]}
+
+                 :malnutrition-underlying-cause
+                 {:text "What is the underlying cause of the patient's malnutrition issues?"
+                  :confirms #{aidbox.sdc.fhir/coding}
+                  :enum [{:value {:display "Chronic Disease" :code "malnutrition-cause-chronic-disease"}}
+                         {:value {:display "Acute Disease" :code "malnutrition-cause-acute-disease"}}
+                         {:value {:display "Starvation" :code "malnutrition-cause-starvation"}}
+                         {:value {:display "Other" :code "malnutrition-cause-other"}}
+                         {:value {:display "None" :code "malnutrition-cause-none"}}]}
+
+                 :malnutrition-comment {:text "Specify" :type zen/string}
+
+                 :obesity-weight-gain-areas
+                 {:type zen/vector
+                  :every {:text "Are there areas of patient's diet are concerning for weight gain?"
+                          :confirms #{aidbox.sdc.fhir/coding}
+                          :enum [{:value {:display "Fast food/take out" :code "obesity-weight-gain-area-1"}}
+                                 {:value {:display "Fried foods" :code "obesity-weight-gain-area-2"}}
+                                 {:value {:display "High caloric intake" :code "obesity-weight-gain-area-3"}}
+                                 {:value {:display "Juices/sodas" :code "obesity-weight-gain-area-4"}}
+                                 {:value {:display "Other" :code "obesity-weight-gain-area-other"}}]}}
+
+                 :obesity-weight-gain-area-other {:text "Specify" :type zen/string}
+
+                 :obesity-comorbid-conditions
+                 {:type zen/vector
+                  :every {:text "Does patient have conditions associated with morbid obesity?"
+                          :confirms #{aidbox.sdc.fhir/coding}
+                          :enum [{:value {:display "Diabetes mellitus" :code "comorbid-condition-1"}}
+                                 {:value {:display "Hypertension" :code "comorbid-condition-2"}}
+                                 {:value {:display "Heart Disease" :code "comorbid-condition-3"}}
+                                 {:value {:display "Hyperlipidemia" :code "comorbid-condition-4"}}
+                                 {:value {:display "Hypercholesterolemia" :code "comorbid-condition-5"}}
+                                 {:value {:display "Obstructive Sleep Apnea" :code "comorbid-condition-6"}}
+                                 {:value {:display "GERD" :code "comorbid-condition-7"}}
+                                 {:value {:display "Osteoarthritis " :code "comorbid-condition-8"}}
+                                 {:value {:display "Not applicable " :code "comorbid-condition-not-applicable"}}]}}}}
+
+
+         :lifestyle-physical-activity {:text "**Physical Activity:** Is the patient physically active?"
+                                       :type zen/boolean}
+
+         :lifestyle-physical-activity-exercise-days
+         {:text "How many days a week do you exercise?"
+          :confirms #{aidbox.sdc.fhir/coding}
+          :enum [{:value {:display "1-2" :code "exercise-1"}}
+                 {:value {:display "3-4" :code "exercise-2"}}
+                 {:value {:display "5+" :code "exercise-3"}}
+                 {:value {:display "I don't know" :code "exercise-unknown"}}]}
+
+         :lifestyle-physical-activity-exercise-length
+         {:text "On the days that you exercised how long did you exercise?"
+          :confirms #{aidbox.sdc.fhir/coding}
+          :enum [{:value {:display "0-30 min" :code "exercise-length-1"}}
+                 {:value {:display "30 min-1 hr" :code "exercise-length-2"}}
+                 {:value {:display "More than 1 hr" :code "exercise-length-3"}}
+                 {:value {:display "I don't know" :code "exercise-length-unknown"}}]}
+
+         :lifestyle-physical-activity-exercise-intensity
+         {:text "How intense is your exercise?"
+          :confirms #{aidbox.sdc.fhir/coding}
+          :enum [{:value {:display "Light (Stretching\nSlow walking)" :code "exercise-intensity-1"}}
+                 {:value {:display "Moderate (Brisk walking)" :code "exercise-intensity-2"}}
+                 {:value {:display "Heavy (Jogging\nSwimming)" :code "exercise-intensity-3"}}
+                 {:value {:display "Very Heavy (Running fast)" :code "exercise-intensity-4"}}
+                 {:value {:display "I don't know" :code "exercise-intensity-unknown"}}]}
+
+         :lifestyle-physical-activity-exercise {:text "What kind of activities?" :type zen/string}
+
+         :lifestyle-sleep {:text "**Sleep:** Does the patient have any trouble with sleep?" :type zen/boolean}
+
+         :lifestyle-sleep-trouble-falling {:text "Do you have trouble falling asleep?" :type zen/boolean}
+         :lifestyle-sleep-trouble-staying {:text "Do you have trouble staying asleep?":type zen/boolean}
+         :lifestyle-sleep-tired           {:text "Do you feel tired during the day?" :type zen/boolean}
+
+         :lifestyle-sleep-avoid-activities
+         {:type zen/vector
+          :every {:text "Do you do any of the following 2 hours prior to go to bed?"
+                  :confirms #{aidbox.sdc.fhir/coding}
+                  :enum [{:value {:display "Watch TV" :code "sleep-avoid-1"}}
+                         {:value {:display "Eat large meal" :code "sleep-avoid-2"}}
+                         {:value {:display "Drink caffeine" :code "sleep-avoid-3"}}
+                         {:value {:display "Drink alcohol" :code "sleep-avoid-4"}}
+                         {:value {:display "Workout" :code "sleep-avoid-5"}}]}}
+
+         :lifestyle-sleep-snore
+         {:text "Do you snore or has anyone told you that you snore?"
+          :confirms #{aidbox.sdc.fhir/coding}
+          :enum [{:value {:display "Yes" :code "Y" :score 1}}
+                 {:value {:display "No" :code "N" :score 0}}
+                 {:value {:display "Unable to assess" :code "unable-to-assess"}}]}
+
+         :stop-bang-enabled {:text "**Obstructive Sleep Apnea Screening (STOP-BANG)**" :type zen/boolean}
+
+         :stop-bang-1 {:text "Do you snore loudly? Louder than talking or loud enough to be heard through closed doors."
+                       :type zen/boolean}
+
+         :stop-bang-2 {:text "Do you often feel tired, fatigued, or sleepy during the daytime?" :type zen/boolean}
+         :stop-bang-3 {:text "Has anyone observed you stop breathing during sleep?" :type zen/boolean}
+         :stop-bang-4 {:text "Do you have (or are you being treated for) high blood pressure?" :type zen/boolean}
+         :stop-bang-5 {:text "Is BMI over 35 kg/m2?" :type zen/boolean}
+         :stop-bang-6 {:text "Is the neck circumference over 15.7 inches?" :type zen/boolean}
+         :stop-bang-7 {:text "Is the patient male?" :type zen/boolean}
+         :stop-bang-8 {:text "Is the patient over 50?" :type zen/boolean}
+
+         :stop-bang-score {:text "Risk of Obstructive Sleep Apnea" :type zen/number}}}
+
+ LifestyleLayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
+  :document LifestyleDocument
+  :engine aidbox.sdc/Hiccup
+  :sdc/rules {:enable-nutrition (get-in [:nutrition :enabled])
+
+              :enable-nutrition-malnutrition-type
+              (> (count (matcho-filter (get-in [:nutrition :nutrition-type])
+                                       {:code "nutrition-malnutrition"}))
+                 0)
+
+              :enable-nutrition-malnutrition-intake
+              (or (get-in [:nutrition :malnutrition-unintended-weight-loss])
+                  (= "reduced-muscle-mass-1"
+                     (get-in [:nutrition :malnutrition-reduced-muscle-mass :code]))
+                  (= "reduced-muscle-mass-2"
+                     (get-in [:nutrition :malnutrition-reduced-muscle-mass :code]))
+                  (= "reduced-muscle-mass-3"
+                     (get-in [:nutrition :malnutrition-reduced-muscle-mass :code])))
+
+              :enable-nutrition-malnutrition-specify-cause
+              (and (get-in [:nutrition :malnutrition-underlying-cause :code])
+                   (not (= "malnutrition-cause-none"
+                           (get-in [:nutrition :malnutrition-underlying-cause :code]))))
+
+              :enable-nutrition-obesity-type
+              (> (count (matcho-filter (get-in [:nutrition :nutrition-type])
+                                       {:code "nutrition-obesity"})) 0)
+
+              :enable-nutrition-obesity-weight-gain-area-other
+              (> (count (matcho-filter (get-in [:nutrition :obesity-weight-gain-areas])
+                                       {:code "obesity-weight-gain-area-other"}))
+                 0)
+
+              :enable-nutrition-other-type
+              (> (count (matcho-filter (get-in [:nutrition :nutrition-type])
+                                       {:code "nutrition-other"}))
+                 0)
+
+              :enable-physical-activity (get-in [:lifestyle-physical-activity])
+              :enable-sleep (get-in [:lifestyle-sleep])
+              :enable-stop-bang (get-in [:stop-bang-enabled])}
+  :layout
+  {:type aidbox.sdc/col
+   :children
+   [{:bind [:nutrition :enabled]}
+    {:type aidbox.sdc/fields
+     :children
+     [{:bind [:nutrition :patient-diet]
+       :sdc/display-when (= (get-in [:enable-nutrition]) false) }
+      {:type aidbox.sdc/fields
+       :sdc/display-when (get :enable-nutrition)
+       :children
+       [{:bind [:nutrition :nutrition-type]}
+        {:bind [:nutrition :nutrition-type-other]
+         :sdc/display-when (get :enable-nutrition-other-type)}
+        {:bind [:nutrition :patient-diet]}
+        {:type aidbox.sdc/fields
+         :sdc/display-when (get :enable-nutrition-malnutrition-type)
+         :children
+         [{:type aidbox.sdc/col
+           :children
+           [{:bind [:nutrition :malnutrition-trouble-eating] }
+            {:bind [:nutrition :malnutrition-dentition]
+             :sdc/display-when (get-in [:nutrition :malnutrition-trouble-eating])}
+
+            {:type aidbox.sdc/fields
+             :sdc/display-when (get-in [:nutrition :malnutrition-trouble-eating])
+             :children [{:bind [:nutrition :malnutrition-feeding-tube]}
+                        {:bind [:nutrition :malnutrition-feeding-tube-details]
+                         :sdc/display-when (get-in [:nutrition :malnutrition-feeding-tube]) }]}
+
+            {:type aidbox.sdc/fields
+             :children [{:bind [:nutrition :malnutrition-unintended-weight-loss]}
+                        {:type aidbox.sdc/row
+                         :sdc/display-when (get-in [:nutrition :malnutrition-unintended-weight-loss])
+                         :children [{:bind [:nutrition :malnutrition-estimated-weight-loss]}
+                                    {:bind [:nutrition :malnutrition-weight-loss-duration]
+                                     :hide-score true}]}]}]}
+
+          {:bind [:nutrition :malnutrition-reduced-muscle-mass]}
+          {:bind [:nutrition :malnutrition-reduced-nutrition]
+           :sdc/display-when (get :enable-nutrition-malnutrition-intake)}
+          {:bind [:nutrition :malnutrition-underlying-cause]
+           :sdc/display-when (get :enable-nutrition-malnutrition-intake)}
+          {:bind [:nutrition :malnutrition-comment]
+           :sdc/display-when (get :enable-nutrition-malnutrition-specify-cause)}]}
+
+        {:type aidbox.sdc/fields
+         :sdc/display-when (get :enable-nutrition-obesity-type)
+         :children [{:type aidbox.sdc/col
+                     :children [{:bind [:nutrition :obesity-weight-gain-areas]}
+                                {:bind [:nutrition :obesity-weight-gain-area-other]
+                                 :sdc/display-when (get :enable-nutrition-obesity-weight-gain-area-other)}
+                                {:bind [:nutrition :obesity-comorbid-conditions]}]}]}]}]}
+
+    {:bind [:lifestyle-physical-activity]}
+    {:type aidbox.sdc/fields
+
+     :children
+     [{:type aidbox.sdc/fields
+       :sdc/display-when (get-in [:enable-physical-activity])
+       :children [{:bind [:lifestyle-physical-activity-exercise-days]}
+                  {:type aidbox.sdc/fields
+                   :sdc/display-when (or (= "exercise-1" (get-in [:lifestyle-physical-activity-exercise-days :code]))
+                                         (= "exercise-2" (get-in [:lifestyle-physical-activity-exercise-days :code]))
+                                         (= "exercise-3" (get-in [:lifestyle-physical-activity-exercise-days :code])))
+                   :children [{:bind [:lifestyle-physical-activity-exercise-length]}
+                              {:bind [:lifestyle-physical-activity-exercise-intensity]}
+                              {:bind [:lifestyle-physical-activity-exercise]}]}]}]}
+
+    {:bind [:lifestyle-sleep]}
+    {:type aidbox.sdc/fields
+     :sdc/display-when (get-in [:enable-sleep])
+     :children [{:type aidbox.sdc/row
+                 :children [{:bind [:lifestyle-sleep-trouble-falling]}
+                            {:bind [:lifestyle-sleep-trouble-staying]}]}
+                {:bind [:lifestyle-sleep-tired]}
+                {:bind [:lifestyle-sleep-avoid-activities]}
+                {:bind [:lifestyle-sleep-snore]}
+                {:bind [:stop-bang-enabled]}
+                {:type aidbox.sdc/fields
+                 :sdc/display-when (get-in [:enable-stop-bang])
+                 :children [{:bind [:stop-bang-1]}
+                            {:bind [:stop-bang-2]}
+                            {:bind [:stop-bang-3]}
+                            {:bind [:stop-bang-4]}
+                            {:bind [:stop-bang-5]}
+                            {:bind [:stop-bang-6]}
+                            {:bind [:stop-bang-7]}
+                            {:bind [:stop-bang-8]}]}]}]}}
+
+ LifestyleLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document LifestyleDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate (let [patient (sql {:select [:#> :resource [:subject]]
+                                :from :Encounter
+                                :where [:= :id (get-in [:params :encounter-id])]})]
+              {:author      (get-in [:ctx :user])
+               :encounter   {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+               :patient     patient
+               :stop-bang-7 (= "male" (sql {:select {:patient [:#> :resource [:gender]]}
+                                            :from :Patient
+                                            :where [:= :id (get patient :id)]}))
+               :stop-bang-8 (<= 50 (period (sql {:select {:patient [:#> :resource [:birthDate]]}
+                                                 :from :Patient
+                                                 :where [:= :id (get patient :id)]})
+                                           (date "yyyy-MM-dd")
+                                           :years))})}
+
+ LifestyleForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Lifestyle"
+  :document LifestyleDocument
+  :layout   LifestyleLayout
+  :launch   LifestyleLaunch}}
