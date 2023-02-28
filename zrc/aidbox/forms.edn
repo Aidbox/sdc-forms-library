@@ -20,5 +20,6 @@
           aidbox.forms.problems-list
           aidbox.forms.hpi
           aidbox.forms.demographics
+          aidbox.forms.functional-status
           }
  }

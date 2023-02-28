@@ -8,6 +8,7 @@ Forms library contains next common forms:
 - Demographics
 - Elder Abuse Suspicion Index (EASI)
 - Female Urinary Incontinence Diagnosis (QUID)
+- Functional status
 - GAD-7
 - History of present illness
 - Living Arrangements

@@ -1,0 +1,319 @@
+{ns aidbox.forms.functional-status
+ import #{zenbox aidbox.sdc}
+
+ FunctionalStatusDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Functional Status Assessment"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:functional-status
+         {:type zen/map
+          :keys {:bathing                   {:text "Bathing" :type zen/boolean}
+                 :dressing                  {:text "Dressing" :type zen/boolean}
+                 :eating                    {:text "Eating" :type zen/boolean}
+                 :transferring              {:text "Transferring" :type zen/boolean}
+                 :toileting                 {:text "Toileting" :type zen/boolean}
+                 :incontinence              {:text "Continence of bowel & bladder" :type zen/boolean}
+                 :drive-or-public-transport {:text "Driving or using public transportation" :type zen/boolean}
+                 :cooking                   {:text "Cooking and meal preparation" :type zen/boolean}
+                 :telephone                 {:text "Using telephone" :type zen/boolean}
+                 :taking-medications        {:text "Taking medications" :type zen/boolean}}}
+
+         :bathing-comment-required                   {:text "Comment required" :type zen/boolean}
+         :bathing-comment                            {:text "Comment" :type zen/string}
+         :dressing-comment-required                  {:text "Comment required":type zen/boolean}
+         :dressing-comment                           {:text "Comment" :type zen/string}
+         :eating-comment-required                    {:text "Comment required":type zen/boolean}
+         :eating-comment                             {:text "Comment" :type zen/string}
+         :transferring-comment-required              {:text "Comment required":type zen/boolean}
+         :transferring-comment                       {:text "Comment" :type zen/string}
+         :toileting-comment-required                 {:text "Comment required" :type zen/boolean}
+         :toileting-comment                          {:text "Comment" :type zen/string}
+         :incontinence-comment-required              {:text "Comment required" :type zen/boolean}
+         :incontinence-comment                       {:text "Comment" :type zen/string}
+         :drive-or-public-transport-comment-required {:text "Comment required" :type zen/boolean}
+         :drive-or-public-transport-comment          {:text "Comment" :type zen/string}
+         :cooking-comment-required                   {:text "Comment required" :type zen/boolean}
+         :cooking-comment                            {:text "Comment" :type zen/string}
+         :telephone-comment-required                 {:text "Comment required" :type zen/boolean}
+         :telephone-comment                          {:text "Comment" :type zen/string}
+         :taking-medications-comment-required        {:text "Comment required" :type zen/boolean}
+         :taking-medications-comment                 {:text "Comment" :type zen/string}}}
+
+ FunctionalStatusLayout
+ {:zen/tags #{aidbox.sdc/Layout}
+  :document FunctionalStatusDocument
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/col
+   :children
+   [{:type aidbox.sdc/fields
+     :children
+     [{:type aidbox.sdc/label :label "**Activities of Daily Living (ADLs)**"}
+      {:type aidbox.sdc/col
+       :children [{:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :bathing]}
+                                          {:bind [:bathing-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :bathing-comment-required)
+                               :children [{:bind [:bathing-comment]}]}]}
+
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :dressing]}
+                                          {:bind [:dressing-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :dressing-comment-required)
+                               :children [{:bind [:dressing-comment]}]}]}
+
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :eating]}
+                                          {:bind [:eating-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :eating-comment-required)
+                               :children [{:bind [:eating-comment]}]}]}
+
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :transferring]}
+                                          {:bind [:transferring-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :transferring-comment-required)
+                               :children [{:bind [:transferring-comment]}]}]}
+                  
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :toileting]}
+                                          {:bind [:toileting-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :toileting-comment-required)
+                               :children [{:bind [:toileting-comment]}]}]}
+                  
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :incontinence]}
+                                          {:bind [:incontinence-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :incontinence-comment-required)
+                               :children [{:bind [:incontinence-comment]}]}]}]}
+
+      {:type aidbox.sdc/label :label "**Instrumental Activities of Daily Living (IADLs)**"}
+      {:type aidbox.sdc/col
+       :children [{:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :drive-or-public-transport]}
+                                          {:bind [:drive-or-public-transport-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :drive-or-public-transport-comment-required)
+                               :children [{:bind [:drive-or-public-transport-comment]}]}]}
+
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :cooking]}
+                                          {:bind [:cooking-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :cooking-comment-required)
+                               :children [{:bind [:cooking-comment]}]}]}
+
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :telephone]}
+                                          {:bind [:telephone-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :telephone-comment-required)
+                               :children [{:bind [:telephone-comment]}]}]}
+                  
+                  {:type aidbox.sdc/fields
+                   :children [{:type aidbox.sdc/row
+                               :children [{:bind [:functional-status :taking-medications]}
+                                          {:bind [:taking-medications-comment-required]}]}
+                              {:type aidbox.sdc/row
+                               :sdc/display-when (get :taking-medications-comment-required)
+                               :children [{:bind [:taking-medications-comment]}]}]}]}]}]}}
+
+ FunctionalStatusLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document FunctionalStatusDocument
+  :params {:encounter-id {:type zen/string}
+           :tenant-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate {:author    (get-in [:ctx :user])
+             :tenant-id (get-in [:params :tenant-id])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})}}
+
+ FunctionalStatusFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :document FunctionalStatusDocument
+  :export-engine aidbox.sdc/LispExport
+  :create [{:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "57243-8"
+                             :display "Bathing"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :bathing])
+                                                 {:code "LA12264-0" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA12270-7" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :bathing-comment)
+                    [{:text (get :bathing-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "46599-7"
+                             :display "Dressing"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :dressing])
+                                                 {:code "LA6138-7" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA6324-3" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :dressing-comment)
+                    [{:text (get :dressing-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "57248-7"
+                             :display "Eating"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :eating])
+                                                 {:code "LA6133-8" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA6414-2" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :eating-comment)
+                    [{:text (get :eating-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "Transferring"
+                             :display "57246-1"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :transferring])
+                                                 {:code "LA6131-2" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA6326-8" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :transferring-comment)
+                    [{:text (get :transferring-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "57245-3"
+                             :display "Toileting"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :toileting])
+                                                 {:code "LA6131-2" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA6326-8" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :toileting-comment)
+                    [{:text (get :toileting-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "Continence of bowel & bladder"
+                             :display "46553-4"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :incontinence])
+                                                 {:code "LA6278-1" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA6332-6" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :incontinence-comment)
+                    [{:text (get :incontinence-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "57249-5"
+                             :display "Cooking and meal preparation"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :cooking])
+                                                 {:code "LA12299-6" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA6420-9" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :cooking-comment)
+                    [{:text (get :cooking-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "46569-0"
+                             :display "Using telephone"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :telephone])
+                                                 {:code "LA6124-7" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA6400-1" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :telephone-comment)
+                    [{:text (get :telephone-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "93030-5"
+                             :display "Driving or using public transportation"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :drive-or-public-transport])
+                                                 {:code "LA32-8" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA30133-5" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :drive-or-public-transport-comment)
+                    [{:text (get :drive-or-public-transport-comment)}]
+                    [])}
+
+           {:resourceType "Observation"
+            :status "final"
+            :subject   (get :patient)
+            :encounter (get :encounter)
+            :effective {:dateTime (date)}
+            :issued (date)
+            :code {:coding [{:code "57285-9"
+                             :display "Taking medications"
+                             :system "https://loinc.org"}]}
+            :value {:CodeableConcept {:coding [(if (get-in [:functional-status :taking-medications])
+                                                 {:code "LA6135-3" :display "Yes" :system "https://loinc.org"}
+                                                 {:code "LA12324-2" :display "No" :system "https://loinc.org"})]}}
+            :note (if (get :taking-medications-comment)
+                    [{:text (get :taking-medications-comment)}]
+                    [])}]}
+
+ FunctionalStatusForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Functional Status Assessment"
+  :document FunctionalStatusDocument
+  :finalize FunctionalStatusFinalize
+  :layout   FunctionalStatusLayout
+  :launch   FunctionalStatusLaunch}}
