@@ -13,6 +13,7 @@ Forms library contains next common forms:
 - History of present illness
 - Lifestyle
 - Living Arrangements
+- Mini Cognitive Test
 - PHQ2/PHQ9 Depression Form
 - Pain assessment
 - Past Surgical History
