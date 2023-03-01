@@ -30,18 +30,18 @@ Ask the person to recall the three words you stated in Step 1. Say: “What were
   :keys {:mini-cognitive-test-1 {:text "**Three Word Registration**"
                                  :confirms #{aidbox.sdc.fhir/coding}
                                  ;; TODO Remove text in round brackets and move it to help messages
-                                 :enum [{:value {:display "Set 1 (Banana,Sunrise,Chair)", :code "mini-cognitive-test-set-1",
-                                                 #_#_:help "Banana\nSunrise\nChair"}}
-                                        {:value {:display "Set 2 (Leader,Season,Table)", :code "mini-cognitive-test-set-2",
-                                                 #_#_:help "Leader\nSeason\nTable"}}
-                                        {:value {:display "Set 3 (Village,Kitchen,Baby)", :code "mini-cognitive-test-set-3",
-                                                 #_#_:help "Village\nKitchen\nBaby"}}
-                                        {:value {:display "Set 4 (River,Nation,Finger)", :code "mini-cognitive-test-set-4",
-                                                 #_#_:help "River\nNation\nFinger"}}
-                                        {:value {:display "Set 5 (Captain,Garden,Picture)", :code "mini-cognitive-test-set-5",
-                                                 #_#_:help "Captain\nGarden\nPicture"}}
-                                        {:value {:display "Set 6 (Daughter,Heaven,Mountain)", :code "mini-cognitive-test-set-6",
-                                                 #_#_:help "Daughter\nHeaven\nMountain"}}],
+                                 :help "Set 1 - Banana,Sunrise,Chair\n
+Set 2 - Leader,Season,Table\n
+Set 3 - Village,Kitchen,Baby\n
+Set 4 - River,Nation,Finger\n
+Set 5 - Captain,Garden,Picture\n
+Set 6 - Daughter,Heaven,Mountain"
+                                 :enum [{:value {:display "Set 1", :code "mini-cognitive-test-set-1"}}
+                                        {:value {:display "Set 2", :code "mini-cognitive-test-set-2"}}
+                                        {:value {:display "Set 3", :code "mini-cognitive-test-set-3"}}
+                                        {:value {:display "Set 4", :code "mini-cognitive-test-set-4"}}
+                                        {:value {:display "Set 5", :code "mini-cognitive-test-set-5"}}
+                                        {:value {:display "Set 6", :code "mini-cognitive-test-set-6"}}],
                                  }
          ;; :mini-cognitive-test-2 {:zen/desc "**Clock Drawing**"
          ;;                         :type zen/vector
