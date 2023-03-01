@@ -10,14 +10,12 @@
 
   :keys {:chief-complaint
          {:text "Chief Complaint"
-          :type zen/string
-          :code {:code "46239-0" :system "https://loinc.org"}}
+          :type zen/string}
 
          :history-of-present-illness
          {:text "History of Present Illness"
           :sdc-type aidbox.sdc/text
-          :type zen/string
-          :code {:code "10164-2" :system "https://loinc.org"}}
+          :type zen/string}
 
          :ros-confirm
          {:text "**ROS**: I have reviewed and attest that all 10 systems are negative except as noted in HPI."
