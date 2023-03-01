@@ -1,0 +1,134 @@
+{ns aidbox.forms.past-medical-history
+ import #{zenbox aidbox.sdc aidbox.forms.problems-list aidbox.sdc.fhir}
+
+
+ PastMedicalHistoryDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Past Medical History"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:patient {:type zen/map
+                   :keys {:birthDate {:type zen/string}
+                          :gender {:type zen/string}}}
+         :conditions {:type zen/vector,
+                      :every {:type zen/map,
+                              :confirms #{aidbox.forms.problems-list/Condition}
+                              :keys {:clinicalStatus {:type zen/string :sdc/default-value "resolved"}}}}}}
+
+ ConditionInplaceForm
+ {:zen/tags #{aidbox.sdc/Layout}
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/col
+   :children
+   [{:bind [:problem]}
+    {:type aidbox.sdc/row
+     :children [{:bind [:onsetDateTime]}
+                {:type aidbox.sdc/col}]}
+    {:bind [:comments]}]}}
+
+ ProblemDetails
+ {:zen/tags #{aidbox.sdc/Layout}
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/fields
+   :children [{:type aidbox.sdc/label
+               :bind [:comments]
+               :label "Comments"}]}}
+
+ PastMedicalHistoryLayout
+ {:zen/tags #{aidbox.sdc/Layout}
+  :document PastMedicalHistoryDocument
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/grid-editor
+   :bind [:conditions]
+   :columns [{:label "Condition"
+              :type aidbox.sdc/label
+              :bind [:problem :display]}
+             {:label "Onset date"
+              :type aidbox.sdc/label
+              :bind [:onsetDateTime]}]
+   :row-actions [{:type aidbox.sdc/grid-edit-button :label "Edit"}]
+   :new-form {:form-ref ConditionInplaceForm}
+   :edit-form {:form-ref ConditionInplaceForm}
+   :row-details {:form-ref ProblemDetails :sdc/display-when (get :comments)}}}
+
+ PastMedicalHistoryLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document PastMedicalHistoryDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate (let [patient (sql {:select {:patient
+                                         ^:pg/obj {:id :id
+                                                   :resourceType "Patient"
+                                                   :gender [:#> :resource [:gender]]
+                                                   :birthDate [:#> :resource [:birthDate]]}}
+                                :from :Patient
+                                :where [:= :id
+                                        (sql {:select [:#> :resource [:subject :id]]
+                                              :from :Encounter
+                                              :where [:= :id (get-in [:params :encounter-id])]})]})]
+              {:author     (get-in [:ctx :user])
+               :encounter  {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+               :patient    patient
+               :conditions (sql* {:select {:condition
+                                           ^:pg/obj {:id :id
+                                                     :problem [:#> :resource [:code :coding 0]]
+                                                     :onsetDateTime [:#> :resource [:onset :dateTime]]
+                                                     :comments [:#> :resource [:note 0 :text]]
+                                                     :clinicalStatus [:#> :resource [:clinicalStatus :coding 0 :code]]}}
+                                  :from :Condition
+                                  :where [:and
+                                          [:= [:#>> :resource [:subject :id]] (get patient :id)]
+                                          [:= [:#>> :resource [:clinicalStatus :coding 0 :code]] "resolved"]
+                                          [:= [:#>> :resource [:verificationStatus :coding 0 :code]] "confirmed"]]})})}
+
+
+ PastMedicalHistoryFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :document PastMedicalHistoryDocument
+  :export-engine aidbox.sdc/LispExport
+  :patch [(for [j (sql* {:select  {:id :id}
+                         :from :Condition
+                         :where [:and
+                                 (when (> (count (get-in [:conditions])) 0)
+                                   [:not [:in :id [:pg/params-list
+                                                   (for [i (get-in [:conditions])]
+                                                     (str (get i :id)))]]])
+                                 [:= [:#>> :resource [:subject :id]] (get-in [:patient :id])]
+                                 [:= [:#>> :resource [:clinicalStatus :coding 0 :code]] "resolved"]
+                                 [:= [:#>> :resource [:verificationStatus :coding 0 :code]] "confirmed"]]})]
+            {:resourceType "Condition"
+             :id j
+             :verificationStatus {:coding [{:system "http://terminology.hl7.org/CodeSystem/condition-ver-status"
+                                            :code "entered-in-error"}]}})]
+  :create [(for [i (get-in [:conditions])]
+             {:id (get-in i [:id])
+              :resourceType "Condition"
+              :clinicalStatus {:coding [{:code (get i :clinicalStatus) :system "http://terminology.hl7.org/CodeSystem/condition-clinical"}]}
+              :verificationStatus {:coding [{:code "confirmed" :system "http://terminology.hl7.org/CodeSystem/condition-ver-status"}]}
+
+              :category [{:coding [{:code "problem-list-item"
+                                    :system "http://terminology.hl7.org/CodeSystem/condition-category"}]}
+
+                         {:coding [{:system "urn:oid:2.16.840.1.113883.3.247.1.1"
+                                    :code (get-in i [:problem :code])
+                                    :display (get-in i [:problem :display])}]}]
+
+              :code    {:coding [(get-in i [:problem])]
+                        :text   (get-in i [:problem :display])}
+              :onset {:dateTime (get-in i [:onsetDateTime])}
+              :subject (select-keys (get :patient) [:id :resourceType])
+              :encounter (get :encounter)
+              :recordedDate (date)
+              :note (when (get-in i [:comments])
+                      [{:text (get-in i [:comments])}])})]}
+
+ PastMedicalHistoryForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Past Medical History"
+  :document PastMedicalHistoryDocument
+  :layout   PastMedicalHistoryLayout
+  :launch   PastMedicalHistoryLaunch
+  :finalize PastMedicalHistoryFinalize}}

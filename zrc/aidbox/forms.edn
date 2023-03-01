@@ -23,5 +23,6 @@
           aidbox.forms.functional-status
           aidbox.forms.lifestyle
           aidbox.forms.mini-cognitive-test
+          aidbox.forms.past-medical-history
           }
  }

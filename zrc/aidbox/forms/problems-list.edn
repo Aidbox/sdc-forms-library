@@ -258,6 +258,25 @@
          {:value {:code "765057007", :system "http://snomed.info/sct", :display "BRCA1 associated protein 1 tumor predisposition syndrome"}}]}
 
 
+ Condition
+ {:zen/tags #{zen/schema}
+  :type zen/map,
+  :require #{:problem}
+  :keys {:id             {:type zen/string}
+         :category       {:type zen/map
+                          :keys {:text {:type zen/string}
+                                 :code {:type zen/string}}}
+         :problem        {:text "Condition" :confirms #{Problem}}
+         :clinicalStatus {:text "Clinical Status"
+                          :type zen/string
+                          :sdc/default-value "active"}
+         :onsetDateTime  {:text "Onset date (optional)" :type zen/date}
+         :comments       {:text "Comments"
+                          :type zen/string
+                          :sdc-type aidbox.sdc/text}
+         :duplicates     {:type zen/vector
+                          :every {:text "Duplicates" :confirms #{aidbox.sdc.fhir/coding}}}
+         :showDetails    {:type zen/boolean}}}
 
  ProblemsListDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
@@ -268,21 +287,7 @@
                    :keys {:birthDate {:type zen/string}
                           :gender {:type zen/string}}}
          :conditions {:type zen/vector,
-                      :every {:type zen/map,
-                              :require #{:problem}
-                              :keys {:id             {:type zen/string}
-                                     :category       {:type zen/map
-                                                      :keys {:text {:type zen/string}
-                                                             :code {:type zen/string}}}
-                                     :problem        {:text "Condition" :confirms #{Problem}}
-                                     :clinicalStatus {:text "Clinical Status"
-                                                      :type zen/string
-                                                      :sdc/default-value "active"}
-                                     :onsetDateTime  {:text "Onset date (optional)" :type zen/date}
-                                     :comments       {:text "Comments" :type zen/string}
-                                     :duplicates     {:type zen/vector
-                                                      :every {:text "Duplicates" :confirms #{aidbox.sdc.fhir/coding}}}
-                                     :showDetails    {:type zen/boolean}}}}}}
+                      :every {:confirms #{Condition}}}}}
 
 
 

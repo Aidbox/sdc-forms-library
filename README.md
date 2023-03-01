@@ -16,6 +16,7 @@ Forms library contains next common forms:
 - Mini Cognitive Test
 - PHQ2/PHQ9 Depression Form
 - Pain assessment
+- Past Medical History
 - Past Surgical History
 - Physical exam
 - Problems list
