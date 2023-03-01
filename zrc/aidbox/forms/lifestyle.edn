@@ -46,21 +46,21 @@
                  :malnutrition-weight-loss-duration
                  {:text "Duration"
                   :confirms #{aidbox.sdc.fhir/coding}
-                  :enum [{:value {:display "1 week"    :score 1  :code "wk"  :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "2 weeks"   :score 2  :code "wk" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "3 weeks"   :score 3  :code "wk" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "1 month"   :score 1  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "2 months"  :score 2  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "3 months"  :score 3  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "4 months"  :score 4  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "5 months"  :score 5  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "6 months"  :score 6  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "7 months"  :score 7  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "8 months"  :score 8  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "9 months"  :score 9  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "10 months" :score 10 :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "11 months" :score 11 :code "mo" :system "https://ucum.nlm.nih.gov/"}}
-                         {:value {:display "12 months" :score 12 :code "mo" :system "https://ucum.nlm.nih.gov/"}}]}
+                  :enum [{:value {:display "1 week"    :value 1  :code "wk" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "2 weeks"   :value 2  :code "wk" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "3 weeks"   :value 3  :code "wk" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "1 month"   :value 1  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "2 months"  :value 2  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "3 months"  :value 3  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "4 months"  :value 4  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "5 months"  :value 5  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "6 months"  :value 6  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "7 months"  :value 7  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "8 months"  :value 8  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "9 months"  :value 9  :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "10 months" :value 10 :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "11 months" :value 11 :code "mo" :system "https://ucum.nlm.nih.gov/"}}
+                         {:value {:display "12 months" :value 12 :code "mo" :system "https://ucum.nlm.nih.gov/"}}]}
 
                  :malnutrition-reduced-muscle-mass
                  {:text "Does the patient have reduced muscle mass?"
@@ -248,6 +248,7 @@
            :children
            [{:bind [:nutrition :malnutrition-trouble-eating] }
             {:bind [:nutrition :malnutrition-dentition]
+
              :sdc/display-when (get-in [:nutrition :malnutrition-trouble-eating])}
 
             {:type aidbox.sdc/fields
