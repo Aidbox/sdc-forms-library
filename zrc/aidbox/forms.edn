@@ -24,5 +24,7 @@
           aidbox.forms.lifestyle
           aidbox.forms.mini-cognitive-test
           aidbox.forms.past-medical-history
+          aidbox.forms.active-medications
+          aidbox.forms.fall-risk
           }
  }
