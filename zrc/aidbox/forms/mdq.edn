@@ -105,20 +105,20 @@
    :children
    [{:type aidbox.sdc/label :label "**Has there ever been a period of time when you were not your usual self and...**"}
     {:type aidbox.sdc/col
-     :children [{:type aidbox.sdc/row :children [{:bind [:mdq-1] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-2] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-3] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-4] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-5] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-6] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-7] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-8] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-9] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-10] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-11] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-12] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-13] :hide-score true}]}
-                {:type aidbox.sdc/row :children [{:bind [:mdq-14] :hide-score true}]}]}
+     :children [{:bind [:mdq-1] :hide-score true}
+                {:bind [:mdq-2] :hide-score true}
+                {:bind [:mdq-3] :hide-score true}
+                {:bind [:mdq-4] :hide-score true}
+                {:bind [:mdq-5] :hide-score true}
+                {:bind [:mdq-6] :hide-score true}
+                {:bind [:mdq-7] :hide-score true}
+                {:bind [:mdq-8] :hide-score true}
+                {:bind [:mdq-9] :hide-score true}
+                {:bind [:mdq-10] :hide-score true}
+                {:bind [:mdq-11] :hide-score true}
+                {:bind [:mdq-12] :hide-score true}
+                {:bind [:mdq-13] :hide-score true}
+                {:bind [:mdq-14] :hide-score true}]}
     {:bind [:mdq-15] :hide-score true}
     {:type aidbox.sdc/label :label "MDQ Score"}
     {:bind [:mdq-score] :label ""}]}}
