@@ -1,0 +1,29 @@
+{:ns aidbox.forms.vs.problems-list
+ :import #{zen.fhir}
+
+ problems-list-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "problems-list-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/snomed-problems-list.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 13
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "snomed-problem-list",
+                                          :version "2022-09"
+                                          :status "active"
+                                          :url "http://snomed.info/sct"}
+                            :value-set {:id "snomed-problem-list"
+                                        :name "SNOMED CT CORE Problem List"
+                                        :url "forms.problems-list-vs"
+                                        :version "20221118"
+                                        :status "active"
+                                        :identifier [{:system "http://snomed.info/sct"
+                                                      :id "2.16.840.1.113883.6.96"}]}}}}
+ }
