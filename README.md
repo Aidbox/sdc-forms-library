@@ -27,3 +27,16 @@ Forms library contains next common forms:
 - Social determinants
 - Substance Use
 - Vitals Signs
+
+
+## NOTES: 
+
+Next forms requires some external valuesets to be in the Aidbox instance.
+
+- Active Medications
+- Past Medical History
+- Problems list
+
+That valuesets stored in this repo as FTR module.
+
+You need to enable valuesets loading via Aidbox parameter `BOX_FEATURES_FTR_PULL_ENABLE=true`.
