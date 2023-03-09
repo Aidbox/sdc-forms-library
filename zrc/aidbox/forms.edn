@@ -2,6 +2,7 @@
  import #{aidbox.forms.vitals
           aidbox.forms.phq2phq9
           aidbox.forms.gad-7
+          aidbox.forms.allergies
           aidbox.forms.ros
           aidbox.forms.advance-care-planning
           aidbox.forms.physical-exam
