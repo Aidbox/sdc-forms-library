@@ -1,0 +1,29 @@
+{:ns aidbox.forms.vs.past-history-of-procedure
+ :import #{zen.fhir}
+
+ past-history-of-procedure-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "past-history-of-procedure-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/snomed-past-history-of-procedure.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 13
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "past-history-of-procedure",
+                                          :version "2022-09"
+                                          :status "active"
+                                          :url "http://snomed.info/sct"}
+                            :value-set {:id "past-history-of-procedure"
+                                        :name "Past History of Procedure"
+                                        :url "forms.past-history-of-procedure-vs"
+                                        :version "20210902"
+                                        :status "active"
+                                        :identifier [{:system "http://snomed.info/sct"
+                                                      :id "2.16.840.1.113762.1.4.1237.27"}]}}}}
+ }
