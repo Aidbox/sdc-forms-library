@@ -35,6 +35,7 @@ Next forms requires some external valuesets to be in the Aidbox instance.
 
 - Active Medications
 - Past Medical History
+- Past Surgical History
 - Problems list
 
 That valuesets stored in this repo as FTR module.
