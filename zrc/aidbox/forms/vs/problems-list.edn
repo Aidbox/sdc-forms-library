@@ -15,11 +15,11 @@
                             :header false
                             :data-row 13
                             :mapping {:concept {:code {:column 0} :display {:column 1}}}
-                            :code-system {:id "snomed-problem-list",
+                            :code-system {:id "snomed-problems-list",
                                           :version "2022-09"
                                           :status "active"
                                           :url "http://snomed.info/sct"}
-                            :value-set {:id "snomed-problem-list"
+                            :value-set {:id "snomed-problems-list"
                                         :name "SNOMED CT CORE Problem List"
                                         :url "forms.problems-list-vs"
                                         :version "20221118"
