@@ -17,7 +17,7 @@
                                      :help "Drug Name"
                                      :confirms #{aidbox.sdc.fhir/coding}
                                      :sdc/options aidbox.sdc.options/valueset
-                                     :valueset "http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1010.4"}
+                                     :valueset "forms.rxnorm-medication-clinical-drug"}
                          :sig {:type zen/string :zen/desc "Sig"}
                          :dispense {:type zen/string :zen/desc "Dispense (optional)"}
                          :refill {:type zen/string :zen/desc "Refill (optional)"}

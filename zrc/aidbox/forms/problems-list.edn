@@ -12,7 +12,7 @@
          :problem        {:text "Condition"
                           :confirms #{aidbox.sdc.fhir/coding}
                           :sdc/options aidbox.sdc.options/valueset
-                          :valueset "forms.problems-list-vs"}
+                          :valueset "forms.snomed-problems-list-vs"}
          :clinicalStatus {:text "Clinical Status"
                           :type zen/string
                           :sdc/default-value "active"}

@@ -21,7 +21,7 @@
                                           :url "http://snomed.info/sct"}
                             :value-set {:id "snomed-problems-list"
                                         :name "SNOMED CT CORE Problem List"
-                                        :url "forms.problems-list-vs"
+                                        :url "forms.snomed-problems-list-vs"
                                         :version "20221118"
                                         :status "active"
                                         :identifier [{:system "http://snomed.info/sct"
