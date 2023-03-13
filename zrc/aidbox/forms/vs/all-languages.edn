@@ -1,0 +1,27 @@
+{:ns aidbox.forms.vs.all-languages
+ :import #{zen.fhir}
+
+ all-languages-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "all-languages-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/all-languages.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "all-languages",
+                                          :status "draft"
+                                          :url "http://hl7.org/fhir/ValueSet/all-languages"}
+                            :value-set {:id "all-languages"
+                                        :name "Common Languages"
+                                        :url "http://hl7.org/fhir/ValueSet/all-languages"
+                                        :status "draft"
+                                        :identifier [{:system "urn:ietf:rfc:3986"
+                                                      :id "urn:oid:2.16.840.1.113883.4.642.3.20"}]}}}}
+ }

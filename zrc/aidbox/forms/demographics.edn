@@ -20,7 +20,7 @@
          :language-other {:text "Specify Other"
                           :confirms #{aidbox.sdc.fhir/coding}
                           :sdc/options aidbox.sdc.options/valueset
-                          :valueset "http://hl7.org/fhir/ValueSet/all-languages"} ;; TODO: Add fixtures with valueset or inline it here
+                          :valueset "http://hl7.org/fhir/ValueSet/all-languages"}
          :marital-status {:text "Marital Status"
                           :confirms #{aidbox.sdc.fhir/coding}
                           :enum [{:value {:display "Single", :code "U", :system "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"}}
