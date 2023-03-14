@@ -1,5 +1,10 @@
 {ns aidbox.forms.allergies
- import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+ import #{zenbox aidbox.sdc
+          aidbox.sdc.options
+          aidbox.sdc.fhir
+          aidbox.forms.vs.rxnorm-clinical-drug-ingredient
+          aidbox.forms.vs.snomed-common-environmental-substances-for-allergy-and-intolerance-documentation
+          aidbox.forms.vs.snomed-food-allergen}
 
 
  AllergiesDocument
@@ -16,10 +21,17 @@
                                   :sdc/default-value "active"},
                          :substance {:text "Agent/substance",
                                      :confirms #{aidbox.sdc.fhir/coding},
-                                     :enum [{:value {:display "Latex", :code "111088007", :system "http://snomed.ct"}}
-                                            {:value {:display "Pollen", :code "256259004", :system "http://snomed.ct"}}
-                                            {:value {:display "Grass pollen", :code "256277009", :system "http://snomed.ct"}}
-                                            {:value {:display "Horse dander", :code "256417003", :system "http://snomed.ct"}}]},
+                                     :sdc/options aidbox.sdc.options/valueset
+                                     :valueset (cond
+                                                 (= (get-in [:type :code]) "418634005")
+                                                 "forms.rxnorm-clinical-drug-ingredient-vs"
+
+                                                 (= (get-in [:type :code]) "414285001")
+                                                 "forms.snomed-food-allergen-vs"
+
+                                                 (= (get-in [:type :code]) "426232007")
+                                                 "forms.snomed-common-environmental-substances-for-allergy-and-intolerance-documentation-vs"
+                                                 :else "empty")},
                          :type {:text "Type",
                                 :confirms #{aidbox.sdc.fhir/coding},
                                 :enum [{:value {:display "Drug", :code "418634005", :system "http://snomed.ct"}}
@@ -39,20 +51,13 @@
                                           :text "Other reaction"},
                          :notes {:type zen/string,
                                  :text "Notes"}}}}}}
-
-
  AllergyInplaceForm
  {:zen/tags #{aidbox.sdc/Layout}
   :engine aidbox.sdc/Hiccup
   :layout
   {:type aidbox.sdc/col
    :children
-   [{:bind [:type]
-     :sdc/display-when (= (count (matcho-filter (get-in global [:allergies])
-                                                {:substance {:code "409137002"}})) 0)}
-    {:bind [:type]
-     :sdc/display-when (> (count (matcho-filter (get-in global [:allergies])
-                                                {:substance {:code "409137002"}})) 0)}
+   [{:bind [:type]}
     {:bind [:reaction]}
     {:bind [:other-reaction]
      :sdc/display-when (> (count (matcho-filter (get-in [:reaction]) {:code "782197009"})) 0)}
@@ -78,42 +83,17 @@
              {:label "Reaction"
               :type aidbox.sdc/label
               :bind [:reaction 0 :display]}]
-   :quick-row [{:label "NKDA"
-                :type aidbox.sdc/add-value-button
-                :sdc/disable-when (> (- (count (matcho-filter (get-in [:allergies])
-                                                              {:type {:code "418634005"} :status "active"}))
-                                        (count (matcho-filter (get-in [:allergies])
-                                                              {:substance {:code "409137002"}}))) 0)
-                :value {:status "active"
-                        :type {:display "Drug", :code "418634005",
-                               :system "https://snomed.ct"}
-                        :substance {:code "409137002" :system "http://snomed.ct" :display "No Known Drug Allergies"}}}]
-   :row-actions [{:type aidbox.sdc/grid-edit-button
-                  :label "Edit"
-                  :sdc/display-when (not (= (get-in [:substance :code]) "409137002"))}
+   :row-actions [{:type aidbox.sdc/grid-edit-button :label "Edit"}
                  {:label "Inactivate"
                   :type aidbox.sdc/set-value-button
                   :bind [:status]
                   :value "inactive"
-                  :sdc/display-when (and (not (= "inactive" (get-in [:status])))
-                                         (not (= "409137002" (get-in [:substance :code]))))}
+                  :sdc/display-when (not (= "inactive" (get-in [:status])))}
                  {:label "Activate"
                   :type aidbox.sdc/set-value-button
                   :bind [:status]
                   :value "active"
-                  :sdc/display-when (and (= "inactive" (get-in [:status]))
-                                         (not (= "409137002" (get-in [:substance :code])))
-                                         (not (and
-                                               (= "418634005" (get-in [:type :code]))
-                                               (> (count (matcho-filter
-                                                          (get-in global [:allergies])
-                                                          {:substance {:code "409137002"} :status "active"})) 0))))}]
-
-   #_#_:filters [{:engine :matcho
-                  :options [{:status "active"} {}]
-                  :sdc/disable-when (< (count (matcho-filter (get-in [:allergies])
-                                                             {:status "inactive"})) 1)
-                  }]}}
+                  :sdc/display-when (= "inactive" (get-in [:status]))}]}}
 
  AllergiesLaunch
  {:zen/tags #{aidbox.sdc/Launch}

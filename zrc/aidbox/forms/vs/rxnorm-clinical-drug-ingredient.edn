@@ -1,0 +1,27 @@
+{:ns aidbox.forms.vs.rxnorm-clinical-drug-ingredient
+ :import #{zen.fhir}
+
+ rxnorm-clinical-drug-ingredient-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "rxnorm-clinical-drug-ingredient-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/rxnorm-clinical-drug-ingredient.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "rxnorm-clinical-drug-ingredient",
+                                          :status "active"
+                                          :url "http://www.nlm.nih.gov/research/umls/rxnorm"}
+                            :value-set {:id "rxnorm-clinical-drug-ingredient"
+                                        :name "Clinical Drug Ingredient"
+                                        :url "forms.rxnorm-clinical-drug-ingredient-vs"
+                                        :version "20190423",
+                                        :status "active"
+                                        :publisher "HL7 Terminology"}}}}
+ }
