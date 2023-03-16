@@ -1,0 +1,141 @@
+{ns aidbox.forms.member-satisfaction-survey,
+ import #{aidbox.sdc zenbox aidbox.sdc.fhir},
+
+ MemberSatisfactionSurveyDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules},
+  :zen/desc "Member Satisfaction Survey",
+  :type zen/map,
+  :confirms #{aidbox.sdc/Document},
+  :keys
+  {:take-survey
+   {:text "Would you like to take a survey about your recent services"
+    :enum [{:value {:code "yes" :display "Yes"}}
+           {:value {:code "no" :display "No"}}]}
+
+   ;; If answer is no, will get prompted thanks for completing survey.
+   :how-happy-you-are-with-the-services
+   {:text "On a scale of 1 – 4, how happy are you with the services you are receiving?"
+    :enum [{:value {:code "1" :display "Not happy at all"}}
+           {:value {:code "2" :display "Not really happy"}}
+           {:value {:code "3" :display "Somewhat happy"}}
+           {:value {:code "4" :display "Very happy"}}]}
+
+   :do-you-feel-save-with-your-workers
+   {:text "Do you feel safe with your worker(s)?"
+    :enum [{:value {:code "yes" :display "Yes"}}
+           {:value {:code "no" :display "No"}}]}
+
+   ;; If NO - prompt below questions
+   :my-worker-doesnt-respect-my-property
+   {:text "My worker doesn’t respect my property." :type zen/boolean}
+
+   :people-other-than-my-worker-show-up-to-my-visit
+   {:text "People other than my worker show up to my visit." :type zen/boolean}
+
+   :my-worker-is-always-late-or-doesnt-show-up
+   {:text "My worker is always late or doesn’t show up." :type zen/boolean}
+
+   :i-often-have-a-different-worker
+   {:text "I often have a different worker." :type zen/boolean}
+
+   :my-worker-acts-in-aggressive-manner
+   {:text "My worker acts in aggressive manner towards me by loud talking, using excessive hand communication,
+not allowing personal space, or handles me roughly." :type zen/boolean}
+
+   :how-often-does-your-worker-treat-you-with-respect
+   {:text "How often does your worker(s) treat you with respect?"
+    :enum [{:value {:code "1" :display "1 - Never"}}
+           {:value {:code "2" :display "2 – Sometimes"}}
+           {:value {:code "3" :display "3 – Most of the time"}}
+           {:value {:code "4" :display "4 – All of the time"}}]}
+
+   :is-there-anything-that-has-happened
+   {:text "Is there anything that has happened that you want to talk (MCO) about?"
+    :enum [{:value {:code "yes" :display "Yes"}}
+           {:value {:code "no" :display "No"}}]}
+
+   :do-you-want-to-change-my-worker-of-provider
+   {:text "Do you want to change my worker of provider"
+    :enum [{:value {:code "yes" :display "Yes"}}
+           {:value {:code "no" :display "No"}}]}
+
+   :did-you-get-to-do-the-things-you-want-or-enjoy
+   {:text "Did you get to do the things you want or enjoy doing since your last communication with coordinator"
+    :enum [{:value {:code "yes" :display "Yes"}}
+           {:value {:code "no" :display "No"}}]}
+
+   ;; if No- Prompt below questions
+   :worker-didnt-have-enough-time
+   {:text "Worker didn’t have enough time." :type zen/boolean}
+
+   :i-didnt-feel-up-to-doing-additional-things.
+   {:text "I didn’t feel up to doing additional things." :type zen/boolean}
+
+   :worker-refused
+   {:text "Worker refused." :type zen/boolean}
+
+   :not-enough-resources-to-do-the-activities-that-i-wanted
+   {:text "Not enough resources to do the activities that I wanted." :type zen/boolean}
+
+   :bad-weather
+   {:text "Bad weather." :type zen/boolean}
+
+   }},
+
+ MemberSatisfactionSurveyLayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules},
+  :document MemberSatisfactionSurveyDocument,
+  :engine aidbox.sdc/Hiccup,
+  :layout {:type aidbox.sdc/col,
+           :children [{:bind [:take-survey]
+                       :sdc/display-when (not (= "yes" (get-in [:take-survey :code])))}
+                      {:type aidbox.sdc/pages
+                       :sdc/display-when (= "yes" (get-in [:take-survey :code]))
+                       :children [{:bind [:how-happy-you-are-with-the-services]}
+
+                                  {:type aidbox.sdc/col
+                                   :children
+                                   [{:bind [:do-you-feel-save-with-your-workers]}
+                                    ;; If NO - prompt below questions
+                                    {:type aidbox.sdc/col
+                                     :sdc/display-when (= "no" (get-in [:do-you-feel-save-with-your-workers :code]))
+                                     :children [{:bind [:my-worker-doesnt-respect-my-property]}
+                                                {:bind [:people-other-than-my-worker-show-up-to-my-visit]}
+                                                {:bind [:my-worker-is-always-late-or-doesnt-show-up]}
+                                                {:bind [:i-often-have-a-different-worker]}
+                                                {:bind [:my-worker-acts-in-aggressive-manner]}]}]}
+
+                                  {:bind [:how-often-does-your-worker-treat-you-with-respect]}
+                                  {:bind [:is-there-anything-that-has-happened]}
+                                  {:bind [:do-you-want-to-change-my-worker-of-provider]}
+
+                                  {:type aidbox.sdc/col
+                                   :children
+                                   [{:bind [:did-you-get-to-do-the-things-you-want-or-enjoy]}
+                                    ;; if No- Prompt below questions
+                                    {:type aidbox.sdc/col
+                                     :sdc/display-when (= "no" (get-in [:did-you-get-to-do-the-things-you-want-or-enjoy :code]))
+                                     :children [{:bind [:worker-didnt-have-enough-time]}
+                                                {:bind [:i-didnt-feel-up-to-doing-additional-things.]}
+                                                {:bind [:worker-refused]}
+                                                {:bind [:not-enough-resources-to-do-the-activities-that-i-wanted]}
+                                                {:bind [:bad-weather]}]}]} ]}]}},
+
+ MemberSatisfactionSurveyLaunch
+ {:zen/tags #{aidbox.sdc/Launch},
+  :document MemberSatisfactionSurveyDocument,
+  :params {:encounter-id {:type zen/string}},
+  :populate-engine aidbox.sdc/LispPopulate,
+  :populate {:author    (get-in [:ctx :user]),
+             :encounter {:id (get-in [:params :encounter-id]), :resourceType "Encounter"},
+             :patient   (sql {:select [:#> :resource [:subject]],
+                              :from :Encounter,
+                              :where [:= :id (get-in [:params :encounter-id])]})}},
+
+ MemberSatisfactionSurveyForm
+ {:zen/tags #{aidbox.sdc/Form},
+  :title "Member Satisfaction Survey",
+  :document MemberSatisfactionSurveyDocument,
+  :layout MemberSatisfactionSurveyLayout,
+  :launch MemberSatisfactionSurveyLaunch,
+  }}

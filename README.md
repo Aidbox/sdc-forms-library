@@ -29,7 +29,8 @@ Forms library contains next common forms:
 - Vitals Signs
 
 
-## NOTES: 
+
+## NOTES:
 
 Next forms requires some external valuesets to be in the Aidbox instance.
 
