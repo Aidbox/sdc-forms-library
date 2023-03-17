@@ -29,5 +29,6 @@
           aidbox.forms.fall-risk
           aidbox.forms.late-visit-survey
           aidbox.forms.member-satisfaction-survey
+          aidbox.forms.immunizations
           }
- }
+}

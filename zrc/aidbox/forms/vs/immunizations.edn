@@ -1,0 +1,181 @@
+{:ns aidbox.forms.vs.immunizations
+ :import #{zen.fhir}
+
+ cvx-immunization-pneumonia-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-pneumonia-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-pneumonia.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-pneumonia",
+                                          :status "active"
+                                          :url "http://hl7.org/fhir/sid/cvx"}
+                            :value-set {:id "cvx-immunization-pneumonia"
+                                        :name "Pneumonia",
+                                        :url "forms.cvx-immunization-pneumonia-vs"
+                                        :status "active"}}}}
+
+
+ cvx-immunization-covid-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-covid-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-covid.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-covid",
+                                          :status "active"
+                                          :url "http://hl7.org/fhir/sid/cvx"}
+                            :value-set {:id "cvx-immunization-covid"
+                                        :name "Covid",
+                                        :url "forms.cvx-immunization-covid-vs"
+                                        :status "active"}}}}
+
+
+ cvx-immunization-shingles-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-shingles-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-shingles.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-shingles",
+                                          :status "active"
+                                          :url "http://hl7.org/fhir/sid/cvx"}
+                            :value-set {:id "cvx-immunization-shingles"
+                                        :name "Shingles",
+                                        :url "forms.cvx-immunization-shingles-vs"
+                                        :status "active"}}}}
+
+  cvx-immunization-mmr-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-mmr-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-mmr.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-mmr",
+                                          :status "active"
+                                          :url "http://hl7.org/fhir/sid/cvx"}
+                            :value-set {:id "cvx-immunization-mmr"
+                                        :name "Mmr",
+                                        :url "forms.cvx-immunization-mmr-vs"
+                                        :status "active"}}}}
+ cvx-immunization-tetanus-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-tetanus-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-tetanus.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-tetanus",
+                                          :status "active"
+                                          :url "http://hl7.org/fhir/sid/cvx"}
+                            :value-set {:id "cvx-immunization-tetanus"
+                                        :name "Tetanus",
+                                        :url "forms.cvx-immunization-tetanus-vs"
+                                        :status "active"}}}}
+
+  cvx-immunization-hpv-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-hpv-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-hpv.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-hpv",
+                                          :status "active"
+                                          :url "forms.cvx-immunization"}
+                            :value-set {:id "cvx-immunization-hpv"
+                                        :name "Hpv",
+                                        :url "forms.cvx-immunization-hpv-vs"
+                                        :status "active"}}}}
+
+  cvx-immunization-influenza-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-influenza-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-influenza.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-influenza",
+                                          :status "active"
+                                          :url "http://hl7.org/fhir/sid/cvx"}
+                            :value-set {:id "cvx-immunization-influenza"
+                                        :name "Influenza",
+                                        :url "forms.cvx-immunization-influenza-vs"
+                                        :status "active"}}}}
+
+  cvx-immunization-us-core-vaccines-vs
+ {:zen/tags #{zen.fhir/value-set}
+  :zen.fhir/version "0.6.0"
+  :uri "cvx-immunization-us-core-vaccines-vs"
+  :ftr {:module "forms-valuesets"
+        :source-url "resources/cvx-immunization-us-core-vaccines.csv"
+        :source-type :flat-table
+        :ftr-path "ftr"
+        :tag "prod"
+        :extractor-options {:format "csv"
+                            :csv-format {:delimiter ";" :quote "\""}
+                            :header false
+                            :data-row 0
+                            :mapping {:concept {:code {:column 0} :display {:column 1}}}
+                            :code-system {:id "cvx-immunization-us-core-vaccines",
+                                          :url "http://hl7.org/fhir/sid/cvx"}
+                            :value-set {:id "cvx-immunization-us-core-vaccines"
+                                        :name "Us-Core-Vaccines",
+                                        :url "forms.cvx-immunization-us-core-vaccines-vs"
+                                        :status "active"}}}}
+
+
+ }

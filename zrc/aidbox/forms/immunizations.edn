@@ -1,0 +1,227 @@
+{ns aidbox.forms.immunizations
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+
+
+ HistoryRecord
+ {:zen/tags #{zen/schema}
+  :type zen/case
+  :case [{:when {:type zen/map
+                 :validation-type :open
+                 :keys {:is-history {:const {:value true}}
+                        :date-of-inject {:type zen/date}}}
+          :then {:type zen/map
+                 :validation-type :open
+                 :require #{:date-of-inject}}}
+         {:when {:type zen/map
+                 :validation-type :open
+                 :keys {:is-history {:const {:value false}}}}
+          :then {:type zen/any}}]}
+
+
+ ImmunizationsDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :zen/desc "Immunizations"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:practitioner {:confirms #{zenbox/Reference}}
+
+         :immunization
+         {:type zen/vector
+          :every {:type zen/map
+                  :require #{:vaccine :category}
+                  :confirms #{HistoryRecord}
+                  :keys {:is-history {:type zen/boolean
+                                      :sdc/default-value false}
+                         :id {:type zen/string}
+                         :status {:type zen/string :sdc/default-value "completed"}
+                         :category {:zen/desc "Immunization"
+                                    :type zen/map
+                                    :sdc-type aidbox.sdc/choice
+                                    :confirms #{aidbox.sdc.fhir/coding}
+                                    :enum [{:value {:display "Influenza" :code "influenza" :system "forms.immunization-category"}}
+                                           {:value {:display "Pneumonia" :code "pneumonia" :system "forms.immunization-category"}}
+                                           {:value {:display "COVID" :code "covid" :system "forms.immunization-category"}}
+                                           {:value {:display "Tetanus" :code "tetanus" :system "forms.immunization-category"}}
+                                           {:value {:display "Shingles" :code "shingles" :system "forms.immunization-category"}}
+                                           {:value {:display "MMR" :code "mmr" :system "forms.immunization-category"}}
+                                           {:value {:display "Hepatitis A" :code "hepatitis-a" :system "forms.immunization-category"}}
+                                           {:value {:display "Hepatitis B" :code "hepatitis-b" :system "forms.immunization-category"}}
+                                           {:value {:display "Meningococcal" :code "meningococcal" :system "forms.immunization-category"}}
+                                           {:value {:display "Haemophilus Influenzae type B" :code "haemophilus-influenzae-type-b" :system "forms.immunization-category"}}
+                                           {:value {:display "HPV" :code "hpv"}}]}
+                         :vaccine {:zen/desc "Vaccine name/Manufacturer"
+                                   :type zen/map
+                                   :sdc-type aidbox.sdc/choice
+                                   :confirms #{aidbox.sdc.fhir/coding}
+                                   :sdc/options aidbox.sdc.options/valueset
+                                   :valueset
+                                   (cond
+                                     (= (get-in [:category :code]) "pneumonia") "forms.cvx-immunization-pneumonia-vs"
+                                     (= (get-in [:category :code]) "covid")     "forms.cvx-immunization-covid-vs"
+                                     (= (get-in [:category :code]) "snigles")   "forms.cvx-immunization-shingles-vs"
+                                     (= (get-in [:category :code]) "mmr")       "forms.cvx-immunization-mmr-vs"
+                                     (= (get-in [:category :code]) "tetanus")   "forms.cvx-immunization-tetanus-vs"
+                                     (= (get-in [:category :code]) "hpv")       "forms.cvx-immunization-hpv-vs"
+                                     (= (get-in [:category :code]) "influenza") "forms.cvx-immunization-influenza-vs"
+                                     :else                                      "forms.cvx-immunization-us-core-vaccines-vs")}
+                         :date-of-inject {:zen/desc "Date of injection"
+                                          :type zen/date}
+                         :site {:type zen/map
+                                :zen/desc "Site of Injection"
+                                :confirms #{aidbox.sdc.fhir/coding}
+                                :sdc-type aidbox.sdc/choice
+                                :enum [{:value {:display "Left deltoid"
+                                                :code "LD"
+                                                :system "http://terminology.hl7.org/CodeSystem/v3-ActSite"}}
+                                       {:value {:display "Right deltoid"
+                                                :code "RD"
+                                                :system "http://terminology.hl7.org/CodeSystem/v3-ActSite"}}
+                                       {:value {:display "Left thigh"
+                                                :code "LT"
+                                                :system "http://terminology.hl7.org/CodeSystem/v3-ActSite"}}
+                                       {:value {:display "Right thigh"
+                                                :code "RT"
+                                                :system "http://terminology.hl7.org/CodeSystem/v3-ActSite"}}]}
+                         :dose {:type zen/any
+                                :zen/desc "Dose (mL)"
+                                :sdc-type aidbox.sdc/choice
+                                :confirms #{aidbox.sdc.fhir/coding}
+                                :enum [{:value {:value 0.1 :code "0.1" :display "0.1"}}
+                                       {:value {:value 0.2 :code "0.2" :display "0.2"}}
+                                       {:value {:value 0.25 :code "0.25" :display "0.25"}}
+                                       {:value {:value 0.3 :code "0.3" :display "0.3"}}
+                                       {:value {:value 0.4 :code "0.4" :display "0.4"}}
+                                       {:value {:value 0.5 :code "0.5" :display "0.5"}}
+                                       {:value {:value 1.0 :code "1.0" :display "1.0"}}]}
+                         :lot-number {:type zen/string :zen/desc "Lot Number"}
+                         :expiration-date {:type zen/date :zen/desc "Expiration Date"}
+                         :administered-by {:type zen/map
+                                           :confirms #{zenbox/Reference}
+                                           :sdc/default-value (get global :practitioner)
+                                           ;; :sdc-type aidbox.sdc/reference
+                                           :zen/desc "Administered by"}}}}}}
+
+ ImmunizationInplaceForm
+ {:zen/tags #{aidbox.sdc/Layout}
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/fields
+   :children
+   [{:type aidbox.sdc/col
+     :sdc/display-when (get :is-history)
+     :children [{:type aidbox.sdc/row :children [{:bind [:category]} {:bind [:vaccine]}]}
+                {:type aidbox.sdc/row :children [{:bind [:date-of-inject]}]}]}
+    {:type aidbox.sdc/col
+     :sdc/display-when (not (get :is-history))
+     :children [{:type aidbox.sdc/row :children [{:bind [:category]} {:bind [:vaccine]}]}
+                {:type aidbox.sdc/row :children [{:bind [:site]} {:bind [:dose]}]}
+                {:type aidbox.sdc/row :children [{:bind [:lot-number]} {:bind [:expiration-date]}]}
+                {:type aidbox.sdc/row :children [{:bind [:administered-by]}]}]}]}}
+
+ ImmunizationsLayout
+ {:zen/tags #{aidbox.sdc/Layout}
+  :document ImmunizationsDocument
+  :engine aidbox.sdc/Hiccup
+  :layout
+  {:type aidbox.sdc/grid-editor
+   :bind [:immunization]
+   :columns [{:label "Vaccine name"
+              :bind [:vaccine :display]}
+             {:label "Administered on"
+              :bind [:date-of-inject]}]
+   :new-form {:form-ref ImmunizationInplaceForm}
+   :edit-form {:form-ref ImmunizationInplaceForm}
+   :row-actions [{:type aidbox.sdc/grid-edit-button
+                  :label "Edit"}]
+   #_#_:controlOptions {:matcho-group-by [:category :display]
+                    :add-buttons [{:button-label "Add record" :defaults {:is-history true}}
+                                  {:button-label "Administer" :defaults {:is-history false}}]}}}
+
+ ImmunizationsLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document ImmunizationsDocument
+  :params {:encounter-id {:type zen/string}}
+  :populate-engine aidbox.sdc/LispPopulate
+  :populate (let [patient (sql {:select [:#> :resource [:subject]]
+                                :from :Encounter
+                                :where [:= :id (get-in [:params :encounter-id])]})]
+              {:author    (get-in [:ctx :user])
+               :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+               #_#_:practitioner
+               (sql {:select {:resource
+                              ^:pg/fn [:jsonb_build_object
+                                       "id" :id
+                                       "resourceType" "Practitioner"
+                                       "display" (sql {:select [:#> :resource [:name :formatted]]
+                                                       :from :public.user
+                                                       :where [:= :id (get-in [:ctx :user :id])]})]}
+                     :from :Practitioner
+                     :where [:pg/include-op
+                             ^:pg/fn [:knife_extract_text :resource ^:pg/jsonb [["telecom" {"use" "work" "system" "email"} "value"]]]
+                             [:pg/array-param :text [(sql {:select {:email [:#> :resource [:data :email]]}
+                                                           :from :public.user
+                                                           :where [:= :id (get-in [:ctx :user :id])]})]]]})
+               :patient  patient
+               :immunization (sql* {:select {:immunization
+                                             ^:pg/obj {:id :id
+                                                       :status [:#>> :resource [:status]]
+                                                       :vaccine [:#> :resource [:vaccineCode :coding 0]]
+                                                       ;; :category [:#> :resource [:vaccineCode :category]]
+                                                       :category  ^:pg/fn [:knife_extract_text :resource ^:pg/jsonb [["vaccineCode" "coding" {"system" "forms.immunization-category"}]]]
+                                                       :date-of-inject [:#> :resource [:occurrence :dateTime]]}}
+                                    :from :Immunization
+                                    :where [:and
+                                            [:= [:#>> :resource [:patient :id]] (get patient :id)]
+                                            [:!= [:#>> :resource [:status]] "entered-in-error"]]})})}
+
+ ImmunizationsFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema}
+  :document ImmunizationsDocument
+  :export-engine aidbox.sdc/LispExport
+  :patch [(for [j (sql* {:select  {:id :id}
+                         :from :Immunization
+                         :where [:and
+                                 (when (> (count (get-in [:immunization])) 0)
+                                   [:not [:in :id [:pg/params-list
+                                                   (for [i (get-in [:immunization])]
+                                                     (str (get i :id)))]]])
+                                 [:= [:->> :resource :status] "completed"]
+                                 [:= [:#>> :resource [:patient :id]] (get-in [:patient :id])]]})]
+            {:resourceType "Immunization"
+             :id j
+             :status "entered-in-error"})]
+  :create [(for [i (get :immunization)]
+             (when (not (get i :id))
+               (if (get i :is-history)
+                 {:resourceType "Immunization"
+                  :status (get i :status)
+                  :patient   (get :patient)
+                  :vaccineCode {:text (get-in i [:vaccine :code])
+                                :coding [(get i :vaccine) (get i :category)]}
+                  :recorded (date)
+                  :occurrence {:dateTime (get i :date-of-inject)}}
+                 {:resourceType "Immunization"
+                  :status (get i :status)
+                  :patient   (get :patient)
+                  :encounter (get :encounter)
+
+                  :vaccineCode {:text (get-in i [:vaccine :code])
+                                :coding [(get i :vaccine) (get i :category)]}
+                  :site {:text (get-in i [:site :code])
+                         :coding [(get i :site)]}
+                  :doseQuantity {:value (get-in i [:dose :value]) :unit "mL"}
+                  :lotNumber (get i :lot-number)
+                  :expirationDate (get i :expiration-date)
+                  :performer [{:actor (get i :administered-by)}]
+                  :recorded (date)
+                  :occurrence {:dateTime (date "yyyy-MM-dd")}
+                  })))]}
+
+ ImmunizationsForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title    "Immunizations"
+  :properties {:fhir/id "ImmunizationsForm"}
+  :document ImmunizationsDocument
+  :layout   ImmunizationsLayout
+  :launch   ImmunizationsLaunch
+  :finalize ImmunizationsFinalize}}
