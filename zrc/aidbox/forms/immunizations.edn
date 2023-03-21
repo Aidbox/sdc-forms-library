@@ -1,5 +1,6 @@
 {ns aidbox.forms.immunizations
- import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir
+          aidbox.forms.vs.immunizations}
 
 
  HistoryRecord
@@ -7,14 +8,14 @@
   :type zen/case
   :case [{:when {:type zen/map
                  :validation-type :open
-                 :keys {:is-history {:const {:value true}}
+                 :keys {:type {:const {:value {:code "history" :display "History"}}}
                         :date-of-inject {:type zen/date}}}
           :then {:type zen/map
                  :validation-type :open
                  :require #{:date-of-inject}}}
          {:when {:type zen/map
                  :validation-type :open
-                 :keys {:is-history {:const {:value false}}}}
+                 :keys {:type {:const {:value {:code "administer" :display "Administer"}}}}}
           :then {:type zen/any}}]}
 
 
@@ -30,8 +31,10 @@
           :every {:type zen/map
                   :require #{:vaccine :category}
                   :confirms #{HistoryRecord}
-                  :keys {:is-history {:type zen/boolean
-                                      :sdc/default-value false}
+                  :keys {:type {:text "History / Administer"
+                                :sdc/default-value {:code "administer" :display "Administer"}
+                                :enum [{:value {:code "history" :display "History"}}
+                                       {:value {:code "administer" :display "Administer"}}]}
                          :id {:type zen/string}
                          :status {:type zen/string :sdc/default-value "completed"}
                          :category {:zen/desc "Immunization"
@@ -86,7 +89,7 @@
                                 :zen/desc "Dose (mL)"
                                 :sdc-type aidbox.sdc/choice
                                 :confirms #{aidbox.sdc.fhir/coding}
-                                :enum [{:value {:value 0.1 :code "0.1" :display "0.1"}}
+                                :enum [{:value {:value  0.1 :code "0.1" :display "0.1"}}
                                        {:value {:value 0.2 :code "0.2" :display "0.2"}}
                                        {:value {:value 0.25 :code "0.25" :display "0.25"}}
                                        {:value {:value 0.3 :code "0.3" :display "0.3"}}
@@ -96,6 +99,8 @@
                          :lot-number {:type zen/string :zen/desc "Lot Number"}
                          :expiration-date {:type zen/date :zen/desc "Expiration Date"}
                          :administered-by {:type zen/map
+                                           :sdc-type aidbox.sdc/reference
+                                           :resourceType "Practitioner"
                                            :confirms #{zenbox/Reference}
                                            :sdc/default-value (get global :practitioner)
                                            ;; :sdc-type aidbox.sdc/reference
@@ -107,12 +112,13 @@
   :layout
   {:type aidbox.sdc/fields
    :children
-   [{:type aidbox.sdc/col
-     :sdc/display-when (get :is-history)
+   [{:bind [:type]}
+    {:type aidbox.sdc/col
+     :sdc/display-when (= (get-in [:type :code]) "history")
      :children [{:type aidbox.sdc/row :children [{:bind [:category]} {:bind [:vaccine]}]}
                 {:type aidbox.sdc/row :children [{:bind [:date-of-inject]}]}]}
     {:type aidbox.sdc/col
-     :sdc/display-when (not (get :is-history))
+     :sdc/display-when (= (get-in [:type :code]) "administer")
      :children [{:type aidbox.sdc/row :children [{:bind [:category]} {:bind [:vaccine]}]}
                 {:type aidbox.sdc/row :children [{:bind [:site]} {:bind [:dose]}]}
                 {:type aidbox.sdc/row :children [{:bind [:lot-number]} {:bind [:expiration-date]}]}
@@ -126,9 +132,11 @@
   {:type aidbox.sdc/grid-editor
    :bind [:immunization]
    :columns [{:label "Vaccine name"
+              :type aidbox.sdc/label
               :bind [:vaccine :display]}
              {:label "Administered on"
-              :bind [:date-of-inject]}]
+              :bind [:date-of-inject]
+              :type aidbox.sdc/label}]
    :new-form {:form-ref ImmunizationInplaceForm}
    :edit-form {:form-ref ImmunizationInplaceForm}
    :row-actions [{:type aidbox.sdc/grid-edit-button
@@ -166,8 +174,9 @@
                                              ^:pg/obj {:id :id
                                                        :status [:#>> :resource [:status]]
                                                        :vaccine [:#> :resource [:vaccineCode :coding 0]]
+                                                       :type ^:pg/obj {:code "history" :display "History"}
                                                        ;; :category [:#> :resource [:vaccineCode :category]]
-                                                       :category  ^:pg/fn [:knife_extract_text :resource ^:pg/jsonb [["vaccineCode" "coding" {"system" "forms.immunization-category"}]]]
+                                                       :category  [:pg/nth ^:pg/fn[:knife_extract :resource ^:pg/jsonb [["vaccineCode" "coding" {"system" "forms.immunization-category"}]]] 1]
                                                        :date-of-inject [:#> :resource [:occurrence :dateTime]]}}
                                     :from :Immunization
                                     :where [:and
@@ -192,7 +201,7 @@
              :status "entered-in-error"})]
   :create [(for [i (get :immunization)]
              (when (not (get i :id))
-               (if (get i :is-history)
+               (if (= (get-in i [:type :code]) "history")
                  {:resourceType "Immunization"
                   :status (get i :status)
                   :patient   (get :patient)
