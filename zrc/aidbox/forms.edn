@@ -30,5 +30,6 @@
           aidbox.forms.late-visit-survey
           aidbox.forms.member-satisfaction-survey
           aidbox.forms.immunizations
+          aidbox.forms.missed-visit-survey
           }
 }

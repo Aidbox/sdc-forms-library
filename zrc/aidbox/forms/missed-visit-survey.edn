@@ -1,0 +1,66 @@
+{ns aidbox.forms.missed-visit-survey
+ import #{aidbox.sdc zenbox aidbox.sdc.fhir}
+
+
+ MissedVisitSurveyDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :keys {:worker-arrived {:text "Has your worker arrived for your scheduled visit?"
+                          :confirms #{aidbox.sdc.fhir/coding}
+                          :enum [{:value {:display "Yes" :code "yes"}}
+                                 {:value {:display "No" :code "no"}}]}
+         :they-notified {:text "Have they notified you?"
+                         :confirms #{aidbox.sdc.fhir/coding}
+                         :enum [{:value {:display "Yes" :code "yes"}}
+                                {:value {:display "No" :code "no"}}]}}}
+
+ MissedVisitSurveyLayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
+  :document MissedVisitSurveyDocument
+  :engine aidbox.sdc/Hiccup
+  :layout {:type aidbox.sdc/pages
+           :children [{:type aidbox.sdc/col
+                       :children [{:type aidbox.sdc/label
+                                   :label "Our records show that you had a visit scheduled with a BlueCare Choices worker today"}
+                                  {:bind [:worker-arrived]}]}
+                      {:type aidbox.sdc/label
+                       :sdc/display-when (= (get-in [:worker-arrived :code]) "yes")
+                       :label "Thank you.  Please have your worker log in for the visit they are currently providing"}
+                      {:type aidbox.sdc/col
+                       :sdc/display-when (= (get-in [:worker-arrived :code]) "no")
+                       :children [{:bind [:they-notified]}
+                                  {:type aidbox.sdc/label
+                                   :sdc/display-when (and (= (get-in [:worker-arrived :code]) "no")
+                                                          (= (get-in [:they-notified :code]) "yes"))
+                                   :label "Please contact your Care Coordinator if the worker does not arrive in the next 30 minutes at Support Care Number"}
+                                  {:type aidbox.sdc/label
+                                   :sdc/display-when (and (= (get-in [:worker-arrived :code]) "no")
+                                                          (= (get-in [:they-notified :code]) "no"))
+                                   :label "BlueCare will work to implement your back up plan"}]}]}}
+
+
+ MissedVisitSurveyLaunch
+ {:zen/tags #{aidbox.sdc/Launch}
+  :document MissedVisitSurveyDocument
+  :params {:encounter-id {:type zen/string}},
+  :populate-engine aidbox.sdc/LispPopulate,
+  :populate
+  {:author (get-in [:ctx :user]),
+   :encounter
+   {:id (get-in [:params :encounter-id]), :resourceType "Encounter"},
+   :patient
+   (sql
+    {:select [:#> :resource [:subject]],
+     :from :Encounter,
+     :where [:= :id (get-in [:params :encounter-id])]})}}
+
+ MissedVisitSurveyForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title "Missed Visit Survey"
+  :document MissedVisitSurveyDocument
+  :layout MissedVisitSurveyLayout
+  :launch MissedVisitSurveyLaunch}
+
+
+ }
