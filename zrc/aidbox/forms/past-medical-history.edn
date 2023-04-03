@@ -52,7 +52,7 @@
    :row-actions [{:type aidbox.sdc/grid-edit-button :label "Edit"}]
    :new-form {:form-ref ConditionInplaceForm}
    :edit-form {:form-ref ConditionInplaceForm}
-   :row-details {:form-ref ProblemDetails :sdc/display-when (get :comments)}}}
+   :row-details {:form-ref ProblemDetails #_#_:sdc/display-when (get :comments)}}}
 
  PastMedicalHistoryLaunch
  {:zen/tags #{aidbox.sdc/Launch}
