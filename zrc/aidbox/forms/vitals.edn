@@ -152,8 +152,8 @@ As additional option this form has BMI."
                                    :form-ref body-temperature-subform}]}
                       {:type aidbox.sdc/media-viewer
                        :src "https://raw.githubusercontent.com/Aidbox/sdc-forms-library/main/resources/images/bp-instructions.png"
-                       :width 500
-                       :height 300}
+                       :height 400}
+
                       {:type aidbox.sdc/row,
                        :children [{:type aidbox.sdc/subform,
                                    :label "Blood Pressure"
