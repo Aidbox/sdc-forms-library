@@ -6,14 +6,14 @@
   :zen/desc "Mini Cognitive Test"
   :help "**Instructions:**
 
-**Three Word Registration**  
-Look directly at patient and say, “Please listen carefully, I am going to say three words I want you to repeat back to me now and try to remember. The words are [select a list of words].  Please say them for me now.” If patient is unable to repeat after 3 attempts, move on to next step.  
+**Three Word Registration**
+Look directly at patient and say, “Please listen carefully, I am going to say three words I want you to repeat back to me now and try to remember. The words are [select a list of words].  Please say them for me now.” If patient is unable to repeat after 3 attempts, move on to next step.
 *For repeated administrations, use of an alternative word list is recommended.*
 
-**Clock Drawing**  
+**Clock Drawing**
 Say: “Next, I want you to draw a clock for me. First, put in all of the numbers where they go.” When that is completed, say: “Now, set the hands to 10 past 11.” Use preprinted circle for this exercise. Repeat instructions as needed as this is not a memory test. Move to next step if the clock is not complete within three minutes.
 
-**Three Word Recall**  
+**Three Word Recall**
 Ask the person to recall the three words you stated in Step 1. Say: “What were the three words I asked you to remember?” Record the total number of words patient recalled correctly."
   :type zen/map
   :confirms #{aidbox.sdc/Document}
@@ -51,6 +51,11 @@ Set 6 - Daughter,Heaven,Mountain"
                                  :enum [{:value {:display "Yes" :code "mini-cognitive-test-clock-1" :score 2}}
                                         {:value {:display "No" :code "mini-cognitive-test-clock-0" :score 0}}
                                         {:value {:display "Unable to assess" :code "mini-cognitive-test-clock-3" :score 0}}]}
+         :mini-cognitive-test-3-image {:text "Clock drawing"
+                                      :confirms #{aidbox.sdc.fhir/attachment}
+                                      :type zen/map
+                                      :keys {:contentType {:type zen/string
+                                                           :regex "image/*"}}}
          :mini-cognitive-test-4 {:text "**Three Word Recall**"
                                  :confirms #{aidbox.sdc.fhir/coding}
                                  :enum [{:value {:display "None" :code "mini-cognitive-test-recall-0" :score 0}}
@@ -74,6 +79,10 @@ Set 6 - Daughter,Heaven,Mountain"
    [{:bind [:mini-cognitive-test-1]}
     ;; {:bind [:mini-cognitive-test-2]}
     {:bind [:mini-cognitive-test-3]}
+    {:bind [:mini-cognitive-test-3-image]
+     :type aidbox.sdc/media-viewer}
+    {:bind [:mini-cognitive-test-3-image]
+     :type aidbox.sdc/file-input}
     {:bind [:mini-cognitive-test-4]}
     {:bind [:mini-cognitive-test-score]}
     {:bind [:mini-cognitive-test-score-interp]}]}}

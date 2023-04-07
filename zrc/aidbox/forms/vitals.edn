@@ -64,7 +64,13 @@ As additional option this form has BMI."
                                                      :code [{:system "http://loinc.org" :code "8361-8"}]
                                                      :linkId "8361-8"},
                                          :datetime {:type zen/datetime
-                                                    :text "Moment of measurement"}}}},
+                                                    :text "Moment of measurement"}}}}
+         :pulse-image {:text "Pulse image"
+                       :confirms #{aidbox.sdc.fhir/attachment}
+                       :type zen/map
+                       :keys {:contentType {:type zen/string
+                                            :regex "image/*"}}
+                       :sdc-type aidbox.sdc/attachment},
          :respiratory-rate {:type zen/vector,
                             :minItems 1,
                             :every {:type zen/map,
@@ -128,9 +134,7 @@ As additional option this form has BMI."
   :engine aidbox.sdc/Hiccup
   :layout
   {:type aidbox.sdc/col
-   :children [{:type aidbox.sdc/label
-               :label "Temperature"}
-              {:type aidbox.sdc/fields
+   :children [{:type aidbox.sdc/fields
                :children
                [{:bind [:value] :last-change-datetime [:datetime] :label ""}
                 {:bind [:datetime] :label "" :is-last-change true}]}]}}
@@ -143,16 +147,20 @@ As additional option this form has BMI."
            :children [{:type aidbox.sdc/row,
                        :children [{:type aidbox.sdc/subform,
                                    :bind [:temperature],
+                                   :label "Temperature"
                                    :collection true,
                                    :form-ref body-temperature-subform}]}
+                      {:type aidbox.sdc/media-viewer
+                       :src "https://raw.githubusercontent.com/Aidbox/sdc-forms-library/main/resources/images/bp-instructions.png"
+                       :width 500
+                       :height 300}
                       {:type aidbox.sdc/row,
                        :children [{:type aidbox.sdc/subform,
+                                   :label "Blood Pressure"
                                    :bind [:blood-pressure],
                                    :collection true,
                                    :form-layout {:type aidbox.sdc/col
-                                                 :children [{:type aidbox.sdc/label
-                                                             :label "Blood Pressure"}
-                                                            {:type aidbox.sdc/fields,
+                                                 :children [{:type aidbox.sdc/fields,
                                                              :children [{:type aidbox.sdc/row,
                                                                          :children [{:bind [:systolic],
                                                                                      :last-change-datetime [:datetime]}
@@ -167,48 +175,40 @@ As additional option this form has BMI."
                       {:type aidbox.sdc/row,
                        :children [{:type aidbox.sdc/subform,
                                    :bind [:heart-rate],
+                                   :label "Pulse Rate"
                                    :collection true,
                                    :form-layout {:type aidbox.sdc/col
-                                                 :children [{:type aidbox.sdc/label
-                                                             :label "Pulse Rate"}
-                                                            {:type aidbox.sdc/fields,
-                                                             :children [{:bind [:value],
-                                                                         :label "",
+                                                 :children [{:type aidbox.sdc/fields,
+                                                             :children [{:bind [:value]
                                                                          :last-change-datetime [:datetime]}
-                                                                        {:bind [:datetime],
-                                                                         :label "",
+                                                                        {:bind [:datetime]
                                                                          :is-last-change true}]}]}}]}
                       {:type aidbox.sdc/row,
                        :children [{:type aidbox.sdc/subform,
                                    :bind [:respiratory-rate],
                                    :collection true,
+                                   :label "Respiratory Rate"
                                    :form-layout {:type aidbox.sdc/col
-                                                 :children [{:type aidbox.sdc/label
-                                                             :label "Respiratory Rate"}
-                                                            {:type aidbox.sdc/fields,
-                                                             :children [{:bind [:value],
-                                                                         :label "",
+                                                 :children [{:type aidbox.sdc/fields,
+                                                             :children [{:bind [:value]
                                                                          :last-change-datetime [:datetime]}
-                                                                        {:bind [:datetime],
-                                                                         :label "",
+                                                                        {:bind [:datetime]
                                                                          :is-last-change true}]}]}}]}
                       {:type aidbox.sdc/row,
                        :children [{:type aidbox.sdc/subform,
                                    :bind [:saturation],
+                                   :label "Oxygen Saturation",
                                    :collection true,
                                    :form-layout {:type aidbox.sdc/col
-                                                 :children [{:type aidbox.sdc/label :label "Oxygen Saturation",}
-                                                            {:type aidbox.sdc/fields,
-                                                             :children [{:bind [:value],
-                                                                         :label "",
+                                                 :children [{:type aidbox.sdc/fields,
+                                                             :children [{:bind [:value]
                                                                          :last-change-datetime [:datetime]}
-                                                                        {:bind [:datetime],
-                                                                         :label "",
+                                                                        {:bind [:datetime]
                                                                          :is-last-change true}]}]}}]}
                       {:type aidbox.sdc/row,
-                       :children [{:bind [:body-weight], :label "Weight"}]}
+                       :children [{:bind [:body-weight]}]}
                       {:type aidbox.sdc/row
-                       :children [{:bind [:body-height] :label "Height"}]}
+                       :children [{:bind [:body-height]}]}
                       {:type aidbox.sdc/row,
                        :children [{:bind [:bmi], :label "Body Mass Index"}]}]}}
 
