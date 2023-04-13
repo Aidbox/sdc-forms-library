@@ -92,14 +92,14 @@ As additional option this form has BMI."
 
          :body-weight {:text "Weight",
                        :confirms #{aidbox.sdc.fhir/quantity}
-                       :units [{:name "[lb_av]"} {:name "kg"}],
+                       :units [{:name "lb"} {:name "kg"}],
                        :code [{:system "http://loinc.org" :code "29463-7"}]
                        :linkId "29463-7"},
 
          :saturation {:type zen/vector,
                       :minItems 1,
                       :every {:type zen/map,
-                              :keys {:value {:text "SaO2 % BldA PulseOx",
+                              :keys {:value {:text "SaO2 % PulseOx",
                                              :type zen/map
                                              :confirms #{aidbox.sdc.fhir/quantity}
                                              :keys {:value {:type zen/number :min 60 :max 100}}
@@ -108,8 +108,8 @@ As additional option this form has BMI."
                                              :linkId "59408-5"},
                                      :datetime {:text "Moment of measurement"
                                                 :type zen/datetime}}}}
-         :body-height {:text "Body height",
-                       :units [{:name "[in_i]"} {:name "cm"}],
+         :body-height {:text "Height",
+                       :units [{:name "in"} {:name "cm"}],
                        :confirms #{aidbox.sdc.fhir/quantity}
                        :code [{:system "http://loinc.org" :code "8302-2"}]
                        :linkId "8302-2"},
@@ -378,7 +378,7 @@ As additional option this form has BMI."
 
  VitalsForm
  {:zen/tags #{aidbox.sdc/Form}
-  :title    "Vitals Signs"
+  :title    "Vital Signs"
   :document VitalsDocument
   :layout   VitalsLayout
   :launch   VitalsLaunch
