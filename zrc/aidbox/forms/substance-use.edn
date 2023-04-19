@@ -7,43 +7,40 @@
   :type zen/map
   :confirms #{aidbox.sdc/Document}
   :sdc/rules {:dsm-alcohol-score
-              (lisp/or
-               (lisp/when (lisp/>= (lisp/count (lisp/matcho-filter (lisp/vals (lisp/get-in [:alcohol :dsm]))
-                                                                   true))
-                                   2)
-                 (lisp/count (lisp/matcho-filter (lisp/vals (lisp/get-in [:alcohol :dsm]))
-                                                 true)))
-               (lisp/+
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-1])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-2])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-3])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-4])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-5])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-6])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-7])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-8])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-9])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-10])
-                (lisp/get-in [:alcohol :dsm :dsm-alcohol-11])))
+              (or
+               (when (>= (count (matcho-filter (vals (get-in [:alcohol :dsm]))
+                                               true))
+                         2)
+                 (count (matcho-filter (vals (get-in [:alcohol :dsm]))
+                                       true)))
+               (+ (get-in [:alcohol :dsm :dsm-alcohol-1])
+                  (get-in [:alcohol :dsm :dsm-alcohol-2])
+                  (get-in [:alcohol :dsm :dsm-alcohol-3])
+                  (get-in [:alcohol :dsm :dsm-alcohol-4])
+                  (get-in [:alcohol :dsm :dsm-alcohol-5])
+                  (get-in [:alcohol :dsm :dsm-alcohol-6])
+                  (get-in [:alcohol :dsm :dsm-alcohol-7])
+                  (get-in [:alcohol :dsm :dsm-alcohol-8])
+                  (get-in [:alcohol :dsm :dsm-alcohol-9])
+                  (get-in [:alcohol :dsm :dsm-alcohol-10])
+                  (get-in [:alcohol :dsm :dsm-alcohol-11])))
               :dsm-drug-score
-              (lisp/or
-               (lisp/when (lisp/>= (lisp/count (lisp/matcho-filter (lisp/vals (lisp/get-in [:drug :dsm]))
-                                                                   true))
-                                   2)
-                 (lisp/count (lisp/matcho-filter (lisp/vals (lisp/get-in [:drug :dsm]))
-                                                 true)))
-               (lisp/+
-                (lisp/get-in [:drug :dsm :dsm-drug-1])
-                (lisp/get-in [:drug :dsm :dsm-drug-2])
-                (lisp/get-in [:drug :dsm :dsm-drug-3])
-                (lisp/get-in [:drug :dsm :dsm-drug-4])
-                (lisp/get-in [:drug :dsm :dsm-drug-5])
-                (lisp/get-in [:drug :dsm :dsm-drug-6])
-                (lisp/get-in [:drug :dsm :dsm-drug-7])
-                (lisp/get-in [:drug :dsm :dsm-drug-8])
-                (lisp/get-in [:drug :dsm :dsm-drug-9])
-                (lisp/get-in [:drug :dsm :dsm-drug-10])
-                (lisp/get-in [:drug :dsm :dsm-drug-11])))}
+              (or (when (>= (count (matcho-filter (vals (get-in [:drug :dsm]))
+                                                  true))
+                            2)
+                    (count (matcho-filter (vals (get-in [:drug :dsm]))
+                                          true)))
+                  (+ (get-in [:drug :dsm :dsm-drug-1])
+                     (get-in [:drug :dsm :dsm-drug-2])
+                     (get-in [:drug :dsm :dsm-drug-3])
+                     (get-in [:drug :dsm :dsm-drug-4])
+                     (get-in [:drug :dsm :dsm-drug-5])
+                     (get-in [:drug :dsm :dsm-drug-6])
+                     (get-in [:drug :dsm :dsm-drug-7])
+                     (get-in [:drug :dsm :dsm-drug-8])
+                     (get-in [:drug :dsm :dsm-drug-9])
+                     (get-in [:drug :dsm :dsm-drug-10])
+                     (get-in [:drug :dsm :dsm-drug-11])))}
   :keys {:nicotine {:type zen/map
                     :keys
                     {:substance-use-nicotine {:type zen/boolean
@@ -247,25 +244,25 @@ Liquor: 1.5 oz."
  {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules}
   :document SubstanceUseDocument
   :engine aidbox.sdc/Hiccup
-  :sdc/rules {:enable-nicotine (lisp/get-in [:nicotine :substance-use-nicotine])
-              :enable-alcohol (lisp/get-in [:alcohol :substance-use-alcohol])
-              :enable-other-nicotine (lisp/> (lisp/count (lisp/matcho-filter (lisp/get-in [:nicotine :substance-use-nicotine-types])
-                                                                             {:code "nicotine-other"})) 0)
+  :sdc/rules {:enable-nicotine (get-in [:nicotine :substance-use-nicotine])
+              :enable-alcohol (get-in [:alcohol :substance-use-alcohol])
+              :enable-other-nicotine (> (count (matcho-filter (get-in [:nicotine :substance-use-nicotine-types])
+                                                              {:code "nicotine-other"})) 0)
 
-              :enabled-dsm-alcohol (lisp/get-in [:alcohol :dsm-enabled-alcohol])
-              :enable-dsm-alcohol-help-questions (lisp/>= (lisp/get :dsm-alcohol-score) 2)
+              :enabled-dsm-alcohol (get-in [:alcohol :dsm-enabled-alcohol])
+              :enable-dsm-alcohol-help-questions (>= (get :dsm-alcohol-score) 2)
 
-              :enable-other-drug (lisp/> (lisp/count (lisp/matcho-filter (lisp/get-in [:drug :substance-use-drug-types])
-                                                                         {:code "drug-other"})) 0)
-              :possible-drug-dsm (lisp/> (lisp/-
-                                          (lisp/count (lisp/get-in [:drug :substance-use-drug-types]))
-                                          (lisp/count (lisp/matcho-filter (lisp/get-in [:drug :substance-use-drug-types])
-                                                                          {:code "398705004"})))
-                                         0)
-              :enabled-dsm-drug (lisp/if (lisp/get :possible-drug-dsm)
-                                  (lisp/get-in [:drug :dsm-enabled-drug-yes-default])
-                                  (lisp/get-in [:drug :dsm-enabled-drug]))
-              :enable-dsm-drug-help-questions (lisp/>= (lisp/get :dsm-drug-score) 2)}
+              :enable-other-drug (> (count (matcho-filter (get-in [:drug :substance-use-drug-types])
+                                                          {:code "drug-other"})) 0)
+              :possible-drug-dsm (> (-
+                                     (count (get-in [:drug :substance-use-drug-types]))
+                                     (count (matcho-filter (get-in [:drug :substance-use-drug-types])
+                                                           {:code "398705004"})))
+                                    0)
+              :enabled-dsm-drug (if (get :possible-drug-dsm)
+                                  (get-in [:drug :dsm-enabled-drug-yes-default])
+                                  (get-in [:drug :dsm-enabled-drug]))
+              :enable-dsm-drug-help-questions (>= (get :dsm-drug-score) 2)}
   :layout
   {:type aidbox.sdc/col
    :children
@@ -274,14 +271,14 @@ Liquor: 1.5 oz."
     {:type aidbox.sdc/fields
      :children
      [{:type aidbox.sdc/fields
-       :sdc/display-when (lisp/get :enable-nicotine)
+       :sdc/display-when (get :enable-nicotine)
        :children
        [{:bind [:nicotine :substance-use-nicotine-types]}
         {:bind [:nicotine :substance-use-nicotine-other]
-         :sdc/display-when (lisp/get :enable-other-nicotine)}
+         :sdc/display-when (get :enable-other-nicotine)}
         {:bind [:nicotine :substance-use-nicotine-currently]}
         {:bind [:nicotine :substance-use-nicotine-frequency]
-         :sdc/display-when (lisp/get-in [:nicotine :substance-use-nicotine-currently])}
+         :sdc/display-when (get-in [:nicotine :substance-use-nicotine-currently])}
         {:bind [:nicotine :substance-use-nicotine-document-use]}
         {:bind [:nicotine :substance-use-nicotine-20-pack]}
         {:bind [:nicotine :substance-use-nicotine-cessation-interest]}]}]}
@@ -291,27 +288,27 @@ Liquor: 1.5 oz."
     {:type aidbox.sdc/fields
      :children
      [{:type aidbox.sdc/fields
-       :sdc/display-when (lisp/get :enable-alcohol)
+       :sdc/display-when (get :enable-alcohol)
        :children
        [{:bind [:alcohol :substance-use-alcohol-types]}
         {:bind [:alcohol :substance-use-alcohol-frequency]}
         {:bind [:alcohol :substance-use-alcohol-frequency-qualifier]}
         {:bind [:alcohol :substance-use-alcohol-comments]}
         {:bind [:alcohol :dsm-enabled-alcohol]
-         :sdc/display-when (lisp/or
-                            (lisp/not (lisp/get-in [:alcohol :substance-use-alcohol-frequency :value]))
-                            (lisp/< (lisp/get-in [:alcohol :substance-use-alcohol-frequency :value]) 7))}
+         :sdc/display-when (or
+                            (not (get-in [:alcohol :substance-use-alcohol-frequency :value]))
+                            (< (get-in [:alcohol :substance-use-alcohol-frequency :value]) 7))}
         {:bind [:alcohol :dsm-enabled-alcohol-yes-default]
-         :sdc/display-when (lisp/>= (lisp/get-in [:alcohol :substance-use-alcohol-frequency :value]) 7)}
+         :sdc/display-when (>= (get-in [:alcohol :substance-use-alcohol-frequency :value]) 7)}
         {:type aidbox.sdc/fields
          :children
          [{:type aidbox.sdc/fields
-           :sdc/display-when (lisp/if
-                              (lisp/or
-                               (lisp/not (lisp/get-in [:alcohol :substance-use-alcohol-frequency :value]))
-                               (lisp/< (lisp/get-in [:alcohol :substance-use-alcohol-frequency :value]) 7))
-                               (lisp/get-in [:alcohol :dsm-enabled-alcohol])
-                               (lisp/get-in [:alcohol :dsm-enabled-alcohol-yes-default]))
+           :sdc/display-when (if
+                                 (or
+                                  (not (get-in [:alcohol :substance-use-alcohol-frequency :value]))
+                                  (< (get-in [:alcohol :substance-use-alcohol-frequency :value]) 7))
+                               (get-in [:alcohol :dsm-enabled-alcohol])
+                               (get-in [:alcohol :dsm-enabled-alcohol-yes-default]))
            :children [{:type aidbox.sdc/fields
                        :children
                        [{:type aidbox.sdc/label,
@@ -342,7 +339,7 @@ Liquor: 1.5 oz."
                        :label "Patient has Alcohol Use Disorder based on DSM-5 Criteria"}]}]}
 
         {:type aidbox.sdc/row
-         :sdc/display-when (lisp/get :enable-dsm-alcohol-help-questions)
+         :sdc/display-when (get :enable-dsm-alcohol-help-questions)
          :children
          [{:bind [:alcohol :substance-use-alcohol-help-before]}
           {:bind [:alcohol :substance-use-alcohol-help-now]}]}]}]}
@@ -352,19 +349,19 @@ Liquor: 1.5 oz."
     {:type aidbox.sdc/fields
      :children
      [{:type aidbox.sdc/col
-       :sdc/display-when (lisp/get-in [:drug :substance-use-drug])
+       :sdc/display-when (get-in [:drug :substance-use-drug])
        :children
        [{:bind [:drug :substance-use-drug-types]}
-        {:sdc/display-when (lisp/get :enable-other-drug)
+        {:sdc/display-when (get :enable-other-drug)
          :bind [:drug :substance-use-drug-other]}
-        {:sdc/display-when (lisp/not (lisp/= (lisp/get :possible-drug-dsm) true))
+        {:sdc/display-when (not (= (get :possible-drug-dsm) true))
          :bind [:drug :dsm-enabled-drug]}
-        {:sdc/display-when (lisp/= (lisp/get :possible-drug-dsm) true)
+        {:sdc/display-when (= (get :possible-drug-dsm) true)
          :bind [:drug :dsm-enabled-drug-yes-default]}
         {:type aidbox.sdc/fields
          :children
          [{:type aidbox.sdc/fields
-           :sdc/display-when (lisp/get-in [:enabled-dsm-drug])
+           :sdc/display-when (get-in [:enabled-dsm-drug])
            :children
            [{:type aidbox.sdc/label
              :label "**Over the past 12 months, has the patient had any of below:**"}
@@ -393,7 +390,7 @@ Liquor: 1.5 oz."
             {:bind [:dsm-drug-score]
              :label "Patient has Substance Use Disorder based on DSM-5 Criteria"}]}]}
         {:type aidbox.sdc/row
-         :sdc/display-when (lisp/get :enable-dsm-drug-help-questions)
+         :sdc/display-when (get :enable-dsm-drug-help-questions)
          :children
          [{:bind [:drug :substance-use-drug-help-before]}
           {:bind [:drug :substance-use-drug-help-now]}]}]}]}]}}
@@ -403,65 +400,65 @@ Liquor: 1.5 oz."
   :document SubstanceUseDocument
   :params {:encounter-id {:type zen/string}}
   :populate-engine aidbox.sdc/LispPopulate
-  :populate {:author    (lisp/get-in [:ctx :user])
-             :encounter {:id (lisp/get-in [:params :encounter-id]) :resourceType "Encounter"}
-             :patient   (lisp/sql {:select [:#> :resource [:subject]]
-                                   :from :Encounter
-                                   :where [:= :id (lisp/get-in [:params :encounter-id])]})
-             :nicotine (lisp/sql {:select [:#> :resource [:nicotine]]
-                                  :from :SDCDocument
-                                  :where [:and
-                                          [:= [:#>> :resource [:status]] "completed"]
-                                          [:= [:#>> :resource [:form :form]] "aidbox.forms.substance-use/SubstanceUseForm"]]
-                                  :order-by [:pg/desc :ts]
-                                  :limit 1})
-             :alcohol (lisp/sql {:select [:#> :resource [:alcohol]]
-                                 :from :SDCDocument
-                                 :where [:and
-                                         [:= [:#>> :resource [:status]] "completed"]
-                                         [:= [:#>> :resource [:form :form]] "aidbox.forms.substance-use/SubstanceUseForm"]]
-                                 :order-by [:pg/desc :ts]
-                                 :limit 1})}}
+  :populate {:author    (get-in [:ctx :user])
+             :encounter {:id (get-in [:params :encounter-id]) :resourceType "Encounter"}
+             :patient   (sql {:select [:#> :resource [:subject]]
+                              :from :Encounter
+                              :where [:= :id (get-in [:params :encounter-id])]})
+             :nicotine (sql {:select [:#> :resource [:nicotine]]
+                             :from :SDCDocument
+                             :where [:and
+                                     [:= [:#>> :resource [:status]] "completed"]
+                                     [:= [:#>> :resource [:form :form]] "aidbox.forms.substance-use/SubstanceUseForm"]]
+                             :order-by [:pg/desc :ts]
+                             :limit 1})
+             :alcohol (sql {:select [:#> :resource [:alcohol]]
+                            :from :SDCDocument
+                            :where [:and
+                                    [:= [:#>> :resource [:status]] "completed"]
+                                    [:= [:#>> :resource [:form :form]] "aidbox.forms.substance-use/SubstanceUseForm"]]
+                            :order-by [:pg/desc :ts]
+                            :limit 1})}}
 
  SubstanceUseFinalize
  {:zen/tags #{aidbox.sdc/Finalize zen/schema}
   :document SubstanceUseDocument
   :export-engine aidbox.sdc/LispExport
   :create [;; Extract tobacco smoking status
-           (lisp/if
-            (lisp/not (lisp/nil? (lisp/get-in [:nicotine :substance-use-nicotine])))
+           (if
+               (not (nil? (get-in [:nicotine :substance-use-nicotine])))
              {:resourceType "Observation"
               :status "final"
-              :subject (lisp/get :patient)
-              :encounter (lisp/get :encounter)
+              :subject (get :patient)
+              :encounter (get :encounter)
               :category [{:coding [{:system "http://terminology.hl7.org/CodeSystem/observation-category"
                                     :code "social-history"}]}]
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
+              :effective {:dateTime (date)}
+              :issued (date)
               :code {:text "Tobacco smoking status"
                      :coding [{:system "http://loinc.org" :display "Tobacco smoking status NHIS" :code "72166-2"}]}
               :value
               {:CodeableConcept
                {:coding
-                [(lisp/cond
-                   (lisp/not (lisp/get-in [:nicotine :substance-use-nicotine]))
+                [(cond
+                   (not (get-in [:nicotine :substance-use-nicotine]))
                    {:system "http://loinc.org" :code "LA18978-9" :display "Never smoker"}
 
-                   (lisp/not (lisp/get-in [:nicotine :substance-use-nicotine-currently]))
+                   (not (get-in [:nicotine :substance-use-nicotine-currently]))
                    {:system "http://loinc.org" :code "LA15920-4" :display "Former smoker"}
 
-                   :else (lisp/get-in [:nicotine :substance-use-nicotine-frequency]))]}}})
+                   :else (get-in [:nicotine :substance-use-nicotine-frequency]))]}}})
 
            ;; Extract Details of alcohol drinking behavior
-           (lisp/for [lisp/i (lisp/get-in [:alcohol :substance-use-alcohol-types])]
+           (for [i (get-in [:alcohol :substance-use-alcohol-types])]
              {:resourceType "Observation"
               :status "final"
-              :encounter (lisp/get :encounter)
-              :subject (lisp/get :patient)
+              :encounter (get :encounter)
+              :subject (get :patient)
               :category [{:coding [{:system "http://terminology.hl7.org/CodeSystem/observation-category"
                                     :code "social-history"}]}]
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
+              :effective {:dateTime (date)}
+              :issued (date)
               :code {:text "SHX Alcohol type"
                      :coding [{:system "http://snomed.info/sct"
                                :code "363905002"
@@ -470,27 +467,27 @@ Liquor: 1.5 oz."
               :value
               {:CodeableConcept
                {:coding
-                [lisp/i]}}})
+                [i]}}})
 
            ;; Extract Alcohol use disorder
-           (lisp/if
-            (lisp/not (lisp/nil? (lisp/get-in [:alcohol :substance-use-alcohol])))
+           (if
+               (not (nil? (get-in [:alcohol :substance-use-alcohol])))
              {:resourceType "Observation"
               :status "final"
-              :subject (lisp/get :patient)
-              :encounter (lisp/get :encounter)
+              :subject (get :patient)
+              :encounter (get :encounter)
               :category [{:coding [{:system "http://terminology.hl7.org/CodeSystem/observation-category"
                                     :code "social-history"}]}]
-              :effective {:dateTime (lisp/date)}
-              :issued (lisp/date)
+              :effective {:dateTime (date)}
+              :issued (date)
               :code {:coding [{:system "https://loinc.org"
                                :code "74043-1"
                                :display "Alcohol use disorder"}]}
 
               :value
               {:CodeableConcept
-               {:coding [(lisp/if (lisp/and (lisp/get :dsm-alcohol-score)
-                                            (lisp/>= (lisp/get :dsm-alcohol-score) 2))
+               {:coding [(if (and (get :dsm-alcohol-score)
+                                  (>= (get :dsm-alcohol-score) 2))
                            {:code "LA14495-8"
                             :display "True"
                             :system "https://loinc.org"}
@@ -498,26 +495,23 @@ Liquor: 1.5 oz."
                             :display "False"
                             :system "https://loinc.org"})]}}})
 
-;; Extract drug usage
-           (lisp/for [lisp/i (lisp/get-in [:drug :substance-use-drug-types])]
-             (lisp/when (lisp/not (lisp/= (lisp/get-in lisp/i [:code]) "drug-other"))
+           ;; Extract drug usage
+           (for [i (get-in [:drug :substance-use-drug-types])]
+             (when (not (= (get-in i [:code]) "drug-other"))
                {:resourceType "Observation"
                 :status "final"
-                :encounter (lisp/get :encounter)
-                :subject (lisp/get :patient)
+                :encounter (get :encounter)
+                :subject (get :patient)
                 :category [{:coding [{:system "http://terminology.hl7.org/CodeSystem/observation-category"
                                       :code "social-history"}]}]
-                :effective {:dateTime (lisp/date)}
-                :issued (lisp/date)
+                :effective {:dateTime (date)}
+                :issued (date)
                 :code {:text "Substance Abuse"
                        :coding [{:system "http://snomed.info/sct"
                                  :code "363908000"
                                  :display "Details of drug misuse behavior (observable entity)"}]}
 
-                :value
-                {:CodeableConcept
-                 {:coding
-                  [lisp/i]}}}))]}
+                :value {:CodeableConcept {:coding [i]}}}))]}
 
  SubstanceUseForm
  {:zen/tags #{aidbox.sdc/Form}
