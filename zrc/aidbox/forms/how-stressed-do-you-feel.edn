@@ -3,17 +3,17 @@
 
  HowStressedDoYouFeelDocument
  {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules},
-  :zen/desc "How stressed to you feel?",
+  :zen/desc "How stressed do you feel?",
   :type zen/map,
   :confirms #{aidbox.sdc/Document},
   :keys {:how-stressed {:text "Choose an answer that's closest to how you've been feeling within last half an hour?"
                         :confirms #{aidbox.sdc.fhir/coding}
                         :code [{:code "how-stressed"}]
-                        :enum [{:value {:code "1" :display "Not at all"}}
-                               {:value {:code "2" :display "Almost not stressed at all"}}
-                               {:value {:code "3" :display "Somewhat stressed"}}
-                               {:value {:code "4" :display "More stressed than not stressed"}}
-                               {:value {:code "5" :display "Feel stressed most of the time"}}]}}},
+                        :enum [{:value {:score 1 :code "1" :display "Not at all"}}
+                               {:value {:score 2 :code "2" :display "Almost not stressed at all"}}
+                               {:value {:score 3 :code "3" :display "Somewhat stressed"}}
+                               {:value {:score 4 :code "4" :display "More stressed than not stressed"}}
+                               {:value {:score 5 :code "5" :display "Feel stressed most of the time"}}]}}},
 
 
  HowStressedDoYouFeelLaunch
@@ -33,13 +33,18 @@
  {:zen/tags #{aidbox.sdc/Finalize zen/schema},
   :document HowStressedDoYouFeelDocument,
   :export-engine aidbox.sdc/LispExport,
-  :create [{:template aidbox.sdc/gen-observation-template
-            :params {:path [:how-stressed]}}]},
-
+  :create [{:template aidbox.sdc/gen-observation-template :params {:path [:how-stressed]}}
+           {:resourceType "Observation",
+            :subject (get :patient),
+            :encounter (get :encounter),
+            :status "final",
+            :issued (or (get-in [:meta :lastUpdated]) (date))
+            :code {:coding [{:code "how-stressed"}]}
+            :value {:integer (get-in [:how-stressed :score])}}]},
 
  HowStressedDoYouFeelForm
  {:zen/tags #{aidbox.sdc/Form},
-  :title "How stressed to you feel",
+  :title "How stressed do you feel",
   :document HowStressedDoYouFeelDocument,
   :launch HowStressedDoYouFeelLaunch,
   :finalize HowStressedDoYouFeelFinalize}}
