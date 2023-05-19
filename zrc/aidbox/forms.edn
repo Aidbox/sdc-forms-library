@@ -32,5 +32,6 @@
           aidbox.forms.immunizations
           aidbox.forms.missed-visit-survey
           aidbox.forms.screening-tests
+          aidbox.forms.how-stressed-do-you-feel
           }
  }
