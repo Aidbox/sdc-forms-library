@@ -101,7 +101,8 @@
                                         :type zen/boolean
                                         :sdc/default-value true},
          :final-score                  {:zen/desc "UI score display"
-                                        :type zen/number},
+                                        :type zen/number
+                                        :sdc-type aidbox.sdc/calculated}
          :sleeping-trouble             {:text "Trouble falling or staying asleep, or sleeping too much",
                                         :confirms #{aidbox.sdc.fhir/coding LL358-3}
                                         :code [{:code "44259-0" :system  "http://loinc.org"}]
