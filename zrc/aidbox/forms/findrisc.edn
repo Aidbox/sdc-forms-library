@@ -1,0 +1,192 @@
+{ns aidbox.forms.findrisc
+ import #{zenbox aidbox.sdc aidbox.sdc.fhir}
+
+ FINDRISCDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules}
+  :source {:system "http://loinc.org"
+           :code "97055-8"}
+  :zen/desc "Finnish diabetes risk score panel (FINDRISC)"
+  :type zen/map
+  :confirms #{aidbox.sdc/Document}
+  :sdc/rules {:final-score (+ (get-in [:age :score])
+                              (get-in [:bmi :score])
+                              (get-in [:waist-circumference :score])
+                              (get-in [:physical-activity :score])
+                              (get-in [:eat-fruits :score])
+                              (get-in [:regular-medication :score])
+                              (get-in [:high-glucose :score])
+                              (get-in [:family-diabetes :score]))}
+  :keys {:age {:confirms #{aidbox.sdc.fhir/coding}
+               :linkId "88860-2"
+               :code [{:code "88860-2" :display "Age" :system "http://loinc.org"}]
+               :text "Age"
+               :enum [{:value {:code "LA31987-3" :display "Under 45 years" :system "http://loinc.org" :score 0}}
+                      {:value {:code "LA31988-1" :display "45-54 years" :system "http://loinc.org" :score 2}}
+                      {:value {:code "LA31989-9" :display "55-64 years" :system "http://loinc.org" :score 3}}
+                      {:value {:code "LA31990-7" :display "Over 64 years" :system "http://loinc.org" :score 4}}]}
+         :bmi {:confirms #{aidbox.sdc.fhir/coding}
+               :linkId "97057-4"
+               :code [{:code "97057-4" :display "Body mass index" :system "http://loinc.org"}]
+               :text "BMI"
+               :enum [{:value {:code "LA31984-0"
+                               :display "Lower than 25 kg/m^2"
+                               :system "http://loinc.org"
+                               :score 0}}
+                      {:value {:code "LA31985-7"
+                               :display "25-30 kg/m^2"
+                               :system "http://loinc.org"
+                               :score 1}}
+                      {:value {:code "LA31986-5"
+                               :display "Higher than 30 kg/m^2"
+                               :system "http://loinc.org"
+                               :score 3}}]}
+         :waist-circumference {:confirms #{aidbox.sdc.fhir/coding}
+                               :code [{:code "97058-2",
+                                       :display "Waist circumference measured below the ribs (usually at the level of the navel)",
+                                       :system "http://loinc.org"}]
+                               :text "Waist circumference measured below the ribs (usually at the level of the navel)"
+                               :enum [{:value {:code "LA31920-4",
+                                               :display "Men: less than 94 cm",
+                                               :system "http://loinc.org",
+                                               :score 0}}
+                                      {:value {:code "LA31921-2",
+                                               :display "Men: 94-102 cm",
+                                               :system "http://loinc.org",
+                                               :score 3}}
+                                      {:value {:code "LA31922-0",
+                                               :display "Men: more than 102 cm",
+                                               :system "http://loinc.org",
+                                               :score 4}}
+                                      {:value {:code "LA31923-8",
+                                               :display "Women: less than 80 cm",
+                                               :system "http://loinc.org",
+                                               :score 0}}
+                                      {:value {:code "LA31924-6",
+                                               :display "Women: 80-88 cm",
+                                               :system "http://loinc.org",
+                                               :score 3}}
+                                      {:value {:code "LA31925-3",
+                                               :display "Women: more than 88 cm",
+                                               :system "http://loinc.org",
+                                               :score 4}}]}
+         :physical-activity {:confirms #{aidbox.sdc.fhir/coding}
+                             :linkId "97059-0"
+                             :code [{:code "97059-0",
+                                     :display "Do you usually have daily at least 30 min of physical activity at work and/or during leisure time (including normal daily activity)?",
+                                     :system "http://loinc.org"}]
+                             :text "Do you usually have daily at least 30 min of physical activity at work and/or during leisure time (including normal daily activity)?"
+                             :enum [{:value {:code "LA32-8"
+                                             :display "No"
+                                             :system "http://loinc.org"
+                                             :score 0}}
+                                    {:value {:code "LA33-6"
+                                             :display "Yes"
+                                             :system "http://loinc.org"
+                                             :score 2}}]}
+         :eat-fruits {:confirms #{aidbox.sdc.fhir/coding}
+                      :linkId "97060-8"
+                      :code [{:code "97060-8",
+                              :display "How often do you eat vegetables, fruit, or berries",
+                              :system "http://loinc.org"}]
+                      :text "How often do you eat vegetables, fruit, or berries"
+                      :enum [{:value {:code "LA14799-3",
+                                      :display "Every day",
+                                      :system "http://loinc.org"
+                                      :score 0}}
+                             {:value {:code "LA31926-1",
+                                      :display "Not every day",
+                                      :system "http://loinc.org"
+                                      :score 1}}]}
+         :regular-medication {:confirms #{aidbox.sdc.fhir/coding}
+                              :linkId "58298-1"
+                              :code [{:code "58298-1",
+                                      :display "Have you ever taken anti-hypertensive medication regularly?",
+                                      :system "http://loinc.org"}]
+                              :text "Have you ever taken anti-hypertensive medication regularly?"
+                              :enum [{:value {:code "LA32-8",
+                                              :display "No",
+                                              :system "http://loinc.org"
+                                              :score 0}}
+                                     {:value {:code "LA33-6",
+                                              :display "Yes",
+                                              :system "http://loinc.org"
+                                              :score 2}}]}
+         :high-glucose {:confirms #{aidbox.sdc.fhir/coding}
+                        :linkId "97062-4"
+                        :code [{:code "97062-4",
+                                :display "Have you ever been found to have high blood glucose (e.g. in a health examination, during an illness, during pregnancy)?",
+                                :system "http://loinc.org"}]
+                        :text "Have you ever been found to have high blood glucose (e.g. in a health examination, during an illness, during pregnancy)?"
+                        :enum [{:value {:code "LA32-8",
+                                        :display "No",
+                                        :system "http://loinc.org"
+                                        :score 0}}
+                               {:value {:code "LA33-6",
+                                        :display "Yes",
+                                        :system "http://loinc.org"
+                                        :score 5}}]}
+         :family-diabetes {:confirms #{aidbox.sdc.fhir/coding}
+                           :linkId "97063-2"
+                           :code [{:code "97063-2",
+                                   :display "Have any of the members of your immediate family or other relatives been diagnosed with diabetes (type 1 or type 2)?",
+                                   :system "http://loinc.org"}]
+                           :text "Have any of the members of your immediate family or other relatives been diagnosed with diabetes (type 1 or type 2)?"
+                           :enum [{:value {:code "LA32-8",
+                                           :display "No",
+                                           :system "http://loinc.org"
+                                           :score 0}}
+                                  {:value {:code "LA31927-9",
+                                           :display "Yes: grandparent, aunt, uncle, or first cousin (but not own parent, brother, sister or child)",
+                                           :system "http://loinc.org"
+                                           :score 3}}
+                                  {:value {:code "LA31928-7",
+                                           :display "Yes: parent, brother, sister, or own child",
+                                           :system "http://loinc.org"
+                                           :score 5}}]}
+         :final-score {:type zen/number
+                       :sdc-type aidbox.sdc/calculated
+                       :text "Total risk score"
+                       :linkId "97064-0"
+                       :code [{:code "97064-0",
+                               :display "Total risk score FINDRISC",
+                               :system "http://loinc.org"}]
+
+
+                       :help "The FINDRISC Total Risk Score predicts the risk of developing type 2 diabetes within 10 years.
+
+
+Risk levels are categorized as follows:
+
+
+* Score lower than 7, **Low**: estimated 1 in 100 will develop disease;
+* Score of 7-11, **Slightly elevated**: estimated 1 in 25 will develop disease;
+* Score of 12-14, **Moderate**: estimated 1 in 6 will develop disease;
+* Score of 15-20, **High**: estimated 1 in 3 will develop disease;
+* Scores higher than 20, **Very high:** estimated 1 in 2 will develop disease."}}}
+
+ FINDRISCLayout
+ {:zen/tags #{aidbox.sdc/Layout}
+  :document FINDRISCDocument
+  :engine aidbox.sdc/Hiccup
+  :layout {:type aidbox.sdc/col
+           :children [{:type aidbox.sdc/row
+                       :children [{:bind [:age]
+                                   :hide-score true}
+                                  {:bind [:bmi]
+                                   :hide-score true}]}
+                      {:bind [:waist-circumference] :hide-score true}
+                      {:bind [:physical-activity] :hide-score true}
+                      {:bind [:eat-fruits] :hide-score true}
+                      {:bind [:regular-medication] :hide-score true}
+                      {:bind [:family-diabetes] :hide-score true}
+                      {:bind [:final-score]
+                       :sdc/display-when (or (= (get :status) "completed")
+                                             (= (get :status) "amended"))}]}}
+
+ FINDRISCForm
+ {:zen/tags #{aidbox.sdc/Form}
+  :title "Finnish diabetes risk score panel (FINDRISC)"
+  :document FINDRISCDocument
+  :layout FINDRISCLayout}
+
+ }
