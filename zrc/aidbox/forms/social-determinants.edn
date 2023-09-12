@@ -23,7 +23,7 @@
                  :maintenance-issues    {:text "Issues with maintenance/repairs?" :type zen/boolean}
                  :cleanliness-issues    {:text "Issues with cleanliness/hazardous living environment? (e.g. excessive objects/furniture, dirt, insects)"
                                          :type zen/boolean}
-                 :comment-required      {:text "Comment" :type zen/boolean}
+                 :comment-required      {:text "Would you like to leave a comment?" :type zen/boolean}
                  :comment               {:text "Comments" :type zen/string}}}
 
 
@@ -32,7 +32,7 @@
           :keys {:access-issues              {:text "Issues with access to food?" :type zen/boolean}
                  :healty-hood-access-issues  {:text "Issues with access to healthy food options?" :type zen/boolean}
                  :healty-food-choices-issues {:text "Issues with healthy food choices?" :type zen/boolean}
-                 :comment-required           {:text "Comment" :type zen/boolean}
+                 :comment-required           {:text "Would you like to leave a comment?" :type zen/boolean}
                  :comment                    {:text "Comments" :type zen/string}}}
 
          :transportation
@@ -40,14 +40,14 @@
           :keys {:access-issues                  {:text "Issues with access to transportation?" :type zen/boolean}
                  :driving-issues                 {:text "Issues driving self?" :type zen/boolean}
                  :access-public-transport-issues {:text "Issues accessing public transportation?" :type zen/boolean}
-                 :comment-required               {:text "Comment" :type zen/boolean}
+                 :comment-required               {:text "Would you like to leave a comment?" :type zen/boolean}
                  :comment                        {:text "Comments" :type zen/string}}}
 
          :financial
          {:type zen/map
           :keys {:paying-bills-issues  {:text "Issues paying bills each month?" :type zen/boolean}
                  :making-budget-issues {:text "Issues understanding/making a budget?" :type zen/boolean}
-                 :comment-required     {:text "Comment" :type zen/boolean}
+                 :comment-required     {:text "Would you like to leave a comment?" :type zen/boolean}
                  :comment              {:text "Comments" :type zen/string}}}
 
          :taking-medications
@@ -56,7 +56,7 @@
                  :remembering-trouble                 {:text "Trouble remembering to take or fill medications?" :type zen/boolean}
                  :organizing-trouble                  {:text "Trouble organizing medications?" :type zen/boolean}
                  :importance-understanding-difficulty {:text "Difficulty understanding the importance of medications?" :type zen/boolean}
-                 :comment-required                    {:text "Comment" :type zen/boolean}
+                 :comment-required                    {:text "Would you like to leave a comment?" :type zen/boolean}
                  :comment                             {:text "Comments" :type zen/string}}}
 
          :social-support
@@ -65,14 +65,14 @@
                  :caregiver-burnout-issues    {:text "Issues with caregiver/family burnout?" :type zen/boolean}
                  :social-isolation            {:text "Any social isolation or loneliness?" :type zen/boolean}
                  :violence-or-abuse           {:text "Any concerns with safety, neglect, violence, or abuse?" :type zen/boolean}
-                 :comment-required            {:text "Comment" :type zen/boolean}
+                 :comment-required            {:text "Would you like to leave a comment?" :type zen/boolean}
                  :comment                     {:text "Comments" :type zen/string}}}
 
          :health-literacy
          {:type zen/map
           :keys {:understanding-issues    {:text "Issues understanding health information?" :type zen/boolean}
                  :language-barrier-issues {:text "Issues with language barriers?" :type zen/boolean}
-                 :comment-required        {:text "Comment" :type zen/boolean}
+                 :comment-required        {:text "Would you like to leave a comment?" :type zen/boolean}
                  :comment                 {:text "Comments" :type zen/string}}}}}
 
  SocialDeterminantsLayout
@@ -85,9 +85,11 @@
    [{:bind [:social-determinants]}
 
     {:type aidbox.sdc/fields
-     :children [{:type aidbox.sdc/row
-                 :children [{:bind [:social-determinants :housing]}
-                            {:bind [:housing :comment-required]}]}
+     :children [{:type aidbox.sdc/col
+                 :children [{:type aidbox.sdc/switch
+:bind [:social-determinants :housing]}
+                            {:bind [:housing :comment-required]
+                             :sdc/display-when (= (get-in [:social-determinants :housing]) false)}]}
                 {:type aidbox.sdc/fields
                  :sdc/display-when (get-in [:social-determinants :housing])
                  :children [{:type aidbox.sdc/row :children [{:bind [:housing :paying-issues]}]}
@@ -100,9 +102,11 @@
                  :children [{:bind [:housing :comment]}]}]}
 
     {:type aidbox.sdc/fields
-     :children [{:type aidbox.sdc/row
-                 :children [{:bind [:social-determinants :food]}
-                            {:bind [:food :comment-required]}]}
+     :children [{:type aidbox.sdc/col
+                 :children [{:bind [:social-determinants :food]
+                             :type aidbox.sdc/switch}
+                            {:bind [:food :comment-required]
+                             :sdc/display-when (= (get-in [:social-determinants :food]) false)}]}
                 {:type aidbox.sdc/fields
                  :sdc/display-when (get-in [:social-determinants :food])
                  :children [{:type aidbox.sdc/row :children [{:bind [:food :access-issues]}]}
@@ -114,9 +118,11 @@
                  :children [{:bind [:food :comment]}]}]}
 
     {:type aidbox.sdc/fields
-     :children [{:type aidbox.sdc/row
-                 :children [{:bind [:social-determinants :transportation]}
-                            {:bind [:transportation :comment-required]}]}
+     :children [{:type aidbox.sdc/col
+                 :children [{:bind [:social-determinants :transportation]
+                             :type aidbox.sdc/switch}
+                            {:bind [:transportation :comment-required]
+                             :sdc/display-when (= (get-in [:social-determinants :transportation]) false)}]}
                 {:type aidbox.sdc/fields
                  :sdc/display-when (get-in [:social-determinants :transportation])
                  :children [{:type aidbox.sdc/row :children [{:bind [:transportation :access-issues]}]}
@@ -128,9 +134,11 @@
                  :children [{:bind [:transportation :comment]}]}]}
 
     {:type aidbox.sdc/fields
-     :children [{:type aidbox.sdc/row
-                 :children [{:bind [:social-determinants :financial]}
-                            {:bind [:financial :comment-required]}]}
+     :children [{:type aidbox.sdc/col
+                 :children [{:bind [:social-determinants :financial]
+                             :type aidbox.sdc/switch}
+                            {:bind [:financial :comment-required]
+                             :sdc/display-when (= (get-in [:social-determinants :financial]) false)}]}
                 {:type aidbox.sdc/fields
                  :sdc/display-when (get-in [:social-determinants :financial])
                  :children [{:type aidbox.sdc/row :children [{:bind [:financial :paying-bills-issues]}]}
@@ -141,9 +149,11 @@
                  :children [{:bind [:financial :comment]}]}]}
 
     {:type aidbox.sdc/fields
-     :children [{:type aidbox.sdc/row
-                 :children [{:bind [:social-determinants :taking-medications]}
-                            {:bind [:taking-medications :comment-required]}]}
+     :children [{:type aidbox.sdc/col
+                 :children [{:bind [:social-determinants :taking-medications]
+                             :type aidbox.sdc/switch}
+                            {:bind [:taking-medications :comment-required]
+                             :sdc/display-when (= (get-in [:social-determinants :taking-medications]) false)}]}
                 {:type aidbox.sdc/fields
                  :sdc/display-when (get-in [:social-determinants :taking-medications])
                  :children [{:type aidbox.sdc/row :children [{:bind [:taking-medications :paying-issues]}]}
@@ -156,9 +166,11 @@
                  :children [{:bind [:taking-medications :comment]}]}]}
 
     {:type aidbox.sdc/fields
-     :children [{:type aidbox.sdc/row
-                 :children [{:bind [:social-determinants :social-support]}
-                            {:bind [:social-support :comment-required]}]}
+     :children [{:type aidbox.sdc/col
+                 :children [{:bind [:social-determinants :social-support]
+                             :type aidbox.sdc/switch}
+                            {:bind [:social-support :comment-required]
+                             :sdc/display-when (= (get-in [:social-determinants :social-support]) false)}]}
                 {:type aidbox.sdc/fields
                  :sdc/display-when (get-in [:social-determinants :social-support])
                  :children [{:type aidbox.sdc/row :children [{:bind [:social-support :insufficient-family-support]}]}
@@ -172,9 +184,11 @@
 
     {:type aidbox.sdc/fields
      :children
-     [{:type aidbox.sdc/row
-       :children [{:bind [:social-determinants :health-literacy]}
-                  {:bind [:health-literacy :comment-required]}]}
+     [{:type aidbox.sdc/col
+       :children [{:bind [:social-determinants :health-literacy]
+                   :type aidbox.sdc/switch}
+                  {:bind [:health-literacy :comment-required]
+                   :sdc/display-when (= (get-in [:social-determinants :health-literacy]) false)}]}
       {:type aidbox.sdc/fields
        :sdc/display-when (get-in [:social-determinants :health-literacy])
        :children [{:type aidbox.sdc/row :children [{:bind [:health-literacy :understanding-issues]}]}
