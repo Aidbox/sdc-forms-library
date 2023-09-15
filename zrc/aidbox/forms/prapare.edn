@@ -1,0 +1,718 @@
+{ns aidbox.forms.prapare,
+ import #{aidbox.sdc zenbox aidbox.sdc.fhir},
+
+ PRAPAREDocument
+ {:zen/tags #{zen/schema aidbox.sdc/doc aidbox.sdc/rules},
+  :zen/desc
+  "Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE]",
+  :type zen/map,
+  :confirms #{aidbox.sdc/Document},
+  :keys
+  {:personal-characteristics
+   {:type zen/map,
+    :keys
+    {:are-you-hispanic-or-latino
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA33-6", :display "Yes", :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93043-8/56051-6",
+      :code [{:code "56051-6", :system "http://loinc.org"}],
+      :text "Are you Hispanic or Latino?"},
+     :which-races-are-you
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA6156-9",
+         :display "Asian",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA14045-1",
+         :display "Native Hawaiian",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30187-1",
+         :display "Pacific Islander",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA14042-8",
+         :display "Black/African American",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA4457-3",
+         :display "White",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA4-4",
+         :display "American Indian/Alaskan Native",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA46-8", :display "Other", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93043-8/32624-9",
+      :code [{:code "32624-9", :system "http://loinc.org"}],
+      :text "Which race(s) are you?"},
+     :at-any-point-in-the-past-2-years-has-season-or-migrant-farm-work-been-your-or-your-familys-main-source-of-income
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA33-6", :display "Yes", :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93043-8/93035-4",
+      :code [{:code "93035-4", :system "http://loinc.org"}],
+      :text
+      "At any point in the past 2 years, has season or migrant farm work been your or your family's main source of income?"},
+     :have-you-been-discharged-from-the-armed-forces-of-the-united-states
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA33-6", :display "Yes", :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93043-8/93034-7",
+      :code [{:code "93034-7", :system "http://loinc.org"}],
+      :text
+      "Have you been discharged from the armed forces of the United States?"},
+     :what-language-are-you-most-comfortable-speaking
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA43-5",
+         :display "English",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30188-9",
+         :display "Language other than English",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93043-8/54899-0",
+      :code [{:code "54899-0", :system "http://loinc.org"}],
+      :text "What language are you most comfortable speaking?"}},
+    :linkId "/93043-8",
+    :code [{:code "93043-8", :system "http://loinc.org"}],
+    :text "Personal Characteristics"},
+   :family--home
+   {:type zen/map,
+    :keys
+    {:how-many-family-members-including-yourself-do-you-currently-live-with
+     {:type zen/number,
+      :sdc-type aidbox.sdc/decimal,
+      :linkId "/93042-0/63512-8",
+      :code [{:code "63512-8", :system "http://loinc.org"}],
+      :text
+      "How many family members, including yourself, do you currently live with?"},
+     :what-is-your-housing-situation-today
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA30189-7",
+         :display "I have housing",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30190-5",
+         :display
+         "I do not have housing (staying with others, in a hotel, in a shelter, living outside on the street, on a beach, in a car, or in a park)",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93042-0/71802-3",
+      :code [{:code "71802-3", :system "http://loinc.org"}],
+      :text "What is your housing situation today?"},
+     :are-you-worried-about-losing-your-housing
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA33-6", :display "Yes", :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93042-0/93033-9",
+      :code [{:code "93033-9", :system "http://loinc.org"}],
+      :text "Are you worried about losing your housing?"},
+     :what-address-do-you-live-at
+     {:type zen/string,
+      :linkId "/93042-0/56799-0",
+      :code [{:code "56799-0", :system "http://loinc.org"}],
+      :text "What address do you live at?"}},
+    :linkId "/93042-0",
+    :code [{:code "93042-0", :system "http://loinc.org"}],
+    :text "Family & Home"},
+   :money--resources
+   {:type zen/map,
+    :keys
+    {:what-is-the-highest-level-of-school-that-you-have-finished
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA30191-3",
+         :display "Less than high school degree",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30192-1",
+         :display "High school diploma or GED",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30193-9",
+         :display "More than high school",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93041-2/82589-3",
+      :code [{:code "82589-3", :system "http://loinc.org"}],
+      :text
+      "What is the highest level of school that you have finished?"},
+     :what-is-your-current-work-situation
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA17956-6",
+         :display "Unemployed",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30138-4",
+         :display "Part-time or temporary work",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30136-8",
+         :display "Full-time work",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30137-6",
+         :display
+         "Otherwise unemployed but not seeking work (ex: student, retired, disabled, unpaid primary care giver)",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93041-2/67875-5",
+      :code [{:code "67875-5", :system "http://loinc.org"}],
+      :text "What is your current work situation?"},
+     :what-is-your-main-insurance
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA30194-7",
+         :display "None/uninsured",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA17849-3",
+         :display "Medicaid",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30195-4",
+         :display "CHIP Medicaid",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA15652-3",
+         :display "Medicare",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30196-2",
+         :display "Other public insurance (not CHIP)",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30197-0",
+         :display "Other public insurance (CHIP)",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA6350-8",
+         :display "Private insurance",
+         :system "http://loinc.org"}}],
+      :linkId "/93041-2/76437-3",
+      :code [{:code "76437-3", :system "http://loinc.org"}],
+      :text "What is your main insurance?"},
+     :during-the-past-year-what-was-the-total-combined-income-for-you-and-the-family-members-you-live-with-this-information-will-help-us-determine-if-you-are-eligible-for-any-benefits
+     {:type zen/number,
+      :sdc-type aidbox.sdc/decimal,
+      :linkId "/93041-2/63586-2",
+      :code [{:code "63586-2", :system "http://loinc.org"}],
+      :text
+      "During the past year, what was the total combined income for you and the family members you live with? This information will help us determine if you are eligible for any benefits."},
+     :in-the-past-year-have-you-or-any-family-members-you-live-with-been-unable-to-get-any-of-the-following-when-it-was-really-needed
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA30125-1",
+         :display "Food",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30126-9",
+         :display "Clothing",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30124-4",
+         :display "Utilities",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30127-7",
+         :display "Child care",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30128-5",
+         :display
+         "Medicine or Any Health Care (Medical, Dental, Mental Health, Vision)",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30129-3",
+         :display "Phone",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA46-8", :display "Other", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93041-2/93031-3",
+      :code [{:code "93031-3", :system "http://loinc.org"}],
+      :text
+      "In the past year, have you or any family members you live with been unable to get any of the following when it was really needed?"},
+     :has-lack-of-transportation-kept-you-from-medical-appointments-meetings-work-or-from-getting-things-needed-for-daily-living
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA30133-5",
+         :display
+         "Yes, it has kept me from medical appointments or from getting my medications",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30134-3",
+         :display
+         "Yes, it has kept me from non-medical meetings, appointments, work, or from getting things that I need",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93041-2/93030-5",
+      :code [{:code "93030-5", :system "http://loinc.org"}],
+      :text
+      "Has lack of transportation kept you from medical appointments, meetings, work, or from getting things needed for daily living"}},
+    :linkId "/93041-2",
+    :code [{:code "93041-2", :system "http://loinc.org"}],
+    :text "Money & Resources"},
+   :social--emotional-health
+   {:type zen/map,
+    :keys
+    {:how-often-do-you-see-or-talk-to-people-that-you-care-about-and-feel-close-to-for-example-talking-to-friends-on-the-phone-visiting-friends-or-family-going-to-church-or-club-meetings
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA27722-0",
+         :display "Less than once a week",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30130-1",
+         :display "1 or 2 times a week",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30131-9",
+         :display "3 to 5 times a week",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30132-7",
+         :display "5 or more times a week",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93040-4/93029-7",
+      :code [{:code "93029-7", :system "http://loinc.org"}],
+      :text
+      "How often do you see or talk to people that you care about and feel close to (For example: talking to friends on the phone, visiting friends or family, going to church or club meetings)?"},
+     :stress-is-when-someone-feels-tense-nervous-anxious-or-cant-sleep-at-night-because-their-mind-is-troubled-_-how-stressed-are-you
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA6568-5",
+         :display "Not at all",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA13863-8",
+         :display "A little bit",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA13909-9",
+         :display "Somewhat",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA13902-4",
+         :display "Quite a bit",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA13914-9",
+         :display "Very much",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93040-4/93038-8",
+      :code [{:code "93038-8", :system "http://loinc.org"}],
+      :text
+      "Stress is when someone feels tense, nervous, anxious or can't sleep at night because their mind is troubled - how stressed are you?"}},
+    :linkId "/93040-4",
+    :code [{:code "93040-4", :system "http://loinc.org"}],
+    :text "Social & Emotional Health"},
+   :optional-additional-questions
+   {:type zen/map,
+    :keys
+    {:in-the-past-year-have-you-spent-more-than-2-nights-in-a-row-in-a-jail-prison-detention-center-or-juvenile-correctional-facility
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA33-6", :display "Yes", :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93039-6/93028-9",
+      :code [{:code "93028-9", :system "http://loinc.org"}],
+      :text
+      "In the past year, have you spent more than 2 nights in a row in a jail, prison, detention center, or juvenile correctional facility?"},
+     :are-you-a-refugee
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA33-6", :display "Yes", :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93039-6/93027-1",
+      :code [{:code "93027-1", :system "http://loinc.org"}],
+      :text "Are you a refugee?"},
+     :do-you-feel-physically-and-emotionally-safe-where-you-currently-live
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum
+      [{:value
+        {:code "LA33-6", :display "Yes", :system "http://loinc.org"}}
+       {:value
+        {:code "LA32-8", :display "No", :system "http://loinc.org"}}
+       {:value
+        {:code "LA14072-5",
+         :display "Unsure",
+         :system "http://loinc.org"}}
+       {:value
+        {:code "LA30122-8",
+         :display "I choose not to answer this question",
+         :system "http://loinc.org"}}],
+      :linkId "/93039-6/93026-3",
+      :code [{:code "93026-3", :system "http://loinc.org"}],
+      :text
+      "Do you feel physically and emotionally safe where you currently live?"},
+     :in-the-past-year-have-you-been-afraid-of-your-partner-or-ex_partner
+     {:sdc-type aidbox.sdc/choice,
+      :type zen/map,
+      :confirms #{aidbox.sdc.fhir/coding},
+      :enum [{:value {:code "LA33-6", :value 1 :display "Yes", :system "http://loinc.org"}}
+             {:value {:code "LA32-8", :value 0 :display "No", :system "http://loinc.org"}}],
+      :linkId "/93039-6/76501-6",
+      :code [{:code "76501-6", :system "http://loinc.org"}],
+      :text
+      "In the past year, have you been afraid of your partner or ex-partner?"}},
+    :linkId "/93039-6",
+    :code [{:code "93039-6", :system "http://loinc.org"}],
+    :text "Optional Additional Questions"}},
+  :source {:code "93025-5", :system "http://loinc.org"}},
+
+ PRAPARELayout
+ {:zen/tags #{aidbox.sdc/Layout aidbox.sdc/rules},
+  :document PRAPAREDocument,
+  :engine aidbox.sdc/Hiccup,
+  :layout
+  {:type aidbox.sdc/col,
+   :children
+   [{:type aidbox.sdc/subform,
+     :bind [:personal-characteristics],
+     :form-layout
+     {:type aidbox.sdc/fields,
+      :children
+      [{:bind [:are-you-hispanic-or-latino]}
+       {:bind [:which-races-are-you]}
+       {:bind
+        [:at-any-point-in-the-past-2-years-has-season-or-migrant-farm-work-been-your-or-your-familys-main-source-of-income]}
+       {:bind
+        [:have-you-been-discharged-from-the-armed-forces-of-the-united-states]}
+       {:bind [:what-language-are-you-most-comfortable-speaking]}]}}
+    {:type aidbox.sdc/subform,
+     :bind [:family--home],
+     :form-layout
+     {:type aidbox.sdc/fields,
+      :children
+      [{:bind
+        [:how-many-family-members-including-yourself-do-you-currently-live-with]}
+       {:bind [:what-is-your-housing-situation-today]}
+       {:bind [:are-you-worried-about-losing-your-housing]}
+       {:bind [:what-address-do-you-live-at]}]}}
+    {:type aidbox.sdc/subform,
+     :bind [:money--resources],
+     :form-layout
+     {:type aidbox.sdc/fields,
+      :children
+      [{:bind
+        [:what-is-the-highest-level-of-school-that-you-have-finished]}
+       {:bind [:what-is-your-current-work-situation]}
+       {:bind [:what-is-your-main-insurance]}
+       {:bind
+        [:during-the-past-year-what-was-the-total-combined-income-for-you-and-the-family-members-you-live-with-this-information-will-help-us-determine-if-you-are-eligible-for-any-benefits]}
+       {:bind
+        [:in-the-past-year-have-you-or-any-family-members-you-live-with-been-unable-to-get-any-of-the-following-when-it-was-really-needed]}
+       {:bind
+        [:has-lack-of-transportation-kept-you-from-medical-appointments-meetings-work-or-from-getting-things-needed-for-daily-living]}]}}
+    {:type aidbox.sdc/subform,
+     :bind [:social--emotional-health],
+     :form-layout
+     {:type aidbox.sdc/fields,
+      :children
+      [{:bind
+        [:how-often-do-you-see-or-talk-to-people-that-you-care-about-and-feel-close-to-for-example-talking-to-friends-on-the-phone-visiting-friends-or-family-going-to-church-or-club-meetings]}
+       {:bind
+        [:stress-is-when-someone-feels-tense-nervous-anxious-or-cant-sleep-at-night-because-their-mind-is-troubled-_-how-stressed-are-you]}]}}
+    {:type aidbox.sdc/subform,
+     :bind [:optional-additional-questions],
+     :form-layout
+     {:type aidbox.sdc/fields,
+      :children
+      [{:bind [:in-the-past-year-have-you-spent-more-than-2-nights-in-a-row-in-a-jail-prison-detention-center-or-juvenile-correctional-facility]}
+       {:bind [:are-you-a-refugee]}
+       {:bind
+        [:do-you-feel-physically-and-emotionally-safe-where-you-currently-live]}
+       {:bind
+        [:in-the-past-year-have-you-been-afraid-of-your-partner-or-ex_partner]}]}}]}},
+
+ PRAPARELaunch
+ {:zen/tags #{aidbox.sdc/Launch},
+  :document PRAPAREDocument,
+  :params {:encounter-id {:type zen/string}},
+  :populate-engine aidbox.sdc/LispPopulate,
+  :populate
+  {:author (get-in [:ctx :user]),
+   :encounter
+   {:id (get-in [:params :encounter-id]), :resourceType "Encounter"},
+   :patient (sql {:select [:#> :resource [:subject]],
+                  :from :Encounter,
+                  :where [:= :id (get-in [:params :encounter-id])]})}},
+
+ PRAPAREFinalizeConstraints
+ {:type zen/map,
+  :keys
+  {:personal-characteristics
+   {:type zen/map,
+    :keys
+    {:are-you-hispanic-or-latino {:type zen/map},
+     :which-races-are-you {:type zen/map},
+     :at-any-point-in-the-past-2-years-has-season-or-migrant-farm-work-been-your-or-your-familys-main-source-of-income
+     {:type zen/map},
+     :have-you-been-discharged-from-the-armed-forces-of-the-united-states
+     {:type zen/map},
+     :what-language-are-you-most-comfortable-speaking
+     {:type zen/map}}},
+   :family--home
+   {:type zen/map,
+    :keys
+    {:what-is-your-housing-situation-today {:type zen/map},
+     :are-you-worried-about-losing-your-housing {:type zen/map}}},
+   :money--resources
+   {:type zen/map,
+    :keys
+    {:what-is-the-highest-level-of-school-that-you-have-finished
+     {:type zen/map},
+     :what-is-your-current-work-situation {:type zen/map},
+     :what-is-your-main-insurance {:type zen/map},
+     :in-the-past-year-have-you-or-any-family-members-you-live-with-been-unable-to-get-any-of-the-following-when-it-was-really-needed
+     {:type zen/map},
+     :has-lack-of-transportation-kept-you-from-medical-appointments-meetings-work-or-from-getting-things-needed-for-daily-living
+     {:type zen/map}}},
+   :social--emotional-health
+   {:type zen/map,
+    :keys
+    {:how-often-do-you-see-or-talk-to-people-that-you-care-about-and-feel-close-to-for-example-talking-to-friends-on-the-phone-visiting-friends-or-family-going-to-church-or-club-meetings
+     {:type zen/map},
+     :stress-is-when-someone-feels-tense-nervous-anxious-or-cant-sleep-at-night-because-their-mind-is-troubled-_-how-stressed-are-you
+     {:type zen/map}}},
+   :optional-additional-questions
+   {:type zen/map,
+    :keys
+    {:in-the-past-year-have-you-spent-more-than-2-nights-in-a-row-in-a-jail-prison-detention-center-or-juvenile-correctional-facility
+     {:type zen/map},
+     :are-you-a-refugee {:type zen/map},
+     :do-you-feel-physically-and-emotionally-safe-where-you-currently-live
+     {:type zen/map},
+     :in-the-past-year-have-you-been-afraid-of-your-partner-or-ex_partner
+     {:type zen/map}}}},
+  :zen/tags #{zen/schema}},
+
+ PRAPAREFinalize
+ {:zen/tags #{aidbox.sdc/Finalize zen/schema},
+  :document PRAPAREDocument,
+  :profile PRAPAREFinalizeConstraints,
+  :export-engine aidbox.sdc/LispExport,
+  :create
+  [{:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path [:personal-characteristics :are-you-hispanic-or-latino]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params {:path [:personal-characteristics :which-races-are-you]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:personal-characteristics
+      :at-any-point-in-the-past-2-years-has-season-or-migrant-farm-work-been-your-or-your-familys-main-source-of-income]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:personal-characteristics
+      :have-you-been-discharged-from-the-armed-forces-of-the-united-states]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:personal-characteristics
+      :what-language-are-you-most-comfortable-speaking]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:family--home
+      :how-many-family-members-including-yourself-do-you-currently-live-with]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path [:family--home :what-is-your-housing-situation-today]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path [:family--home :are-you-worried-about-losing-your-housing]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params {:path [:family--home :what-address-do-you-live-at]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:money--resources
+      :what-is-the-highest-level-of-school-that-you-have-finished]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path [:money--resources :what-is-your-current-work-situation]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params {:path [:money--resources :what-is-your-main-insurance]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:money--resources
+      :during-the-past-year-what-was-the-total-combined-income-for-you-and-the-family-members-you-live-with-this-information-will-help-us-determine-if-you-are-eligible-for-any-benefits]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:money--resources
+      :in-the-past-year-have-you-or-any-family-members-you-live-with-been-unable-to-get-any-of-the-following-when-it-was-really-needed]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:money--resources
+      :has-lack-of-transportation-kept-you-from-medical-appointments-meetings-work-or-from-getting-things-needed-for-daily-living]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:social--emotional-health
+      :how-often-do-you-see-or-talk-to-people-that-you-care-about-and-feel-close-to-for-example-talking-to-friends-on-the-phone-visiting-friends-or-family-going-to-church-or-club-meetings]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:social--emotional-health
+      :stress-is-when-someone-feels-tense-nervous-anxious-or-cant-sleep-at-night-because-their-mind-is-troubled-_-how-stressed-are-you]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:optional-additional-questions
+      :in-the-past-year-have-you-spent-more-than-2-nights-in-a-row-in-a-jail-prison-detention-center-or-juvenile-correctional-facility]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path [:optional-additional-questions :are-you-a-refugee]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:optional-additional-questions
+      :do-you-feel-physically-and-emotionally-safe-where-you-currently-live]}}
+   {:template aidbox.sdc/gen-observation-template,
+    :params
+    {:path
+     [:optional-additional-questions
+      :in-the-past-year-have-you-been-afraid-of-your-partner-or-ex_partner]}}]},
+
+ PRAPAREForm
+ {:zen/tags #{aidbox.sdc/Form},
+  :title "Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE]",
+  :document PRAPAREDocument,
+  :layout   PRAPARELayout,
+  :launch   PRAPARELaunch,
+  :finalize PRAPAREFinalize,
+  :properties
+  {:fhir/status "draft",
+   :fhir/copyright
+   "© 2019. This item comes from the national PRAPARE social determinants of health assessment protocol, developed and owned by the National Association of Community Health Centers (NACHC), in partnership with the Association of Asian Pacific Community Health Organization (AAPCHO), the Oregon Primary Care Association (OPCA), and the Institute for Alternative Futures (IAF). For more information, visit www.nachc.org/prapare Used with permission."}}}
