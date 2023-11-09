@@ -22,7 +22,7 @@
                                               :form aidbox.forms.phq2phq9/PHQ2PHQ9Form
                                               :sdc/enable-when (>= (get-in [:items :questionnaires
                                                                             :items :gad-7
-                                                                            :document :70274-6])
+                                                                            :document :gad7-score])
                                                                    15)}}}
           :physical-exam {:item aidbox.sdc/SectionItem
                           :title "Physical Exam"

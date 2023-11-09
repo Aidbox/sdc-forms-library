@@ -69,17 +69,13 @@
    :children
    [{:type aidbox.sdc/label
      :label "Over the last two weeks, how often have you been bothered by the following problems?"}
-    {:type aidbox.sdc/col
-     :children
-     [{:type aidbox.sdc/fields
-       :children
-       [{:bind [:feeling-nervous]}
-        {:bind [:cant-stop-worrying]}
-        {:bind [:worrying-too-much]}
-        {:bind [:trouble-relaxing]}
-        {:bind [:being-so-restless]}
-        {:bind [:easily-annoyed]}
-        {:bind [:feeling-afraid]}]}]}
+    {:bind [:feeling-nervous]}
+    {:bind [:cant-stop-worrying]}
+    {:bind [:worrying-too-much]}
+    {:bind [:trouble-relaxing]}
+    {:bind [:being-so-restless]}
+    {:bind [:easily-annoyed]}
+    {:bind [:feeling-afraid]}
     {:bind [:gad7-score]
      :label "GAD-7 Anxiety Severity Score"}]}}
 
